@@ -15,6 +15,7 @@ class Resident :public Node
 
     void Print();
     double GetPower();
+    void SetSource(Source* source);
 
   private:
     double power_;

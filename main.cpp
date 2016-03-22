@@ -15,9 +15,6 @@
 
 using namespace std;
 
-template <typename Key, typename Value>
-Value* FindOrInitialize(map<Key, Value*>& objects, Key key, Value* initialized_object);
-
 Vertex* FindOrInitializeVertexWithName(map<string, Vertex*>& vertices, string name);
 
 int main(int argc, char* argv[])
@@ -30,6 +27,9 @@ int main(int argc, char* argv[])
 
   map<string, Vertex*> all_vertices;
   map<string, Edge*> all_edges;
+
+  map<string, Source*> all_sources;
+  vector<pair<Resident*, string> > resident_source_connections;
 
   // Since all the power sources and residents in ckt.net have no edge connected to its neighbor
   // vertex, we create pseudo wires to connect them.
@@ -55,9 +55,8 @@ int main(int argc, char* argv[])
       string neighbor_vertex_name;
       line_ss >> neighbor_vertex_name;
       Vertex* neighbor_vertex = FindOrInitializeVertexWithName(all_vertices, neighbor_vertex_name);
-      all_vertices.insert(make_pair(neighbor_vertex_name, neighbor_vertex));
 
-      string pseudo_wire_name = pseudo_wire_name_prefix + to_string(counter++) + '@' + neighbor_vertex->GetRaw()->GetPhase();
+      string pseudo_wire_name = pseudo_wire_name_prefix + to_string(counter++) + "@" + neighbor_vertex->GetRaw()->GetPhase();
       Edge* pseudo_wire_edge;
       pseudo_wire_edge = new Edge(new Wire(pseudo_wire_name));
       all_edges.insert(make_pair(pseudo_wire_name, pseudo_wire_edge));
@@ -69,10 +68,24 @@ int main(int argc, char* argv[])
       if (type == "source") {
         Source* source = new Source(name, power);
 
+        all_sources.insert(make_pair(name, source));
+
         vertex = new Vertex(source);
         vertex->AddEdge(pseudo_wire_edge);
       } else {
+        string source_name;
+        line_ss >> source_name;
+        if (source_name.find(')') == string::npos) {
+          string tmp;
+          line_ss >> tmp;
+
+          source_name += " " + tmp;
+        }
+        source_name += string("@") + neighbor_vertex->GetRaw()->GetPhase();
+
         Resident* resident = new Resident(name, power);
+
+        resident_source_connections.push_back(make_pair(resident, source_name));
 
         vertex = new Vertex(resident);
         vertex->AddEdge(pseudo_wire_edge);
@@ -86,12 +99,10 @@ int main(int argc, char* argv[])
       string vertex_a_name;
       line_ss >> vertex_a_name;
       Vertex* vertex_a = FindOrInitializeVertexWithName(all_vertices, vertex_a_name);
-      all_vertices.insert(make_pair(vertex_a_name, vertex_a));
 
       string vertex_b_name;
       line_ss >> vertex_b_name;
       Vertex* vertex_b = FindOrInitializeVertexWithName(all_vertices, vertex_b_name);
-      all_vertices.insert(make_pair(vertex_b_name, vertex_b));
 
       Edge* edge;
       if (type == "wire") {
@@ -105,9 +116,10 @@ int main(int argc, char* argv[])
 
         edge = new Edge(wire);
       } else if (type == "switch") {
-        bool is_on;
-        line_ss >> is_on;
+        string tmp;
+        line_ss >> tmp;
 
+        bool is_on = (tmp == "on") ? true : false;
         Switch* s = new Switch(name, is_on);
 
         edge = new Edge(s);
@@ -128,35 +140,33 @@ int main(int argc, char* argv[])
     }
   }
 
+  for (auto pair : resident_source_connections) {
+    Source* source = all_sources.find(pair.second)->second;
+
+    pair.first->SetSource(source);
+    source->AddLoadingResident(pair.first);
+  }
+
   for (auto& vertex : all_vertices) {
     vertex.second->GetRaw()->Print();
+    cout << endl;
   }
   for (auto& edge : all_edges) {
     edge.second->GetRaw()->Print();
+    cout << endl;
   }
 
   return 0;
 }
 
-// This function is **useless**.
-// Given a map with key type K and value type V, find if there is a object
-// whose key is key. If found, return the found object, otherwise, return the
-// initialized object.
-template <typename Key, typename Value>
-Value* FindOrInitialize(map<Key, Value*>& objects, Key key, Value* initialized_object)
-{
-  if (objects.find(key) != objects.end()) {
-    delete initialized_object;
-    return objects.find(key)->second;
-  }
-  return initialized_object;
-}
-
+// Find vertex with the given name, and return it if found in the given map,
+// otherwise, initialize a new vertex and insert it into the given map.
 Vertex* FindOrInitializeVertexWithName(map<string, Vertex*>& vertices, string name)
 {
   if (vertices.find(name) != vertices.end()) {
     return vertices.find(name)->second;
   }
   Vertex* vertex = new Vertex(new Node(name));
+  vertices.insert(make_pair(name, vertex));
   return vertex;
 }

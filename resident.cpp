@@ -13,4 +13,15 @@ void Resident::Print()
 {
   Node::Print();
   cout << "  power: " << power_ << endl;
+  cout << "  source: " << source_->GetName() << endl;
+}
+
+double Resident::GetPower()
+{
+  return power_;
+}
+
+void Resident::SetSource(Source* source)
+{
+  source_ = source;
 }

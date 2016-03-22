@@ -1,5 +1,6 @@
 #include "switch.hpp"
 
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -7,6 +8,12 @@ using namespace std;
 Switch::Switch(string name, bool is_on)
   :Node(name, Node::Type::SWITCH), is_on_(is_on)
 {
+}
+
+void Switch::Print()
+{
+  Node::Print();
+  cout << "  is on? " << is_on_ << endl;
 }
 
 bool Switch::GetIsOn()

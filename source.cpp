@@ -15,6 +15,11 @@ void Source::Print()
   cout << "  power: " << power_ << endl;
   cout << "  loading residents:" << endl;
   for (auto resident : loading_residents_) {
-    cout << resident->GetName() << endl;
+    cout << "    " << resident->GetName() << endl;
   }
+}
+
+void Source::AddLoadingResident(Resident* resident)
+{
+  loading_residents_.push_back(resident);
 }

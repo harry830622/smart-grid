@@ -16,6 +16,7 @@ class Source :public Node
 
     void Print();
     double RemainingPower();
+    void AddLoadingResident(Resident* resident);
 
   private:
     double power_;
