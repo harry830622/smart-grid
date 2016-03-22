@@ -14,6 +14,7 @@ class Resident :public Node
     Resident(std::string name, double power);
 
     void Print();
+    double GetPower();
 
   private:
     double power_;

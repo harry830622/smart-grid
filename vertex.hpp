@@ -16,7 +16,6 @@ class Vertex
     Vertex(Node* raw);
     ~Vertex();
 
-    void Print();
     Node* GetRaw();
     void AddEdge(Edge* edge);
 

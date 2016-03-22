@@ -10,11 +10,6 @@ Vertex::~Vertex()
   delete raw_;
 }
 
-void Vertex::Print()
-{
-  raw_->Print();
-}
-
 Node* Vertex::GetRaw()
 {
   return raw_;

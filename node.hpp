@@ -6,13 +6,25 @@
 class Node
 {
   public:
-    Node(std::string name);
+    enum class Type
+    {
+      NODE,
+      SOURCE,
+      RESIDENT,
+      WIRE,
+      SWITCH
+    };
+
+    Node(std::string name, Type type = Type::NODE);
     virtual ~Node();
 
     virtual void Print();
+    Type GetType();
+    std::string GetName();
     char GetPhase();
 
   private:
+    Type type_;
     std::string name_;
     char phase_;
 

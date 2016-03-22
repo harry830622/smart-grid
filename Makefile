@@ -6,8 +6,8 @@ EXE=smartgrid
 
 all: $(EXE)
 
-$(EXE): main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o
-	$(CC) $(CFLAGS) -o $(EXE) main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o
+$(EXE): main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
+	$(CC) $(CFLAGS) -o $(EXE) main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
 
 point.o: point.hpp point.cpp
 	$(CC) $(CFLAGS) -c point.cpp
@@ -29,6 +29,9 @@ resident.o: resident.hpp resident.cpp
 
 wire.o: wire.hpp wire.cpp
 	$(CC) $(CFLAGS) -c wire.cpp
+
+switch.o: switch.hpp switch.cpp
+	$(CC) $(CFLAGS) -c switch.cpp
 
 clean:
 	rm -rf $(EXE) *.o

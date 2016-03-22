@@ -15,12 +15,12 @@ class Edge
     Edge(Node* raw);
     ~Edge();
 
+    Node* GetRaw();
     void AddVertex(Vertex* vertex);
 
   private:
     Node* raw_;
     std::vector<Vertex*> vertices_;
-    double length_;
 
 };
 

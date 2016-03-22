@@ -8,6 +8,9 @@ class Wire :public Node
   public:
     Wire(std::string name, double resistence = 0.0, double current_limit = -1.0);
 
+    double GetResistence();
+    double GetCurrentLimit();
+
   private:
     double resistence_;
     double current_limit_;

@@ -3,7 +3,9 @@
 #include "resident.hpp"
 #include "source.hpp"
 #include "wire.hpp"
+#include "switch.hpp"
 
+#include <climits>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -103,20 +105,35 @@ int main(int argc, char* argv[])
 
         edge = new Edge(wire);
       } else if (type == "switch") {
+        bool is_on;
+        line_ss >> is_on;
+
+        Switch* s = new Switch(name, is_on);
+
+        edge = new Edge(s);
       } else {
+        double resistence = 0;
+        double current_limit = INT_MAX;
+
+        Wire* wire = new Wire(name, resistence, current_limit);
+
+        edge = new Edge(wire);
       }
       all_edges.insert(make_pair(name, edge));
 
-      /* edge->AddVertex(vertex_a); */
-      /* edge->AddVertex(vertex_b); */
-      /* vertex_a->AddEdge(edge); */
-      /* vertex_b->AddEdge(edge); */
+      edge->AddVertex(vertex_a);
+      edge->AddVertex(vertex_b);
+      vertex_a->AddEdge(edge);
+      vertex_b->AddEdge(edge);
     }
   }
 
-  /* for (auto& vertex : all_vertices) { */
-  /*   vertex.second->Print(); */
-  /* } */
+  for (auto& vertex : all_vertices) {
+    vertex.second->GetRaw()->Print();
+  }
+  for (auto& edge : all_edges) {
+    edge.second->GetRaw()->Print();
+  }
 
   return 0;
 }
