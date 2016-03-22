@@ -19,6 +19,26 @@ void Source::Print()
   }
 }
 
+double Source::GetPower()
+{
+  return power_;
+}
+
+double Source::LoadingPower()
+{
+  double loading_power = 0;
+  for (Resident* resident : loading_residents_) {
+    loading_power += resident->GetPower();
+  }
+
+  return loading_power;
+}
+
+double Source::RemainingPower()
+{
+  return power_ - LoadingPower();
+}
+
 void Source::AddLoadingResident(Resident* resident)
 {
   loading_residents_.push_back(resident);

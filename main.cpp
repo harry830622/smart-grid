@@ -147,12 +147,18 @@ int main(int argc, char* argv[])
     source->AddLoadingResident(pair.first);
   }
 
-  for (auto& vertex : all_vertices) {
-    vertex.second->GetRaw()->Print();
-    cout << endl;
-  }
-  for (auto& edge : all_edges) {
-    edge.second->GetRaw()->Print();
+  /* for (auto& vertex : all_vertices) { */
+  /*   vertex.second->GetRaw()->Print(); */
+  /*   cout << endl; */
+  /* } */
+  /* for (auto& edge : all_edges) { */
+  /*   edge.second->GetRaw()->Print(); */
+  /*   cout << endl; */
+  /* } */
+
+  for (auto& pair : all_sources) {
+    cout << pair.first << endl;
+    cout << pair.second->RemainingPower() << endl;
     cout << endl;
   }
 

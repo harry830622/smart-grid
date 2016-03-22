@@ -15,6 +15,8 @@ class Source :public Node
     Source(std::string name, double power = 0.0);
 
     void Print();
+    double GetPower();
+    double LoadingPower();
     double RemainingPower();
     void AddLoadingResident(Resident* resident);
 
