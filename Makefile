@@ -1,6 +1,6 @@
 CC=clang++
 CFLAGS= -std=c++11 -Wall -O2
-EXE=smartgrid
+EXE=smart_grid
 
 .PHONY: all clean
 
