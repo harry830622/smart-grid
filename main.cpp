@@ -5,6 +5,8 @@
 #include "wire.hpp"
 #include "switch.hpp"
 
+#include "json.hpp"
+
 #include <climits>
 #include <iostream>
 #include <fstream>
@@ -14,13 +16,16 @@
 #include <map>
 
 using namespace std;
+using json = nlohmann::json;
 
 Vertex* FindOrInitializeVertexWithName(map<string, Vertex*>& vertices, string name);
+void OutputJson(const map<string, Vertex*>& vertices, const map<string, Edge*>& edges, ostream& output = cout);
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2) {
-    cout << "Usage: " << argv[0] << " input.net" << endl;
+  if (argc != 3) {
+    cout << "Usage: " << argv[0] << " input.net geometry.net" << endl;
+    return 1;
   }
 
   ifstream input(argv[1]);
@@ -147,20 +152,51 @@ int main(int argc, char* argv[])
     source->AddLoadingResident(pair.first);
   }
 
-  /* for (auto& vertex : all_vertices) { */
-  /*   vertex.second->GetRaw()->Print(); */
+  ifstream geometry_input(argv[2]);
+
+  while (getline(geometry_input, line_string)) {
+    stringstream line_ss(line_string);
+
+    string name_without_phase;
+    line_ss >> name_without_phase;
+
+    double x;
+    line_ss >> x;
+    double y;
+    line_ss >> y;
+    double z;
+    line_ss >> z;
+
+    for (int i = 'A'; i <= 'C'; ++i) {
+      string name = name_without_phase + "@" + char(i);
+
+      if (all_vertices.find(name) == all_vertices.end()) {
+        continue;
+      }
+
+      Vertex* vertex = all_vertices.find(name)->second;
+      vertex->SetCoordinateX(x);
+      vertex->SetCoordinateY(y);
+      vertex->SetCoordinateZ(z);
+    }
+  }
+
+  OutputJson(all_vertices, all_edges);
+
+  /* for (auto& pair : all_vertices) { */
+  /*   pair.second->Print(); */
   /*   cout << endl; */
   /* } */
-  /* for (auto& edge : all_edges) { */
-  /*   edge.second->GetRaw()->Print(); */
+  /* for (auto& pair : all_edges) { */
+  /*   pair.second->Print(); */
   /*   cout << endl; */
   /* } */
 
-  for (auto& pair : all_sources) {
-    cout << pair.first << endl;
-    cout << pair.second->RemainingPower() << endl;
-    cout << endl;
-  }
+  /* for (auto& pair : all_sources) { */
+  /*   cout << pair.first << endl; */
+  /*   cout << pair.second->RemainingPower() << endl; */
+  /*   cout << endl; */
+  /* } */
 
   return 0;
 }
@@ -175,4 +211,23 @@ Vertex* FindOrInitializeVertexWithName(map<string, Vertex*>& vertices, string na
   Vertex* vertex = new Vertex(new Node(name));
   vertices.insert(make_pair(name, vertex));
   return vertex;
+}
+
+void OutputJson(const map<string, Vertex*>& vertices, const map<string, Edge*>& edges, ostream& output)
+{
+  json j = {
+    {"vertices", json::array({})},
+    {"edges", json::array({})}
+  };
+
+  for (auto pair : vertices) {
+    j["vertices"].push_back({
+      {"name", pair.second->GetRaw()->GetName()},
+      {"x", pair.second->GetCoordinate().GetX()},
+      {"y", pair.second->GetCoordinate().GetY()},
+      {"z", pair.second->GetCoordinate().GetZ()}
+    });
+  }
+
+  output << j << endl;
 }

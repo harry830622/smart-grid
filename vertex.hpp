@@ -16,7 +16,12 @@ class Vertex
     Vertex(Node* raw);
     ~Vertex();
 
+    void Print();
     Node* GetRaw();
+    Point GetCoordinate();
+    void SetCoordinateX(double x);
+    void SetCoordinateY(double y);
+    void SetCoordinateZ(double z);
     void AddEdge(Edge* edge);
 
   private:
