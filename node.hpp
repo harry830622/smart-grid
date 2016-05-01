@@ -21,12 +21,10 @@ class Node
     virtual void Print();
     Type GetType();
     std::string GetName();
-    char GetPhase();
 
   private:
-    Type type_;
     std::string name_;
-    char phase_;
+    Type type_;
 
 };
 

@@ -5,7 +5,7 @@
 using namespace std;
 
 Node::Node(std::string name, Type type)
-  :type_(type), name_(name), phase_(name.back())
+  :name_(name), type_(type)
 {
 }
 
@@ -16,26 +16,25 @@ Node::~Node()
 void Node::Print()
 {
   string type;
-  switch (static_cast<int>(type_)) {
-    case 0:
+  switch (type_) {
+    case Type::NODE:
       type = "NODE";
       break;
-    case 1:
+    case Type::SOURCE:
       type = "SOURCE";
       break;
-    case 2:
+    case Type::RESIDENT:
       type = "RESIDENT";
       break;
-    case 3:
+    case Type::WIRE:
       type = "WIRE";
       break;
-    case 4:
+    case Type::SWITCH:
       type = "SWITCH";
       break;
   }
   cout << "Node: " << type << endl;
   cout << "  name: " << name_ << endl;
-  cout << "  phase: " << phase_ << endl;
 }
 
 Node::Type Node::GetType()
@@ -46,9 +45,4 @@ Node::Type Node::GetType()
 string Node::GetName()
 {
   return name_;
-}
-
-char Node::GetPhase()
-{
-  return phase_;
 }
