@@ -12,15 +12,14 @@ class Vertex;
 class Edge
 {
   public:
-    Edge(Node* raw);
-    ~Edge();
+    Edge(Node raw);
 
     void Print();
-    Node* GetRaw();
+    Node GetRaw();
     void AddVertex(Vertex* vertex);
 
   private:
-    Node* raw_;
+    Node raw_;
     std::vector<Vertex*> vertices_;
 
 };

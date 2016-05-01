@@ -13,11 +13,10 @@ class Edge;
 class Vertex
 {
   public:
-    Vertex(Node* raw);
-    ~Vertex();
+    Vertex(Node raw);
 
     void Print();
-    Node* GetRaw();
+    Node GetRaw();
     Point GetCoordinate();
     void SetCoordinateX(double x);
     void SetCoordinateY(double y);
@@ -25,7 +24,7 @@ class Vertex
     void AddEdge(Edge* edge);
 
   private:
-    Node* raw_;
+    Node raw_;
     std::vector<Edge*> edges_;
     Point coordinate_;
 

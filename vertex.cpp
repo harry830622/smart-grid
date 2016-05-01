@@ -4,24 +4,19 @@
 
 using namespace std;
 
-Vertex::Vertex(Node* raw)
+Vertex::Vertex(Node raw)
   :raw_(raw)
 {
-}
-
-Vertex::~Vertex()
-{
-  delete raw_;
 }
 
 void Vertex::Print()
 {
   cout << "Vertex" << endl;
   cout << "  x: " << coordinate_.GetX() << " y: " << coordinate_.GetY() << " z: " << coordinate_.GetZ() << endl;
-  raw_->Print();
+  raw_.Print();
 }
 
-Node* Vertex::GetRaw()
+Node Vertex::GetRaw()
 {
   return raw_;
 }

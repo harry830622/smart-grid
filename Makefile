@@ -6,8 +6,8 @@ EXE=smart_grid
 
 all: $(EXE)
 
-$(EXE): main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
-	$(CC) $(CFLAGS) -o $(EXE) main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
+$(EXE): main.cpp point.o vertex.o edge.o graph.o node.o source.o resident.o wire.o switch.o grid.o smart_grid.o
+	$(CC) $(CFLAGS) -o $(EXE) main.cpp point.o vertex.o edge.o graph.o node.o source.o resident.o wire.o switch.o grid.o smart_grid.o
 
 point.o: point.hpp point.cpp
 	$(CC) $(CFLAGS) -c point.cpp
@@ -17,6 +17,9 @@ vertex.o: vertex.hpp vertex.cpp
 
 edge.o: edge.hpp edge.cpp
 	$(CC) $(CFLAGS) -c edge.cpp
+
+graph.o: graph.hpp graph.cpp
+	$(CC) $(CFLAGS) -c graph.cpp
 
 node.o: node.hpp node.cpp
 	$(CC) $(CFLAGS) -c node.cpp
@@ -32,6 +35,12 @@ wire.o: wire.hpp wire.cpp
 
 switch.o: switch.hpp switch.cpp
 	$(CC) $(CFLAGS) -c switch.cpp
+
+grid.o: grid.hpp grid.cpp
+	$(CC) $(CFLAGS) -c grid.cpp
+
+smart_grid.o: smart_grid.hpp smart_grid.cpp
+	$(CC) $(CFLAGS) -c smart_grid.cpp
 
 clean:
 	rm -rf $(EXE) *.o
