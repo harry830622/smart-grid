@@ -18,9 +18,9 @@ class Node
     Node(std::string name, Type type = Type::NODE);
     virtual ~Node();
 
-    virtual void Print();
-    Type GetType();
-    std::string GetName();
+    virtual void Print() const;
+    Type GetType() const;
+    std::string GetName() const;
 
   private:
     std::string name_;

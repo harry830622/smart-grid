@@ -13,7 +13,7 @@ Node::~Node()
 {
 }
 
-void Node::Print()
+void Node::Print() const
 {
   string type;
   switch (type_) {
@@ -37,12 +37,12 @@ void Node::Print()
   cout << "  name: " << name_ << endl;
 }
 
-Node::Type Node::GetType()
+Node::Type Node::GetType() const
 {
   return type_;
 }
 
-string Node::GetName()
+string Node::GetName() const
 {
   return name_;
 }

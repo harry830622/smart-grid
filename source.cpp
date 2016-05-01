@@ -9,37 +9,37 @@ Source::Source(std::string name, double power)
 {
 }
 
-void Source::Print()
+void Source::Print() const
 {
   Node::Print();
   cout << "  power: " << power_ << endl;
   cout << "  loading residents:" << endl;
-  for (auto resident : loading_residents_) {
-    cout << "    " << resident->GetName() << endl;
+  for (auto pair : loading_residents_) {
+    cout << "    " << pair.second->GetName() << endl;
   }
 }
 
-double Source::GetPower()
+double Source::GetPower() const
 {
   return power_;
 }
 
-double Source::LoadingPower()
+double Source::LoadingPower() const
 {
   double loading_power = 0;
-  for (Resident* resident : loading_residents_) {
-    loading_power += resident->GetPower();
+  for (auto pair : loading_residents_) {
+    loading_power += pair.second->GetPower();
   }
 
   return loading_power;
 }
 
-double Source::RemainingPower()
+double Source::RemainingPower() const
 {
   return power_ - LoadingPower();
 }
 
 void Source::AddLoadingResident(Resident* resident)
 {
-  loading_residents_.push_back(resident);
+  loading_residents_.insert(make_pair(resident->GetName(), resident));
 }
