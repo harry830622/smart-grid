@@ -3,14 +3,16 @@
 
 #include "node.hpp"
 
+#include <limits>
+
 class Wire :public Node
 {
   public:
-    Wire(std::string name, double resistence = 0.0, double current_limit = -1.0);
+    Wire(std::string name, double resistence = 0.0, double current_limit = std::numeric_limits<double>::max());
 
-    void Print();
-    double GetResistence();
-    double GetCurrentLimit();
+    void Print() const;
+    double GetResistence() const;
+    double GetCurrentLimit() const;
 
   private:
     double resistence_;

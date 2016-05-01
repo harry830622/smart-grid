@@ -9,19 +9,19 @@ Wire::Wire(std::string name, double resistence, double current_limit)
 {
 }
 
-void Wire::Print()
+void Wire::Print() const
 {
   Node::Print();
   cout << "  resistence: " << resistence_ << endl;
   cout << "  current_limit: " << current_limit_ << endl;
 }
 
-double Wire::GetResistence()
+double Wire::GetResistence() const
 {
   return resistence_;
 }
 
-double Wire::GetCurrentLimit()
+double Wire::GetCurrentLimit() const
 {
   return current_limit_;
 }
