@@ -10,13 +10,13 @@ Switch::Switch(string name, bool is_on)
 {
 }
 
-void Switch::Print()
+void Switch::Print() const
 {
   Node::Print();
   cout << "  is on? " << is_on_ << endl;
 }
 
-bool Switch::GetIsOn()
+bool Switch::GetIsOn() const
 {
   return is_on_;
 }

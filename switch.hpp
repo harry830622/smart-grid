@@ -8,8 +8,8 @@ class Switch :public Node
   public:
     Switch(std::string name, bool is_on);
 
-    void Print();
-    bool GetIsOn();
+    void Print() const;
+    bool GetIsOn() const;
     void SetIsOn(bool is_on = true);
 
   private:
