@@ -9,14 +9,14 @@ Resident::Resident(std::string name, double power)
 {
 }
 
-void Resident::Print()
+void Resident::Print() const
 {
   Node::Print();
   cout << "  power: " << power_ << endl;
   cout << "  source: " << source_->GetName() << endl;
 }
 
-double Resident::GetPower()
+double Resident::GetPower() const
 {
   return power_;
 }

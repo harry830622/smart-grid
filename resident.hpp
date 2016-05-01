@@ -13,8 +13,8 @@ class Resident :public Node
   public:
     Resident(std::string name, double power);
 
-    void Print();
-    double GetPower();
+    void Print() const;
+    double GetPower() const;
     void SetSource(Source* source);
 
   private:
