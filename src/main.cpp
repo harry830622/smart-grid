@@ -7,7 +7,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
   if (argc != 4) {
-    cout << "Usage: " << argv[0] << " equipments.data nodes.geo grid.net" << endl;
+    cout << "Usage: " << argv[0] << " equipments.data nodes.pos grid.net" << endl;
     return 1;
   }
 
