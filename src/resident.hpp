@@ -10,12 +10,12 @@ class Resident : public Node
   public:
     Resident(std::string name, double consuming_power);
 
+    virtual void Print() const;
+
     double GetConsumingPower() const;
-    void SetSource(Source* source);
 
   private:
     double consuming_power_;
-    Source* source_;
 
 };
 

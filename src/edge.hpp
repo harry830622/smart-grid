@@ -17,8 +17,10 @@ class Edge
     void AddIncidentVertex(Vertex* vertex);
 
   private:
-    Wire* raw_;
     std::vector<Vertex*> incident_vertices_;
+
+    Wire* raw_;
+    double current_;
 
 };
 

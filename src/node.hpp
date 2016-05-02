@@ -14,7 +14,9 @@ class Node : public Equipment
       RESIDENT
     };
 
-    Node(std::string name, Type type);
+    Node(std::string name, Type type = Type::NODE);
+
+    virtual void Print() const;
 
     Point GetCoordinate() const;
 

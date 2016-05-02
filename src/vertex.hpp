@@ -17,8 +17,10 @@ class Vertex
     void AddIncidentEdge(Edge* edge);
 
   private:
-    Node* raw_;
     std::vector<Edge*> incident_edges_;
+
+    Node* raw_;
+    double voltage_;
 
 };
 

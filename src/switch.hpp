@@ -8,6 +8,8 @@ class Switch : public Wire
   public:
     Switch(std::string name, bool is_on = false);
 
+    virtual void Print() const;
+
     bool GetIsOn() const;
     void SetIsOn(bool is_on = true);
     void TurnOn();

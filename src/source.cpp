@@ -1,5 +1,7 @@
 #include "source.hpp"
 
+#include <iostream>
+
 using namespace std;
 
 Source::Source(string name, double output_power)
@@ -7,27 +9,14 @@ Source::Source(string name, double output_power)
 {
 }
 
+void Source::Print() const
+{
+  Node::Print();
+  cout << "Source: " << endl;
+  cout << "  output_power: " << output_power_ << endl;
+}
+
 double Source::GetOutputPower() const
 {
   return output_power_;
-}
-
-double Source::LoadingPower() const
-{
-  double loading_power = 0;
-  for (auto pair : loading_residents_) {
-    loading_power += pair.second->GetConsumingPower();
-  }
-
-  return loading_power;
-}
-
-double Source::RemainingPower() const
-{
-  return output_power_ - LoadingPower();
-}
-
-void Source::AddLoadingResident(Resident* resident)
-{
-  loading_residents_.insert(make_pair(resident->GetName(), resident));
 }

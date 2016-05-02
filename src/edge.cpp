@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-Edge::Edge(Wire* raw) : raw_(raw)
+Edge::Edge(Wire* raw) : raw_(raw), current_(0.0)
 {
 }
 

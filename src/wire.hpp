@@ -14,7 +14,9 @@ class Wire : public Equipment
       SWITCH
     };
 
-    Wire(std::string name, Type type, double resistance = 0.0, double current_limit = std::numeric_limits<double>::max());
+    Wire(std::string name, Type type = Type::WIRE, double resistance = 0.0, double current_limit = std::numeric_limits<double>::max());
+
+    virtual void Print() const;
 
     double GetResistance() const;
     double GetCurrentLimit() const;

@@ -8,6 +8,8 @@ class Equipment
   public:
     Equipment(std::string name);
 
+    virtual void Print() const;
+
     std::string GetName() const;
 
   private:
