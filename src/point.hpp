@@ -4,11 +4,11 @@
 class Point
 {
   public:
-    Point(double x = 0, double y = 0, double z = 0);
+    Point(double x = 0.0, double y = 0.0, double z = 0.0);
 
-    double GetX();
-    double GetY();
-    double GetZ();
+    double GetX() const;
+    double GetY() const;
+    double GetZ() const;
     void SetX(double x);
     void SetY(double y);
     void SetZ(double z);

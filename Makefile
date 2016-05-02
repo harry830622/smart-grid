@@ -1,37 +1,16 @@
-CC=clang++
-CFLAGS= -std=c++11 -Wall -O2
-EXE=smart_grid
+EXE = smart_grid
+CXX = clang++
+CXXFLAGS = -std=c++11 -O2 -Wall
+CPPS := $(wildcard src/*.cpp)
+OBJS := $(addprefix obj/,$(notdir $(CPPS:.cpp=.o)))
 
-.PHONY: all clean
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-all: $(EXE)
+obj/%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $^
 
-$(EXE): main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
-	$(CC) $(CFLAGS) -o $(EXE) main.cpp point.o vertex.o edge.o node.o source.o resident.o wire.o switch.o
-
-point.o: point.hpp point.cpp
-	$(CC) $(CFLAGS) -c point.cpp
-
-vertex.o: vertex.hpp vertex.cpp
-	$(CC) $(CFLAGS) -c vertex.cpp
-
-edge.o: edge.hpp edge.cpp
-	$(CC) $(CFLAGS) -c edge.cpp
-
-node.o: node.hpp node.cpp
-	$(CC) $(CFLAGS) -c node.cpp
-
-source.o: source.hpp source.cpp
-	$(CC) $(CFLAGS) -c source.cpp
-
-resident.o: resident.hpp resident.cpp
-	$(CC) $(CFLAGS) -c resident.cpp
-
-wire.o: wire.hpp wire.cpp
-	$(CC) $(CFLAGS) -c wire.cpp
-
-switch.o: switch.hpp switch.cpp
-	$(CC) $(CFLAGS) -c switch.cpp
+.PHONY: clean
 
 clean:
-	rm -rf $(EXE) *.o
+	rm $(EXE) $(OBJS)

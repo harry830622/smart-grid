@@ -1,21 +1,21 @@
 #include "point.hpp"
 
 Point::Point(double x, double y, double z)
-  :x_(x), y_(y), z_(z)
+  : x_(x), y_(y), z_(z)
 {
 }
 
-double Point::GetX()
+double Point::GetX() const
 {
   return x_;
 }
 
-double Point::GetY()
+double Point::GetY() const
 {
   return y_;
 }
 
-double Point::GetZ()
+double Point::GetZ() const
 {
   return z_;
 }
