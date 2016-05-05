@@ -15,13 +15,10 @@ int main(int argc, char* argv[])
   SmartGrid smart_grid;
 
   ifstream equipments_data_input(argv[1]);
-  smart_grid.ParseEquipments(equipments_data_input);
-
   ifstream node_coordinates_input(argv[2]);
-  smart_grid.ParseNodeCoordinates(node_coordinates_input);
-
   ifstream grids_wrapper_input(argv[3]);
-  smart_grid.ParseGrids(grids_wrapper_input);
+
+  smart_grid.Parse(equipments_data_input, node_coordinates_input, grids_wrapper_input);
 
   /* smart_grid.PrintEquipments(); */
   smart_grid.PrintGrids();

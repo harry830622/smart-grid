@@ -18,13 +18,15 @@ class SmartGrid
     void PrintEquipments() const;
     void PrintGrids() const;
 
-    void ParseEquipments(std::ifstream& input);
-    void ParseNodeCoordinates(std::ifstream& input);
-    void ParseGrids(std::ifstream& input);
+    void Parse(std::ifstream& equipments_data_input, std::ifstream& node_coordinates_input, std::ifstream& grids_wrapper_input);
 
     Equipment* GetEquipment(std::string name) const;
 
   private:
+    void ParseEquipments(std::ifstream& input);
+    void ParseNodeCoordinates(std::ifstream& input);
+    void ParseGrids(std::ifstream& input);
+
     std::map<std::string, Equipment*> equipments_;
     std::map<char, Grid*> grids_;
 

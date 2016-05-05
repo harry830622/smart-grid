@@ -7,12 +7,9 @@
 AddEdge	graph.cpp	/^void Graph::AddEdge(Edge* edge)$/;"	f	class:Graph
 AddIncidentEdge	vertex.cpp	/^void Vertex::AddIncidentEdge(Edge* edge)$/;"	f	class:Vertex
 AddIncidentVertex	edge.cpp	/^void Edge::AddIncidentVertex(Vertex* vertex)$/;"	f	class:Edge
-AddLoadingConsumer	power_station.cpp	/^void PowerStation::AddLoadingConsumer(Consumer* consumer)$/;"	f	class:PowerStation
+AddLoadingResident	source_vertex.cpp	/^void SourceVertex::AddLoadingResident(ResidentVertex* resident)$/;"	f	class:SourceVertex
 AddVertex	graph.cpp	/^void Graph::AddVertex(Vertex* vertex)$/;"	f	class:Graph
-CONSUMER_HPP	consumer.hpp	2;"	d
-Consumer	consumer.cpp	/^Consumer::Consumer(Resident* raw) : Vertex(raw, Vertex::Type::CONSUMER)$/;"	f	class:Consumer
-Consumer	consumer.hpp	/^class Consumer : public Vertex$/;"	c
-ConsumingPower	consumer.cpp	/^double Consumer::ConsumingPower() const$/;"	f	class:Consumer
+EDGE	edge.hpp	/^      EDGE,$/;"	m	class:Edge::Type
 EDGE_HPP	edge.hpp	2;"	d
 EQUIPMENT_HPP	equipment.hpp	2;"	d
 Edge	edge.cpp	/^Edge::Edge(Wire* raw, Type type) : raw_(raw), type_(type), current_(0.0)$/;"	f	class:Edge
@@ -22,15 +19,21 @@ Equipment	equipment.hpp	/^class Equipment$/;"	c
 GRAPH_HPP	graph.hpp	2;"	d
 GRID_HPP	grid.hpp	2;"	d
 GetConsumingPower	resident.cpp	/^double Resident::GetConsumingPower() const$/;"	f	class:Resident
+GetConsumingPower	resident_vertex.cpp	/^double ResidentVertex::GetConsumingPower() const$/;"	f	class:ResidentVertex
 GetCurrentLimit	wire.cpp	/^double Wire::GetCurrentLimit() const$/;"	f	class:Wire
 GetEdge	graph.cpp	/^Edge* Graph::GetEdge(std::string name) const$/;"	f	class:Graph
 GetEquipment	smart_grid.cpp	/^Equipment* SmartGrid::GetEquipment(string name) const$/;"	f	class:SmartGrid
 GetIsOn	switch.cpp	/^bool Switch::GetIsOn() const$/;"	f	class:Switch
+GetIsOn	switch_edge.cpp	/^bool SwitchEdge::GetIsOn() const$/;"	f	class:SwitchEdge
+GetLoadingPower	source_vertex.cpp	/^double SourceVertex::GetLoadingPower() const$/;"	f	class:SourceVertex
 GetName	equipment.cpp	/^string Equipment::GetName() const$/;"	f	class:Equipment
+GetName	resident_vertex.cpp	/^string ResidentVertex::GetName() const$/;"	f	class:ResidentVertex
 GetOutputPower	source.cpp	/^double Source::GetOutputPower() const$/;"	f	class:Source
+GetOutputPower	source_vertex.cpp	/^double SourceVertex::GetOutputPower() const$/;"	f	class:SourceVertex
 GetPhase	grid.cpp	/^char Grid::GetPhase() const$/;"	f	class:Grid
 GetRaw	edge.cpp	/^Wire* Edge::GetRaw() const$/;"	f	class:Edge
 GetRaw	vertex.cpp	/^Node* Vertex::GetRaw() const$/;"	f	class:Vertex
+GetRemainingPower	source_vertex.cpp	/^double SourceVertex::GetRemainingPower() const$/;"	f	class:SourceVertex
 GetResistance	wire.cpp	/^double Wire::GetResistance() const$/;"	f	class:Wire
 GetType	edge.cpp	/^Edge::Type Edge::GetType() const$/;"	f	class:Edge
 GetType	node.cpp	/^Node::Type Node::GetType() const$/;"	f	class:Node
@@ -42,55 +45,54 @@ GetY	point.cpp	/^double Point::GetY() const$/;"	f	class:Point
 GetZ	point.cpp	/^double Point::GetZ() const$/;"	f	class:Point
 Graph	graph.cpp	/^Graph::Graph()$/;"	f	class:Graph
 Graph	graph.hpp	/^class Graph$/;"	c
-Grid	grid.cpp	/^Grid::Grid(char phase) : phase_(phase)$/;"	f	class:Grid
+Grid	grid.cpp	/^Grid::Grid(SmartGrid* smart_grid, char phase) : smart_grid_(smart_grid), phase_(phase), graph_(new Graph)$/;"	f	class:Grid
 Grid	grid.hpp	/^class Grid$/;"	c
-LoadingPower	power_station.cpp	/^double PowerStation::LoadingPower() const$/;"	f	class:PowerStation
 NODE	node.hpp	/^      NODE,$/;"	m	class:Node::Type
 NODE_HPP	node.hpp	2;"	d
-Name	consumer.cpp	/^string Consumer::Name() const$/;"	f	class:Consumer
 Node	node.cpp	/^Node::Node(string name, Type type) : Equipment(name), type_(type)$/;"	f	class:Node
 Node	node.hpp	/^class Node : public Equipment$/;"	c
-OutputPower	power_station.cpp	/^double PowerStation::OutputPower() const$/;"	f	class:PowerStation
 POINT_HPP	point.hpp	2;"	d
-POWER_STATION	vertex.hpp	/^      POWER_STATION,$/;"	m	class:Vertex::Type
-POWER_STATION_HPP	power_station.hpp	2;"	d
+Parse	smart_grid.cpp	/^void SmartGrid::Parse(ifstream& equipments_data_input, ifstream& node_coordinates_input, ifstream& grids_wrapper_input)$/;"	f	class:SmartGrid
 ParseEquipments	smart_grid.cpp	/^void SmartGrid::ParseEquipments(ifstream& input)$/;"	f	class:SmartGrid
 ParseGrid	grid.cpp	/^void Grid::ParseGrid(ifstream& input)$/;"	f	class:Grid
 ParseGrids	smart_grid.cpp	/^void SmartGrid::ParseGrids(ifstream& input)$/;"	f	class:SmartGrid
 ParseNodeCoordinates	smart_grid.cpp	/^void SmartGrid::ParseNodeCoordinates(ifstream& input)$/;"	f	class:SmartGrid
 Point	point.cpp	/^Point::Point(double x, double y, double z)$/;"	f	class:Point
 Point	point.hpp	/^class Point$/;"	c
-PowerStation	power_station.cpp	/^PowerStation::PowerStation(Source* raw) : Vertex(raw, Vertex::Type::POWER_STATION)$/;"	f	class:PowerStation
-PowerStation	power_station.hpp	/^class PowerStation : public Vertex$/;"	c
-Print	consumer.cpp	/^void Consumer::Print() const$/;"	f	class:Consumer
 Print	edge.cpp	/^void Edge::Print() const$/;"	f	class:Edge
 Print	equipment.cpp	/^void Equipment::Print() const$/;"	f	class:Equipment
 Print	graph.cpp	/^void Graph::Print() const$/;"	f	class:Graph
 Print	grid.cpp	/^void Grid::Print() const$/;"	f	class:Grid
 Print	node.cpp	/^void Node::Print() const$/;"	f	class:Node
-Print	power_station.cpp	/^void PowerStation::Print() const$/;"	f	class:PowerStation
 Print	resident.cpp	/^void Resident::Print() const$/;"	f	class:Resident
+Print	resident_vertex.cpp	/^void ResidentVertex::Print() const$/;"	f	class:ResidentVertex
 Print	source.cpp	/^void Source::Print() const$/;"	f	class:Source
+Print	source_vertex.cpp	/^void SourceVertex::Print() const$/;"	f	class:SourceVertex
 Print	switch.cpp	/^void Switch::Print() const$/;"	f	class:Switch
+Print	switch_edge.cpp	/^void SwitchEdge::Print() const$/;"	f	class:SwitchEdge
 Print	vertex.cpp	/^void Vertex::Print() const$/;"	f	class:Vertex
 Print	wire.cpp	/^void Wire::Print() const$/;"	f	class:Wire
 PrintEquipments	smart_grid.cpp	/^void SmartGrid::PrintEquipments() const$/;"	f	class:SmartGrid
 PrintGrids	smart_grid.cpp	/^void SmartGrid::PrintGrids() const$/;"	f	class:SmartGrid
 RESIDENT_HPP	resident.hpp	2;"	d
-RemainingPower	power_station.cpp	/^double PowerStation::RemainingPower() const$/;"	f	class:PowerStation
+RESIDENT_VERTEX_HPP	resident_vertex.hpp	2;"	d
 Resident	resident.cpp	/^Resident::Resident(std::string name, double consuming_power)$/;"	f	class:Resident
 Resident	resident.hpp	/^class Resident : public Node$/;"	c
+ResidentVertex	resident_vertex.cpp	/^ResidentVertex::ResidentVertex(Resident* raw) : Vertex(raw, Vertex::Type::RESIDENT), resident_(raw)$/;"	f	class:ResidentVertex
+ResidentVertex	resident_vertex.hpp	/^class ResidentVertex : public Vertex$/;"	c
 SMART_GRID_HPP	smart_grid.hpp	2;"	d
 SOURCE	node.hpp	/^      SOURCE,$/;"	m	class:Node::Type
+SOURCE	vertex.hpp	/^      SOURCE,$/;"	m	class:Vertex::Type
 SOURCE_HPP	source.hpp	2;"	d
+SOURCE_VERTEX_HPP	source_vertex.hpp	2;"	d
+SWITCH_EDGE_HPP	switch_edge.hpp	2;"	d
 SWITCH_HPP	switch.hpp	2;"	d
 SetCoordinateX	node.cpp	/^void Node::SetCoordinateX(double x)$/;"	f	class:Node
 SetCoordinateY	node.cpp	/^void Node::SetCoordinateY(double y)$/;"	f	class:Node
 SetCoordinateZ	node.cpp	/^void Node::SetCoordinateZ(double z)$/;"	f	class:Node
 SetCurrentLimit	wire.cpp	/^void Wire::SetCurrentLimit(double current_limit)$/;"	f	class:Wire
 SetIsOn	switch.cpp	/^void Switch::SetIsOn(bool is_on)$/;"	f	class:Switch
-SetPowerStation	consumer.cpp	/^void Consumer::SetPowerStation(PowerStation* power_station)$/;"	f	class:Consumer
-SetSmartGrid	grid.cpp	/^void Grid::SetSmartGrid(SmartGrid* smart_grid)$/;"	f	class:Grid
+SetSource	resident_vertex.cpp	/^void ResidentVertex::SetSource(SourceVertex* source_vertex)$/;"	f	class:ResidentVertex
 SetX	point.cpp	/^void Point::SetX(double x)$/;"	f	class:Point
 SetY	point.cpp	/^void Point::SetY(double y)$/;"	f	class:Point
 SetZ	point.cpp	/^void Point::SetZ(double z)$/;"	f	class:Point
@@ -98,10 +100,16 @@ SmartGrid	smart_grid.cpp	/^SmartGrid::SmartGrid()$/;"	f	class:SmartGrid
 SmartGrid	smart_grid.hpp	/^class SmartGrid$/;"	c
 Source	source.cpp	/^Source::Source(string name, double output_power)$/;"	f	class:Source
 Source	source.hpp	/^class Source : public Node$/;"	c
+SourceVertex	source_vertex.cpp	/^SourceVertex::SourceVertex(Source* raw) : Vertex(raw, Vertex::Type::SOURCE), source_(raw)$/;"	f	class:SourceVertex
+SourceVertex	source_vertex.hpp	/^class SourceVertex : public Vertex$/;"	c
 Switch	switch.cpp	/^Switch::Switch(string name, bool is_on)$/;"	f	class:Switch
 Switch	switch.hpp	/^class Switch : public Wire$/;"	c
+SwitchEdge	switch_edge.cpp	/^SwitchEdge::SwitchEdge(Switch* raw) : Edge(raw, Edge::Type::SWITCH), switch_(raw)$/;"	f	class:SwitchEdge
+SwitchEdge	switch_edge.hpp	/^class SwitchEdge : public Edge$/;"	c
 TurnOff	switch.cpp	/^void Switch::TurnOff()$/;"	f	class:Switch
+TurnOff	switch_edge.cpp	/^void SwitchEdge::TurnOff()$/;"	f	class:SwitchEdge
 TurnOn	switch.cpp	/^void Switch::TurnOn()$/;"	f	class:Switch
+TurnOn	switch_edge.cpp	/^void SwitchEdge::TurnOn()$/;"	f	class:SwitchEdge
 Type	edge.hpp	/^    enum class Type$/;"	c	class:Edge
 Type	node.hpp	/^    enum class Type$/;"	c	class:Node
 Type	vertex.hpp	/^    enum class Type$/;"	c	class:Vertex
@@ -110,6 +118,7 @@ VERTEX	vertex.hpp	/^      VERTEX,$/;"	m	class:Vertex::Type
 VERTEX_HPP	vertex.hpp	2;"	d
 Vertex	vertex.cpp	/^Vertex::Vertex(Node* raw, Type type) : raw_(raw), type_(type), voltage_(0.0)$/;"	f	class:Vertex
 Vertex	vertex.hpp	/^class Vertex$/;"	c
+WIRE	wire.hpp	/^      WIRE,$/;"	m	class:Wire::Type
 WIRE_HPP	wire.hpp	2;"	d
 Wire	wire.cpp	/^Wire::Wire(string name, Type type, double resistance, double current_limit)$/;"	f	class:Wire
 Wire	wire.hpp	/^class Wire : public Equipment$/;"	c
@@ -119,23 +128,24 @@ current_	edge.hpp	/^    double current_;$/;"	m	class:Edge
 current_limit_	wire.hpp	/^    double current_limit_;$/;"	m	class:Wire
 edges_	graph.hpp	/^    std::map<std::string, Edge*> edges_;$/;"	m	class:Graph
 equipments_	smart_grid.hpp	/^    std::map<std::string, Equipment*> equipments_;$/;"	m	class:SmartGrid
-graph_	grid.hpp	/^    Graph graph_;$/;"	m	class:Grid
-grids_	smart_grid.hpp	/^    std::map<char, Grid> grids_;$/;"	m	class:SmartGrid
+graph_	grid.hpp	/^    Graph* graph_;$/;"	m	class:Grid
+grids_	smart_grid.hpp	/^    std::map<char, Grid*> grids_;$/;"	m	class:SmartGrid
 incident_edges_	vertex.hpp	/^    std::vector<Edge*> incident_edges_;$/;"	m	class:Vertex
 incident_vertices_	edge.hpp	/^    std::vector<Vertex*> incident_vertices_;$/;"	m	class:Edge
 is_on_	switch.hpp	/^    bool is_on_;$/;"	m	class:Switch
-loading_consumers_	power_station.hpp	/^    std::map<std::string, Consumer* const> loading_consumers_;$/;"	m	class:PowerStation
+loading_residents_	source_vertex.hpp	/^    std::map<std::string, ResidentVertex*> loading_residents_;$/;"	m	class:SourceVertex
 main	main.cpp	/^int main(int argc, char* argv[])$/;"	f
 name_	equipment.hpp	/^    std::string name_;$/;"	m	class:Equipment
 output_power_	source.hpp	/^    double output_power_;$/;"	m	class:Source
 phase_	grid.hpp	/^    char phase_;$/;"	m	class:Grid
-power_station_	consumer.hpp	/^    PowerStation* power_station_;$/;"	m	class:Consumer
 raw_	edge.hpp	/^    Wire* raw_;$/;"	m	class:Edge
 raw_	vertex.hpp	/^    Node* raw_;$/;"	m	class:Vertex
-resident_	consumer.hpp	/^    Resident* resident_;$/;"	m	class:Consumer
+resident_	resident_vertex.hpp	/^    Resident* resident_;$/;"	m	class:ResidentVertex
 resistance_	wire.hpp	/^    double resistance_;$/;"	m	class:Wire
 smart_grid_	grid.hpp	/^    SmartGrid* smart_grid_;$/;"	m	class:Grid
-source_	power_station.hpp	/^    Source* source_;$/;"	m	class:PowerStation
+source_	source_vertex.hpp	/^    Source* source_;$/;"	m	class:SourceVertex
+source_vertex_	resident_vertex.hpp	/^    SourceVertex* source_vertex_;$/;"	m	class:ResidentVertex
+switch_	switch_edge.hpp	/^    Switch* switch_;$/;"	m	class:SwitchEdge
 type_	edge.hpp	/^    Type type_;$/;"	m	class:Edge
 type_	node.hpp	/^    Type type_;$/;"	m	class:Node
 type_	vertex.hpp	/^    Type type_;$/;"	m	class:Vertex
@@ -146,4 +156,5 @@ x_	point.hpp	/^    double x_;$/;"	m	class:Point
 y_	point.hpp	/^    double y_;$/;"	m	class:Point
 z_	point.hpp	/^    double z_;$/;"	m	class:Point
 ~Graph	graph.cpp	/^Graph::~Graph()$/;"	f	class:Graph
+~Grid	grid.cpp	/^Grid::~Grid()$/;"	f	class:Grid
 ~SmartGrid	smart_grid.cpp	/^SmartGrid::~SmartGrid()$/;"	f	class:SmartGrid

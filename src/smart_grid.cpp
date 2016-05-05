@@ -42,6 +42,22 @@ void SmartGrid::PrintGrids() const
   }
 }
 
+void SmartGrid::Parse(ifstream& equipments_data_input, ifstream& node_coordinates_input, ifstream& grids_wrapper_input)
+{
+  ParseEquipments(equipments_data_input);
+  ParseNodeCoordinates(node_coordinates_input);
+  ParseGrids(grids_wrapper_input);
+}
+
+Equipment* SmartGrid::GetEquipment(string name) const
+{
+  if (equipments_.find(name) == equipments_.end()) {
+    return nullptr;
+  }
+
+  return equipments_.find(name)->second;
+}
+
 void SmartGrid::ParseEquipments(ifstream& input)
 {
   string line_str;
@@ -139,13 +155,4 @@ void SmartGrid::ParseGrids(ifstream& input)
     ifstream grid_input(grid_input_name.c_str());
     grid->ParseGrid(grid_input);
   }
-}
-
-Equipment* SmartGrid::GetEquipment(string name) const
-{
-  if (equipments_.find(name) == equipments_.end()) {
-    return nullptr;
-  }
-
-  return equipments_.find(name)->second;
 }
