@@ -1,14 +1,28 @@
 #include "edge.hpp"
 
 #include <cassert>
+#include <iostream>
 
-Edge::Edge(Wire* raw) : raw_(raw), current_(0.0)
+using namespace std;
+
+Edge::Edge(Wire* raw, Type type) : raw_(raw), type_(type), current_(0.0)
 {
+}
+
+void Edge::Print() const
+{
+  cout << "Edge: " << endl;
+  raw_->Print();
 }
 
 Wire* Edge::GetRaw() const
 {
   return raw_;
+}
+
+Edge::Type Edge::GetType() const
+{
+  return type_;
 }
 
 void Edge::AddIncidentVertex(Vertex* vertex)

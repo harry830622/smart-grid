@@ -7,6 +7,7 @@ class Switch : public Wire
 {
   public:
     Switch(std::string name, bool is_on = false);
+    virtual ~Switch() = default;
 
     virtual void Print() const;
 

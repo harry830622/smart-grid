@@ -9,6 +9,7 @@ class Resident : public Node
 {
   public:
     Resident(std::string name, double consuming_power);
+    virtual ~Resident() = default;
 
     virtual void Print() const;
 

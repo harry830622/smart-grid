@@ -1,5 +1,9 @@
 #include "graph.hpp"
 
+#include <iostream>
+
+using namespace std;
+
 Graph::Graph()
 {
 }
@@ -13,6 +17,19 @@ Graph::~Graph()
   for (auto pair : edges_) {
     delete pair.second;
     pair.second = nullptr;
+  }
+}
+
+void Graph::Print() const
+{
+  cout << "Graph: " << endl;
+  for (auto pair : vertices_) {
+    pair.second->Print();
+    cout << endl;
+  }
+  for (auto pair : edges_) {
+    pair.second->Print();
+    cout << endl;
   }
 }
 

@@ -9,11 +9,22 @@ Wire::Wire(string name, Type type, double resistance, double current_limit)
 {
 }
 
+/* Wire::~Wire() */
+/* { */
+/*   cout << "Destruct Wire" << endl; */
+/* } */
+
+
 void Wire::Print() const
 {
   Equipment::Print();
   cout << "Wire: " << endl;
   cout << "  resistance: " << resistance_ << " current_limit: " << current_limit_ << endl;
+}
+
+Wire::Type Wire::GetType() const
+{
+  return type_;
 }
 
 double Wire::GetResistance() const

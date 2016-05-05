@@ -9,6 +9,12 @@ Resident::Resident(std::string name, double consuming_power)
 {
 }
 
+/* Resident::~Resident() */
+/* { */
+/*   cout << "Destruct Resident" << endl; */
+/* } */
+
+
 void Resident::Print() const
 {
   Node::Print();

@@ -7,6 +7,7 @@ class Equipment
 {
   public:
     Equipment(std::string name);
+    virtual ~Equipment() = default;
 
     virtual void Print() const;
 

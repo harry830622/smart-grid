@@ -15,9 +15,11 @@ class Wire : public Equipment
     };
 
     Wire(std::string name, Type type = Type::WIRE, double resistance = 0.0, double current_limit = std::numeric_limits<double>::max());
+    virtual ~Wire() = default;
 
     virtual void Print() const;
 
+    Type GetType() const;
     double GetResistance() const;
     double GetCurrentLimit() const;
 

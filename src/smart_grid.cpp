@@ -5,6 +5,7 @@
 #include "resident.hpp"
 
 #include <cassert>
+#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -19,6 +20,10 @@ SmartGrid::~SmartGrid()
     delete pair.second;
     pair.second = nullptr;
   }
+  for (auto pair : grids_) {
+    delete pair.second;
+    pair.second = nullptr;
+  }
 }
 
 void SmartGrid::PrintEquipments() const
@@ -29,7 +34,15 @@ void SmartGrid::PrintEquipments() const
   }
 }
 
-void SmartGrid::ParseEquipments(istream& input)
+void SmartGrid::PrintGrids() const
+{
+  for (auto pair : grids_) {
+    pair.second->Print();
+    cout << endl;
+  }
+}
+
+void SmartGrid::ParseEquipments(ifstream& input)
 {
   string line_str;
   while (getline(input, line_str)) {
@@ -75,10 +88,64 @@ void SmartGrid::ParseEquipments(istream& input)
 
       equipment = new Switch(name, is_on);
     } else {
-      cout << "Type: " << type << " does not exist!" << endl;
-      equipment = nullptr;
-      assert(false);
+      continue;
     }
     equipments_.insert(make_pair(equipment->GetName(), equipment));
   }
+}
+
+void SmartGrid::ParseNodeCoordinates(ifstream& input)
+{
+  string line_str;
+  while (getline(input, line_str)) {
+    stringstream line_ss(line_str);
+
+    string name;
+    line_ss >> name;
+
+    assert(equipments_.find(name) != equipments_.end());
+    Node* node = dynamic_cast<Node*>(equipments_.find(name)->second);
+
+    double x;
+    line_ss >> x;
+
+    double y;
+    line_ss >> y;
+
+    double z;
+    line_ss >> z;
+
+    node->SetCoordinateX(x);
+    node->SetCoordinateY(y);
+    node->SetCoordinateZ(z);
+  }
+}
+
+void SmartGrid::ParseGrids(ifstream& input)
+{
+  string line_str;
+  while (getline(input, line_str)) {
+    stringstream line_ss(line_str);
+
+    char phase;
+    line_ss >> phase;
+
+    string grid_input_name;
+    line_ss >> grid_input_name;
+
+    Grid* grid = new Grid(this, phase);
+    grids_.insert(make_pair(phase, grid));
+
+    ifstream grid_input(grid_input_name.c_str());
+    grid->ParseGrid(grid_input);
+  }
+}
+
+Equipment* SmartGrid::GetEquipment(string name) const
+{
+  if (equipments_.find(name) == equipments_.end()) {
+    return nullptr;
+  }
+
+  return equipments_.find(name)->second;
 }

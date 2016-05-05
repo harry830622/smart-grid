@@ -11,6 +11,12 @@ Switch::Switch(string name, bool is_on)
   SetIsOn(is_on_);
 }
 
+/* Switch::~Switch() */
+/* { */
+/*   cout << "Destruct Switch" << endl; */
+/* } */
+
+
 void Switch::Print() const
 {
   Wire::Print();

@@ -1,3 +1,4 @@
 smart_grid
 *.o
 *.out
+vgcore.*

@@ -12,8 +12,11 @@ class Graph
     Graph();
     ~Graph();
 
+    void Print() const;
+
     Vertex* GetVertex(std::string name) const;
     Edge* GetEdge(std::string name) const;
+
     void AddVertex(Vertex* vertex);
     void AddEdge(Edge* edge);
 

@@ -15,10 +15,15 @@ class Node : public Equipment
     };
 
     Node(std::string name, Type type = Type::NODE);
+    virtual ~Node() = default;
 
     virtual void Print() const;
 
+    Type GetType() const;
     Point GetCoordinate() const;
+    void SetCoordinateX(double x);
+    void SetCoordinateY(double y);
+    void SetCoordinateZ(double z);
 
   private:
     Type type_;
