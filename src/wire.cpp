@@ -9,12 +9,6 @@ Wire::Wire(string name, Type type, double resistance, double current_limit)
 {
 }
 
-/* Wire::~Wire() */
-/* { */
-/*   cout << "Destruct Wire" << endl; */
-/* } */
-
-
 void Wire::Print() const
 {
   Equipment::Print();

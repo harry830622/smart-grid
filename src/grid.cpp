@@ -65,12 +65,14 @@ void Grid::ParseGrid(ifstream& input)
             string neighbor_vertex_name;
             line_ss >> neighbor_vertex_name;
 
-            assert(graph_->GetVertex(neighbor_vertex_name) != nullptr);
             Vertex* neighbor_vertex = graph_->GetVertex(neighbor_vertex_name);
+            assert(neighbor_vertex != nullptr);
 
             Wire* pseudo_wire = new Wire(pseudo_wire_prefix + to_string(pseudo_wire_count++));
+            smart_grid_->AddEquipment(pseudo_wire);
 
             Edge* pseudo_wire_edge = new Edge(pseudo_wire);
+            graph_->AddEdge(pseudo_wire_edge);
 
             vertex->AddIncidentEdge(pseudo_wire_edge);
             neighbor_vertex->AddIncidentEdge(pseudo_wire_edge);
@@ -86,11 +88,14 @@ void Grid::ParseGrid(ifstream& input)
             string neighbor_vertex_name;
             line_ss >> neighbor_vertex_name;
 
-            assert(graph_->GetVertex(neighbor_vertex_name) != nullptr);
             Vertex* neighbor_vertex = graph_->GetVertex(neighbor_vertex_name);
+            assert(neighbor_vertex != nullptr);
 
             Wire* pseudo_wire = new Wire(pseudo_wire_prefix + to_string(pseudo_wire_count++));
+            smart_grid_->AddEquipment(pseudo_wire);
+
             Edge* pseudo_wire_edge = new Edge(pseudo_wire);
+            graph_->AddEdge(pseudo_wire_edge);
 
             vertex->AddIncidentEdge(pseudo_wire_edge);
             neighbor_vertex->AddIncidentEdge(pseudo_wire_edge);
@@ -117,14 +122,14 @@ void Grid::ParseGrid(ifstream& input)
       string vertex_a_name;
       line_ss >> vertex_a_name;
 
-      assert(graph_->GetVertex(vertex_a_name) != nullptr);
       Vertex* vertex_a = graph_->GetVertex(vertex_a_name);
+      assert(vertex_a != nullptr);
 
       string vertex_b_name;
       line_ss >> vertex_b_name;
 
-      assert(graph_->GetVertex(vertex_b_name) != nullptr);
       Vertex* vertex_b = graph_->GetVertex(vertex_b_name);
+      assert(vertex_b != nullptr);
 
       Edge* edge;
       switch (wire->GetType()) {

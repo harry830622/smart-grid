@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 AddEdge	graph.cpp	/^void Graph::AddEdge(Edge* edge)$/;"	f	class:Graph
+AddEquipment	smart_grid.cpp	/^void SmartGrid::AddEquipment(Equipment* equipment)$/;"	f	class:SmartGrid
 AddIncidentEdge	vertex.cpp	/^void Vertex::AddIncidentEdge(Edge* edge)$/;"	f	class:Vertex
 AddIncidentVertex	edge.cpp	/^void Edge::AddIncidentVertex(Vertex* vertex)$/;"	f	class:Edge
 AddLoadingResident	source_vertex.cpp	/^void SourceVertex::AddLoadingResident(ResidentVertex* resident)$/;"	f	class:SourceVertex

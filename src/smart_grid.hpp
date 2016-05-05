@@ -21,6 +21,7 @@ class SmartGrid
     void Parse(std::ifstream& equipments_data_input, std::ifstream& node_coordinates_input, std::ifstream& grids_wrapper_input);
 
     Equipment* GetEquipment(std::string name) const;
+    void AddEquipment(Equipment* equipment);
 
   private:
     void ParseEquipments(std::ifstream& input);

@@ -8,12 +8,6 @@ Node::Node(string name, Type type) : Equipment(name), type_(type)
 {
 }
 
-/* Node::~Node() */
-/* { */
-/*   cout << "Destruct Node" << endl; */
-/* } */
-
-
 void Node::Print() const
 {
   Equipment::Print();

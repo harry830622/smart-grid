@@ -58,6 +58,11 @@ Equipment* SmartGrid::GetEquipment(string name) const
   return equipments_.find(name)->second;
 }
 
+void SmartGrid::AddEquipment(Equipment* equipment)
+{
+  equipments_.insert(make_pair(equipment->GetName(), equipment));
+}
+
 void SmartGrid::ParseEquipments(ifstream& input)
 {
   string line_str;

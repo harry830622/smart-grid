@@ -9,12 +9,6 @@ Source::Source(string name, double output_power)
 {
 }
 
-/* Source::~Source() */
-/* { */
-/*   cout << "Destruct Source" << endl; */
-/* } */
-
-
 void Source::Print() const
 {
   Node::Print();
