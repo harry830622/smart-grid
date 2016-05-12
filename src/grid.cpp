@@ -141,6 +141,7 @@ void Grid::ParseGrid(ifstream& input)
           edge = new SwitchEdge(dynamic_cast<Switch*>(wire));
 
           break;
+	
       }
 
       vertex_a->AddIncidentEdge(edge);
@@ -158,4 +159,8 @@ void Grid::ParseGrid(ifstream& input)
 char Grid::GetPhase() const
 {
   return phase_;
+}
+
+Graph* Grid::GetGraph() const{
+  return graph_;
 }

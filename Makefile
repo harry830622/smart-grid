@@ -1,6 +1,6 @@
 EXE = smart_grid
 CXX = clang++
-CXXFLAGS = -std=c++11 -O2 -Wall
+CXXFLAGS = -std=c++11 -O2 -Wall -g
 CPPS := $(wildcard src/*.cpp)
 OBJS := $(addprefix obj/,$(notdir $(CPPS:.cpp=.o)))
 
