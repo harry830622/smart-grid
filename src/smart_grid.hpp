@@ -22,6 +22,8 @@ class SmartGrid
 
     Equipment* GetEquipment(std::string name) const;
     void AddEquipment(Equipment* equipment);
+    Grid* GetGrid (char);
+    
 
   private:
     void ParseEquipments(std::ifstream& input);

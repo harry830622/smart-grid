@@ -19,6 +19,7 @@ class Grid
     void ParseGrid(std::ifstream& input);
 
     char GetPhase() const;
+    Graph* GetGraph() const;
 
   private:
     SmartGrid* smart_grid_;

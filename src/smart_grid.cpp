@@ -161,3 +161,7 @@ void SmartGrid::ParseGrids(ifstream& input)
     grid->ParseGrid(grid_input);
   }
 }
+
+Grid*  SmartGrid::GetGrid(char c){
+	return grids_[c];
+}

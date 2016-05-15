@@ -11,7 +11,8 @@ class Node : public Equipment
     {
       NODE,
       SOURCE,
-      RESIDENT
+      RESIDENT,
+      PSEUDO
     };
 
     Node(std::string name, Type type = Type::NODE);
