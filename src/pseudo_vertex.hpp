@@ -1,24 +1,25 @@
 #ifndef PSEUDO_VERTEX_HPP
 #define PSEUDO_VERTEX_HPP
 
-#include "graph.hpp"
+#include "vertex.hpp"
 
-class PseudoVertex : public Node
+#include <map>
+
+class PseudoVertex : public Vertex
 {
   public:
-    PseudoVertex(std::string name, Node::Type type, Vertex* source);
-    ~PseudoVertex();
+    PseudoVertex(Node* raw);
 
-    Graph* GetGraph();
-    Vertex* GetSource();
-    double GetPower();
+    virtual void Print() const;
 
-    void SetPower(double power);
+    double GetConsumingPower() const;
+
+    void AddBoundaryVertex(Edge* edge, Vertex* vertex);
 
   private:
-    Graph* graph_;
-    Vertex* root_;
-    double power_;
+    double consuming_power_;
+
+    std::map<Edge*, Vertex*> boundary_vertices_; // Index by edge
 
 };
 

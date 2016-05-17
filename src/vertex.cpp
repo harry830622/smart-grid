@@ -1,20 +1,22 @@
 #include "vertex.hpp"
 #include "edge.hpp"
+
+#include <cassert>
 #include <iostream>
 
 using namespace std;
 
-Vertex::Vertex(Node* raw, Type type) : raw_(raw), type_(type), voltage_(0.0)
+Vertex::Vertex(Node* raw, Type type)
+  : raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), children_num_(0), depth_(-1), low_(-1), is_articulate_(false)
 {
-	visit_=false;
-    	index_num_=0;
-	low_=0;
-	is_artic_=false;
 }
 
 void Vertex::Print() const
 {
   cout << "Vertex: " << endl;
+  cout << "  depth_: " << depth_ << endl;
+  cout << "  low_: " << low_ << endl;
+  cout << "  is_articulate_: " << is_articulate_ << endl;
   raw_->Print();
 }
 
@@ -28,52 +30,93 @@ Vertex::Type Vertex::GetType() const
   return type_;
 }
 
+double Vertex::GetVoltage() const
+{
+  return voltage_;
+}
+
+int Vertex::GetIncidentEdgesNum() const
+{
+  return incident_edges_.size();
+}
+
+Edge* Vertex::GetIncidentEdge(int idx) const
+{
+  assert(idx < incident_edges_.size());
+
+  return incident_edges_[idx];
+}
+
+Vertex* Vertex::GetParent() const
+{
+  return parent_;
+}
+
+bool Vertex::GetIsDFSRoot() const
+{
+  return parent_ == nullptr;
+}
+
+int Vertex::GetChildrenNum() const
+{
+  return children_num_;
+}
+
+int Vertex::GetDepth() const
+{
+  return depth_;
+}
+
+int Vertex::GetLow() const
+{
+  return low_;
+}
+
+bool Vertex::GetIsVisited() const
+{
+  return depth_ != -1;
+}
+
+int Vertex::GetIsArticulate() const
+{
+  return is_articulate_;
+}
+
+void Vertex::SetParent(Vertex* parent)
+{
+  parent_ = parent;
+}
+
+void Vertex::SetDepth(int depth)
+{
+  depth_ = depth;
+}
+
+void Vertex::SetLow(int low)
+{
+  low_ = low;
+}
+
+void Vertex::SetIsArticulate(bool is_articulate)
+{
+  is_articulate_ = is_articulate;
+}
+
 void Vertex::AddIncidentEdge(Edge* edge)
 {
   incident_edges_.push_back(edge);
 }
 
-int Vertex::GetIncidentEdgeNum()
+void Vertex::IncrementChildrenNum()
 {
-  return incident_edges_.size();
+  ++children_num_;
 }
 
-Edge* Vertex::GetIncidentEdge (int i){
-  return incident_edges_[i];
+// Reset all marks to default value except for is_articulate_
+void Vertex::ResetMarks()
+{
+  parent_ = nullptr;
+  children_num_ = 0;
+  depth_ = -1;
+  low_ = -1;
 }
-
-double Vertex::GetVoltage () {
-	return voltage_;
-}
-
-bool Vertex::GetVisit(){
-	return visit_;
-}
-
-void Vertex::SetVisit(bool in){
-	visit_ = in;
-}
-Vertex* Vertex::GetParant(){
-	return parant_;
-}
-void Vertex::SetParant (Vertex* in){
-	parant_ = in;
-}
-void Vertex::AddChild (Vertex* in){
-	children_.push_back(in);
-}
-Vertex* Vertex::GetChild (int i){
-	return children_[i];
-}
-
-int Vertex::GetChildNum (){
-	return children_.size();
-}
-bool Vertex::GetIsArtic(){
-	return is_artic_;
-}
-
-void Vertex::SetIsArtic(bool in){
-	is_artic_ = in;
-}
-

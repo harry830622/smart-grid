@@ -1,6 +1,4 @@
 #include "smart_grid.hpp"
-#include "pseudo_vertex.hpp"
-#include "function.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -22,28 +20,10 @@ int main(int argc, char* argv[])
 
   smart_grid.Parse(equipments_data_input, node_coordinates_input, grids_wrapper_input);
 
+  smart_grid.GetGrid('A')->ShrinkGraph();
+
   /* smart_grid.PrintEquipments(); */
-  //smart_grid.PrintGrids();
-
-  Graph* graph = smart_grid.GetGrid('A')->GetGraph();
-  Graph* new_graph = new Graph;
-  Vertex* root = nullptr;
-
-  cout << "Old: " << graph->GetVertexNum() << endl;
-
-  if (!graph->GetSource(root)) {
-    cout << "GETDIEEEE!!!" << endl;
-  } else {
-    get_shrink_graph(root, graph, new_graph);
-  }
-
-  //new_graph -> Print();
-  if (new_graph->GetVertex("N9933")->GetType() == Vertex::Type::PSEUDO) {
-    PseudoVertex* temp_vertex = dynamic_cast<PseudoVertex*>(new_graph->GetVertex("N9933")->GetRaw());
-    cout << "psuedo num: " << temp_vertex->GetGraph()->GetVertexNum() << endl;
-  }
-
-  cout << "Shrink: " << new_graph->GetVertexNum() << endl;
+  /* smart_grid.PrintGrids(); */
 
   return 0;
 }

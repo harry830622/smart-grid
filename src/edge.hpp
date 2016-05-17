@@ -24,16 +24,17 @@ class Edge
 
     Wire* GetRaw() const;
     Type GetType() const;
-    void AddIncidentVertex(Vertex* vertex);
-    Vertex* GetAnotherVertex(Vertex* vertex);
-    Vertex* GetIncidentVertex (int);
-    double GetCurrent ();
-  private:
-    std::vector<Vertex*> incident_vertices_;
+    double GetCurrent() const;
+    Vertex* GetTheOtherVertex(Vertex* vertex) const;
 
+    void AddIncidentVertex(Vertex* vertex);
+
+  private:
     Wire* raw_;
     Type type_;
     double current_;
+
+    std::vector<Vertex*> incident_vertices_;
 
 };
 

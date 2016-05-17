@@ -10,7 +10,8 @@
 
 using namespace std;
 
-Grid::Grid(SmartGrid* smart_grid, char phase) : smart_grid_(smart_grid), phase_(phase), graph_(new Graph)
+Grid::Grid(SmartGrid* smart_grid, char phase)
+  : smart_grid_(smart_grid), phase_(phase), graph_(new Graph), shrinked_graph_(nullptr)
 {
 }
 
@@ -141,7 +142,7 @@ void Grid::ParseGrid(ifstream& input)
           edge = new SwitchEdge(dynamic_cast<Switch*>(wire));
 
           break;
-	
+
       }
 
       vertex_a->AddIncidentEdge(edge);
@@ -154,6 +155,16 @@ void Grid::ParseGrid(ifstream& input)
       continue;
     }
   }
+}
+
+void Grid::ShrinkGraph()
+{
+  if (shrinked_graph_ != nullptr) {
+    cout << "Graph has been shrinked. Stop shrinking." << endl;
+    return;
+  }
+
+  shrinked_graph_ = graph_->Shrink();
 }
 
 char Grid::GetPhase() const

@@ -11,8 +11,7 @@ class Node : public Equipment
     {
       NODE,
       SOURCE,
-      RESIDENT,
-      PSEUDO
+      RESIDENT
     };
 
     Node(std::string name, Type type = Type::NODE);
@@ -22,6 +21,7 @@ class Node : public Equipment
 
     Type GetType() const;
     Point GetCoordinate() const;
+
     void SetCoordinateX(double x);
     void SetCoordinateY(double y);
     void SetCoordinateZ(double z);

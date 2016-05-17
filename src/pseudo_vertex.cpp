@@ -1,34 +1,26 @@
 #include "pseudo_vertex.hpp"
 
+#include <iostream>
+
 using namespace std;
 
-PseudoVertex::PseudoVertex(string name, Node::Type type, Vertex* source)
-  : Node(name, type), graph_(new Graph), root_(source), power_(0.0)
+PseudoVertex::PseudoVertex(Node* raw) : Vertex(raw, Vertex::Type::PSEUDO), consuming_power_(0.0)
 {
 }
 
-PseudoVertex::~PseudoVertex()
+void PseudoVertex::Print() const
 {
-  delete graph_;
-  graph_ = nullptr;
+  cout << "Pseudo Vertex: " << endl;
+  cout << "  consuming_power_: " << consuming_power_ << endl;
+  Vertex::Print();
 }
 
-Graph* PseudoVertex::GetGraph()
+double PseudoVertex::GetConsumingPower() const
 {
-  return graph_;
+  return consuming_power_;
 }
 
-Vertex* PseudoVertex::GetSource()
+void PseudoVertex::AddBoundaryVertex(Edge* edge, Vertex* vertex)
 {
-  return root_;
-}
-
-double PseudoVertex::GetPower()
-{
-  return power_;
-}
-
-void PseudoVertex::SetPower(double power)
-{
-  power_= power;
+  boundary_vertices_.insert(make_pair(edge, vertex));
 }

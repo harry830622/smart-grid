@@ -2,10 +2,11 @@
 #define GRAPH_HPP
 
 #include "vertex.hpp"
+#include "source_vertex.hpp"
 #include "edge.hpp"
 
 #include <map>
-#include <vector>
+
 class Graph
 {
   public:
@@ -14,23 +15,23 @@ class Graph
 
     void Print() const;
 
+    Graph* Shrink();
+
     Vertex* GetVertex(std::string name) const;
+    int GetVerticesNum() const;
     Edge* GetEdge(std::string name) const;
-    void FlushVertexMark();
-    void FlushVisit();
-    int GetVertexNum();
+
     void AddVertex(Vertex* vertex);
     void AddEdge(Edge* edge);
-    bool GetSource (Vertex* &source);
-    Vertex* GetSource(int);
-    int GetSourceNum();
-    void SetVertexArtic();
 
   private:
-    //bool should_delete_;
-    std::vector<Vertex*> sources_;
     std::map<std::string, Vertex*> vertices_;
     std::map<std::string, Edge*> edges_;
+
+    std::vector<SourceVertex*> source_vertices_;
+
+    void DFS();
+    void MarkArticulationPoints();
 
 };
 

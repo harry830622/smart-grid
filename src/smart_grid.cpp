@@ -58,6 +58,13 @@ Equipment* SmartGrid::GetEquipment(string name) const
   return equipments_.find(name)->second;
 }
 
+Grid* SmartGrid::GetGrid(char phase) const
+{
+  assert(grids_.find(phase) != grids_.end());
+
+  return grids_.find(phase)->second;
+}
+
 void SmartGrid::AddEquipment(Equipment* equipment)
 {
   equipments_.insert(make_pair(equipment->GetName(), equipment));
@@ -160,8 +167,4 @@ void SmartGrid::ParseGrids(ifstream& input)
     ifstream grid_input(grid_input_name.c_str());
     grid->ParseGrid(grid_input);
   }
-}
-
-Grid*  SmartGrid::GetGrid(char c){
-	return grids_[c];
 }

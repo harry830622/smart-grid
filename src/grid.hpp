@@ -17,6 +17,7 @@ class Grid
     void Print() const;
 
     void ParseGrid(std::ifstream& input);
+    void ShrinkGraph();
 
     char GetPhase() const;
     Graph* GetGraph() const;
@@ -25,6 +26,7 @@ class Grid
     SmartGrid* smart_grid_;
     char phase_;
     Graph* graph_;
+    Graph* shrinked_graph_;
 
 };
 
