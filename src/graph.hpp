@@ -33,9 +33,7 @@ class Graph
     Vertex* root_;
 
     void ResetVerticesMarks();
-    void DFS();
     void MarkArticulationPoints();
-    void BFS();
 
 };
 

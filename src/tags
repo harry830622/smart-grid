@@ -5,14 +5,13 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 AddBoundaryVertex	pseudo_vertex.cpp	/^void PseudoVertex::AddBoundaryVertex(Edge* edge, Vertex* vertex)$/;"	f	class:PseudoVertex
+AddChild	vertex.cpp	/^void Vertex::AddChild(Vertex* child)$/;"	f	class:Vertex
 AddEdge	graph.cpp	/^void Graph::AddEdge(Edge* edge)$/;"	f	class:Graph
 AddEquipment	smart_grid.cpp	/^void SmartGrid::AddEquipment(Equipment* equipment)$/;"	f	class:SmartGrid
 AddIncidentEdge	vertex.cpp	/^void Vertex::AddIncidentEdge(Edge* edge)$/;"	f	class:Vertex
 AddIncidentVertex	edge.cpp	/^void Edge::AddIncidentVertex(Vertex* vertex)$/;"	f	class:Edge
 AddLoadingResident	source_vertex.cpp	/^void SourceVertex::AddLoadingResident(ResidentVertex* resident)$/;"	f	class:SourceVertex
 AddVertex	graph.cpp	/^void Graph::AddVertex(Vertex* vertex)$/;"	f	class:Graph
-DFS	graph.cpp	/^void Graph::DFS()$/;"	f	class:Graph
-DFSVisit	graph.cpp	/^void DFSVisit(Vertex* vertex, int depth)$/;"	f
 EDGE	edge.hpp	/^      EDGE,$/;"	m	class:Edge::Type
 EDGE_HPP	edge.hpp	2;"	d
 EQUIPMENT_HPP	equipment.hpp	2;"	d
@@ -20,8 +19,10 @@ Edge	edge.cpp	/^Edge::Edge(Wire* raw, Type type) : raw_(raw), type_(type), curre
 Edge	edge.hpp	/^class Edge$/;"	c
 Equipment	equipment.cpp	/^Equipment::Equipment(string name) : name_(name)$/;"	f	class:Equipment
 Equipment	equipment.hpp	/^class Equipment$/;"	c
+FindArticulationPoints	graph.cpp	/^void FindArticulationPoints(Vertex* vertex, int depth)$/;"	f
 GRAPH_HPP	graph.hpp	2;"	d
 GRID_HPP	grid.hpp	2;"	d
+GetChild	vertex.cpp	/^Vertex* Vertex::GetChild(int idx) const$/;"	f	class:Vertex
 GetChildrenNum	vertex.cpp	/^int Vertex::GetChildrenNum() const$/;"	f	class:Vertex
 GetConsumingPower	pseudo_vertex.cpp	/^double PseudoVertex::GetConsumingPower() const$/;"	f	class:PseudoVertex
 GetConsumingPower	resident.cpp	/^double Resident::GetConsumingPower() const$/;"	f	class:Resident
@@ -66,7 +67,6 @@ Graph	graph.cpp	/^Graph::Graph() : root_(nullptr)$/;"	f	class:Graph
 Graph	graph.hpp	/^class Graph$/;"	c
 Grid	grid.cpp	/^Grid::Grid(SmartGrid* smart_grid, char phase)$/;"	f	class:Grid
 Grid	grid.hpp	/^class Grid$/;"	c
-IncrementChildrenNum	vertex.cpp	/^void Vertex::IncrementChildrenNum()$/;"	f	class:Vertex
 MarkArticulationPoints	graph.cpp	/^void Graph::MarkArticulationPoints()$/;"	f	class:Graph
 NODE	node.hpp	/^      NODE,$/;"	m	class:Node::Type
 NODE_HPP	node.hpp	2;"	d
@@ -103,6 +103,7 @@ RESIDENT	vertex.hpp	/^      RESIDENT,$/;"	m	class:Vertex::Type
 RESIDENT_HPP	resident.hpp	2;"	d
 RESIDENT_VERTEX_HPP	resident_vertex.hpp	2;"	d
 ResetMarks	vertex.cpp	/^void Vertex::ResetMarks()$/;"	f	class:Vertex
+ResetVerticesMarks	graph.cpp	/^void Graph::ResetVerticesMarks()$/;"	f	class:Graph
 Resident	resident.cpp	/^Resident::Resident(std::string name, double consuming_power)$/;"	f	class:Resident
 Resident	resident.hpp	/^class Resident : public Node$/;"	c
 ResidentVertex	resident_vertex.cpp	/^ResidentVertex::ResidentVertex(Resident* raw) : Vertex(raw, Vertex::Type::RESIDENT), resident_(raw)$/;"	f	class:ResidentVertex
@@ -121,6 +122,7 @@ SetCurrentLimit	wire.cpp	/^void Wire::SetCurrentLimit(double current_limit)$/;"	
 SetDepth	vertex.cpp	/^void Vertex::SetDepth(int depth)$/;"	f	class:Vertex
 SetIsArticulate	vertex.cpp	/^void Vertex::SetIsArticulate(bool is_articulate)$/;"	f	class:Vertex
 SetIsOn	switch.cpp	/^void Switch::SetIsOn(bool is_on)$/;"	f	class:Switch
+SetIsVisted	vertex.cpp	/^void Vertex::SetIsVisted(bool is_visited)$/;"	f	class:Vertex
 SetLow	vertex.cpp	/^void Vertex::SetLow(int low)$/;"	f	class:Vertex
 SetParent	vertex.cpp	/^void Vertex::SetParent(Vertex* parent)$/;"	f	class:Vertex
 SetSource	resident_vertex.cpp	/^void ResidentVertex::SetSource(SourceVertex* source_vertex)$/;"	f	class:ResidentVertex
@@ -156,7 +158,7 @@ WIRE_HPP	wire.hpp	2;"	d
 Wire	wire.cpp	/^Wire::Wire(string name, Type type, double resistance, double current_limit)$/;"	f	class:Wire
 Wire	wire.hpp	/^class Wire : public Equipment$/;"	c
 boundary_vertices_	pseudo_vertex.hpp	/^    std::map<Edge*, Vertex*> boundary_vertices_; \/\/ Index by edge$/;"	m	class:PseudoVertex
-children_num_	vertex.hpp	/^    int children_num_;$/;"	m	class:Vertex
+children_	vertex.hpp	/^    std::vector<Vertex*> children_;$/;"	m	class:Vertex
 consuming_power_	pseudo_vertex.hpp	/^    double consuming_power_;$/;"	m	class:PseudoVertex
 consuming_power_	resident.hpp	/^    double consuming_power_;$/;"	m	class:Resident
 coordinate_	node.hpp	/^    Point coordinate_;$/;"	m	class:Node

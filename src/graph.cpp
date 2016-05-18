@@ -45,7 +45,6 @@ Graph* Graph::Shrink()
 {
   root_ = source_vertices_[0];
 
-  DFS();
   MarkArticulationPoints();
 
   // Clean all articulation points on the paths between every pair of source
@@ -60,6 +59,8 @@ Graph* Graph::Shrink()
       }
     }
   }
+
+  // TODO: Shrink
 
   Graph* shrinked_graph = new Graph;
   shrinked_graph->AddVertex(root_);
@@ -161,9 +162,7 @@ Graph* Graph::Shrink()
   /*   cout << endl; */
   /* } */
 
-  // TODO: Shrink
-
-  shrinked_graph->Print();
+  /* shrinked_graph->Print(); */
 
   return shrinked_graph;
 }
@@ -212,94 +211,47 @@ void Graph::ResetVerticesMarks()
   }
 }
 
-void DFSVisit(Vertex* vertex, int depth)
+void FindArticulationPoints(Vertex* vertex, int depth)
 {
   vertex->SetDepth(depth);
   vertex->SetLow(depth);
+
   for (int i = 0; i < vertex->GetIncidentEdgesNum(); ++i) {
     Vertex* child = vertex->GetIncidentEdge(i)->GetTheOtherVertex(vertex);
-    if (!child->GetIsVisited()) {
-      child->SetParent(vertex);
-      vertex->AddChild(child);
-      DFSVisit(child, depth + 1);
+
+    if (child != vertex->GetParent()) {
+      if (!child->GetIsVisited()) {
+        child->SetParent(vertex);
+        vertex->AddChild(child);
+
+        FindArticulationPoints(child, depth + 1);
+
+        if (child->GetLow() >= vertex->GetDepth()) {
+          vertex->SetIsArticulate(true);
+          continue;
+        }
+
+        if (child->GetLow() < vertex->GetLow()) {
+          vertex->SetLow(child->GetLow());
+        }
+      } else {
+        if (child->GetDepth() < vertex->GetLow()) {
+          vertex->SetLow(child->GetDepth());
+        }
+      }
     }
   }
-}
-
-void Graph::DFS()
-{
-  assert(root_ != nullptr);
-
-  ResetVerticesMarks();
-
-  DFSVisit(root_, 0);
 }
 
 void Graph::MarkArticulationPoints()
 {
-  vector<Vertex*> vertices;
-  for (auto pair : vertices_) {
-    vertices.push_back(pair.second);
-  }
-
-  sort(vertices.begin(), vertices.end(), [](Vertex* v1, Vertex* v2) {return v1->GetDepth() > v2->GetDepth();});
-
-  // Compute low_ values for every vertices.
-  for (auto vertex : vertices) {
-    for (int i = 0; i < vertex->GetIncidentEdgesNum(); ++i) {
-      Vertex* child = vertex->GetIncidentEdge(i)->GetTheOtherVertex(vertex);
-
-      if (child != vertex->GetParent() && child->GetLow() < vertex->GetLow()) {
-        vertex->SetLow(child->GetLow());
-      }
-    }
-  }
-
-  // Find articulation points.
-  for (auto vertex : vertices) {
-    if (vertex->GetParent() == nullptr) {
-      continue;
-    }
-
-    Vertex* parent = vertex->GetParent();
-
-    if (parent->GetIsArticulate()) {
-      continue;
-    }
-
-    if (parent == root_) {
-      if (parent->GetChildrenNum() > 1) {
-        parent->SetIsArticulate(true);
-      }
-      continue;
-    }
-
-    if (vertex->GetLow() >= parent->GetDepth()) {
-      parent->SetIsArticulate(true);
-    }
-  }
-}
-
-void Graph::BFS()
-{
   ResetVerticesMarks();
 
-  queue<Vertex*> bfs_queue;
+  assert(root_ != nullptr);
 
-  bfs_queue.push(root_);
-  root_->SetDepth(0);
-  while (!bfs_queue.empty()) {
-    Vertex* front = bfs_queue.front();
-    bfs_queue.pop();
+  FindArticulationPoints(root_, 0);
 
-    for (int i = 0; i < front->GetIncidentEdgesNum(); ++i) {
-      Vertex* child = front->GetIncidentEdge(i)->GetTheOtherVertex(front);
-
-      if (child != front->GetParent() && !child->GetIsVisited()) {
-        child->SetDepth(front->GetDepth() + 1);
-
-        bfs_queue.push(child);
-      }
-    }
+  if (root_->GetChildrenNum() == 1) {
+    root_->SetIsArticulate(false);
   }
 }
