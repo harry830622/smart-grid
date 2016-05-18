@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Graph::Graph()
+Graph::Graph() : root_(nullptr)
 {
 }
 
@@ -43,39 +43,39 @@ void Graph::Print() const
 
 Graph* Graph::Shrink()
 {
+  root_ = source_vertices_[0];
+
   DFS();
   MarkArticulationPoints();
 
-  Vertex* root = source_vertices_[2];
-
+  // Clean all articulation points on the paths between every pair of source
+  // vertices to ensure that all the source vertices will not be merged into
+  // pseudo vertices.
   for (auto source_vertex : source_vertices_) {
-    if (source_vertex != root) {
+    if (source_vertex != root_) {
       Vertex* vertex = source_vertex;
-      while (vertex != root) {
+      while (vertex != root_) {
         vertex->SetIsArticulate(false);
         vertex = vertex->GetParent();
       }
     }
   }
 
-  for (auto pair : vertices_) {
-    pair.second->ResetMarks();
-  }
-
   Graph* shrinked_graph = new Graph;
-
-  queue<Vertex*> bfs_queue;
+  shrinked_graph->AddVertex(root_);
 
   const string pseudo_vertex_prefix("PV");
   int pseudo_vertex_counter = 0;
 
-  root->SetDepth(0);
-
-  shrinked_graph->AddVertex(root);
-
   map<Vertex*, PseudoVertex*> pseudo_vertices; // Index by the vertex
 
-  bfs_queue.push(root);
+  for (auto pair : vertices_) {
+    pair.second->ResetMarks();
+  }
+
+  queue<Vertex*> bfs_queue;
+  bfs_queue.push(root_);
+  root_->SetDepth(0);
   while (!bfs_queue.empty()) {
     Vertex* vertex = bfs_queue.front();
     bfs_queue.pop();
@@ -163,7 +163,7 @@ Graph* Graph::Shrink()
 
   // TODO: Shrink
 
-  /* shrinked_graph->Print(); */
+  shrinked_graph->Print();
 
   return shrinked_graph;
 }
@@ -205,6 +205,13 @@ void Graph::AddEdge(Edge* edge)
   edges_.insert(make_pair(edge->GetRaw()->GetName(), edge));
 }
 
+void Graph::ResetVerticesMarks()
+{
+  for (auto pair : vertices_) {
+    pair.second->ResetMarks();
+  }
+}
+
 void DFSVisit(Vertex* vertex, int depth)
 {
   vertex->SetDepth(depth);
@@ -213,7 +220,7 @@ void DFSVisit(Vertex* vertex, int depth)
     Vertex* child = vertex->GetIncidentEdge(i)->GetTheOtherVertex(vertex);
     if (!child->GetIsVisited()) {
       child->SetParent(vertex);
-      vertex->IncrementChildrenNum();
+      vertex->AddChild(child);
       DFSVisit(child, depth + 1);
     }
   }
@@ -221,11 +228,11 @@ void DFSVisit(Vertex* vertex, int depth)
 
 void Graph::DFS()
 {
-  for (auto pair : vertices_) {
-    if (!pair.second->GetIsVisited()) {
-      DFSVisit(pair.second, 0);
-    }
-  }
+  assert(root_ != nullptr);
+
+  ResetVerticesMarks();
+
+  DFSVisit(root_, 0);
 }
 
 void Graph::MarkArticulationPoints()
@@ -237,6 +244,7 @@ void Graph::MarkArticulationPoints()
 
   sort(vertices.begin(), vertices.end(), [](Vertex* v1, Vertex* v2) {return v1->GetDepth() > v2->GetDepth();});
 
+  // Compute low_ values for every vertices.
   for (auto vertex : vertices) {
     for (int i = 0; i < vertex->GetIncidentEdgesNum(); ++i) {
       Vertex* child = vertex->GetIncidentEdge(i)->GetTheOtherVertex(vertex);
@@ -247,8 +255,9 @@ void Graph::MarkArticulationPoints()
     }
   }
 
+  // Find articulation points.
   for (auto vertex : vertices) {
-    if (vertex->GetIsDFSRoot()) {
+    if (vertex->GetParent() == nullptr) {
       continue;
     }
 
@@ -258,7 +267,7 @@ void Graph::MarkArticulationPoints()
       continue;
     }
 
-    if (parent->GetIsDFSRoot()) {
+    if (parent == root_) {
       if (parent->GetChildrenNum() > 1) {
         parent->SetIsArticulate(true);
       }
@@ -267,6 +276,30 @@ void Graph::MarkArticulationPoints()
 
     if (vertex->GetLow() >= parent->GetDepth()) {
       parent->SetIsArticulate(true);
+    }
+  }
+}
+
+void Graph::BFS()
+{
+  ResetVerticesMarks();
+
+  queue<Vertex*> bfs_queue;
+
+  bfs_queue.push(root_);
+  root_->SetDepth(0);
+  while (!bfs_queue.empty()) {
+    Vertex* front = bfs_queue.front();
+    bfs_queue.pop();
+
+    for (int i = 0; i < front->GetIncidentEdgesNum(); ++i) {
+      Vertex* child = front->GetIncidentEdge(i)->GetTheOtherVertex(front);
+
+      if (child != front->GetParent() && !child->GetIsVisited()) {
+        child->SetDepth(front->GetDepth() + 1);
+
+        bfs_queue.push(child);
+      }
     }
   }
 }

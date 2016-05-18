@@ -7,7 +7,7 @@
 using namespace std;
 
 Vertex::Vertex(Node* raw, Type type)
-  : raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), children_num_(0), depth_(-1), low_(-1), is_articulate_(false)
+  : raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false)
 {
 }
 
@@ -47,19 +47,24 @@ Edge* Vertex::GetIncidentEdge(int idx) const
   return incident_edges_[idx];
 }
 
+bool Vertex::GetIsVisited() const
+{
+  return depth_ != -1;
+}
+
 Vertex* Vertex::GetParent() const
 {
   return parent_;
 }
 
-bool Vertex::GetIsDFSRoot() const
-{
-  return parent_ == nullptr;
-}
-
 int Vertex::GetChildrenNum() const
 {
-  return children_num_;
+  return children_.size();
+}
+
+Vertex* Vertex::GetChild(int idx) const
+{
+  return children_[idx];
 }
 
 int Vertex::GetDepth() const
@@ -72,14 +77,18 @@ int Vertex::GetLow() const
   return low_;
 }
 
-bool Vertex::GetIsVisited() const
-{
-  return depth_ != -1;
-}
-
 int Vertex::GetIsArticulate() const
 {
   return is_articulate_;
+}
+
+void Vertex::SetIsVisted(bool is_visited)
+{
+  if (is_visited) {
+    depth_ = 0;
+  } else {
+    depth_ = -1;
+  }
 }
 
 void Vertex::SetParent(Vertex* parent)
@@ -107,16 +116,15 @@ void Vertex::AddIncidentEdge(Edge* edge)
   incident_edges_.push_back(edge);
 }
 
-void Vertex::IncrementChildrenNum()
+void Vertex::AddChild(Vertex* child)
 {
-  ++children_num_;
+  children_.push_back(child);
 }
 
-// Reset all marks to default value except for is_articulate_
+// Reset all marks to default value except for low_ and is_articulate_
 void Vertex::ResetMarks()
 {
   parent_ = nullptr;
-  children_num_ = 0;
+  children_.clear();
   depth_ = -1;
-  low_ = -1;
 }

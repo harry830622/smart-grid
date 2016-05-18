@@ -30,8 +30,12 @@ class Graph
 
     std::vector<SourceVertex*> source_vertices_;
 
+    Vertex* root_;
+
+    void ResetVerticesMarks();
     void DFS();
     void MarkArticulationPoints();
+    void BFS();
 
 };
 

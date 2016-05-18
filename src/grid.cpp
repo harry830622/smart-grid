@@ -159,10 +159,7 @@ void Grid::ParseGrid(ifstream& input)
 
 void Grid::ShrinkGraph()
 {
-  if (shrinked_graph_ != nullptr) {
-    cout << "Graph has been shrinked. Stop shrinking." << endl;
-    return;
-  }
+  assert(shrinked_graph_ == nullptr);
 
   shrinked_graph_ = graph_->Shrink();
 }

@@ -27,23 +27,26 @@ class Vertex
     Node* GetRaw() const;
     Type GetType() const;
     double GetVoltage() const;
+
     int GetIncidentEdgesNum() const;
     Edge* GetIncidentEdge(int idx) const;
+
+    bool GetIsVisited() const;
     Vertex* GetParent() const;
-    bool GetIsDFSRoot() const;
     int GetChildrenNum() const;
+    Vertex* GetChild(int idx) const;
     int GetDepth() const;
     int GetLow() const;
-    bool GetIsVisited() const;
     int GetIsArticulate() const;
 
+    void SetIsVisted(bool is_visited = true);
     void SetParent(Vertex* parent);
     void SetDepth(int depth);
     void SetLow(int low);
     void SetIsArticulate(bool is_articulate);
 
-    void AddIncidentEdge(Edge* edge);
-    void IncrementChildrenNum();
+    void AddIncidentEdge(Edge* incident_edge);
+    void AddChild(Vertex* child);
     void ResetMarks();
 
   private:
@@ -54,8 +57,9 @@ class Vertex
     std::vector<Edge*> incident_edges_;
 
     Vertex* parent_;
-    int children_num_;
+    std::vector<Vertex*> children_;
     int depth_;
+
     int low_;
     bool is_articulate_;
 
