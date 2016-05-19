@@ -15,6 +15,11 @@ void Edge::Print() const
   raw_->Print();
 }
 
+Grid* Edge::GetGrid() const
+{
+  return grid_;
+}
+
 Wire* Edge::GetRaw() const
 {
   return raw_;
@@ -30,13 +35,18 @@ double Edge::GetCurrent() const
   return current_;
 }
 
-Vertex* Edge::GetTheOtherVertex(Vertex* vertex) const
+Vertex* Edge::GetNeighbor(Vertex* vertex) const
 {
   if (incident_vertices_[0] != vertex) {
     return incident_vertices_[0];
   } else {
     return incident_vertices_[1];
   }
+}
+
+void Edge::SetGrid(Grid* grid)
+{
+  grid_ = grid;
 }
 
 void Edge::AddIncidentVertex(Vertex* vertex)

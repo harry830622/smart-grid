@@ -6,6 +6,7 @@
 
 #include <vector>
 
+class Grid;
 class Vertex;
 
 class Edge
@@ -22,14 +23,21 @@ class Edge
 
     virtual void Print() const;
 
+    Grid* GetGrid() const;
+
     Wire* GetRaw() const;
     Type GetType() const;
     double GetCurrent() const;
-    Vertex* GetTheOtherVertex(Vertex* vertex) const;
+
+    Vertex* GetNeighbor(Vertex* vertex) const;
+
+    void SetGrid(Grid* grid);
 
     void AddIncidentVertex(Vertex* vertex);
 
   private:
+    Grid* grid_;
+
     Wire* raw_;
     Type type_;
     double current_;

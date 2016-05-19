@@ -20,6 +20,11 @@ void Vertex::Print() const
   raw_->Print();
 }
 
+Grid* Vertex::GetGrid() const
+{
+  return grid_;
+}
+
 Node* Vertex::GetRaw() const
 {
   return raw_;
@@ -80,6 +85,11 @@ int Vertex::GetLow() const
 int Vertex::GetIsArticulate() const
 {
   return is_articulate_;
+}
+
+void Vertex::SetGrid(Grid* grid)
+{
+  grid_ = grid;
 }
 
 void Vertex::SetIsVisted(bool is_visited)

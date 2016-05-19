@@ -1,16 +1,19 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include "grid.hpp"
 #include "vertex.hpp"
 #include "source_vertex.hpp"
 #include "edge.hpp"
 
 #include <map>
 
+class Grid;
+
 class Graph
 {
   public:
-    Graph();
+    Graph(Grid* grid);
     ~Graph();
 
     void Print() const;
@@ -25,6 +28,8 @@ class Graph
     void AddEdge(Edge* edge);
 
   private:
+    Grid* grid_;
+
     std::map<std::string, Vertex*> vertices_;
     std::map<std::string, Edge*> edges_;
 
@@ -34,6 +39,7 @@ class Graph
 
     void ResetVerticesMarks();
     void MarkArticulationPoints();
+    Graph* ShrinkByArticulationPoints();
 
 };
 

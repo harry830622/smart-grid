@@ -6,6 +6,7 @@
 
 #include <vector>
 
+class Grid;
 class Edge;
 
 class Vertex
@@ -24,6 +25,7 @@ class Vertex
 
     virtual void Print() const;
 
+    Grid* GetGrid() const;
     Node* GetRaw() const;
     Type GetType() const;
     double GetVoltage() const;
@@ -39,6 +41,8 @@ class Vertex
     int GetLow() const;
     int GetIsArticulate() const;
 
+    void SetGrid(Grid* grid);
+
     void SetIsVisted(bool is_visited = true);
     void SetParent(Vertex* parent);
     void SetDepth(int depth);
@@ -50,6 +54,8 @@ class Vertex
     void ResetMarks();
 
   private:
+    Grid* grid_;
+
     Node* raw_;
     Type type_;
     double voltage_;

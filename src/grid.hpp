@@ -7,6 +7,9 @@
 #include <fstream>
 
 class SmartGrid;
+class Graph;
+class Vertex;
+class Edge;
 
 class Grid
 {
@@ -19,12 +22,22 @@ class Grid
     void ParseGrid(std::ifstream& input);
     void ShrinkGraph();
 
+    SmartGrid* GetSmartGrid() const;
+
     char GetPhase() const;
     Graph* GetGraph() const;
 
+    void AddVertex(Vertex* vertex);
+    void AddEdge(Edge* edge);
+
   private:
     SmartGrid* smart_grid_;
+
     char phase_;
+
+    std::map<Vertex*, Vertex*> all_vertices_;
+    std::map<Edge*, Edge*> all_edges_;
+
     Graph* graph_;
     Graph* shrinked_graph_;
 

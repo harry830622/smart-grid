@@ -11,14 +11,24 @@
 using namespace std;
 
 Grid::Grid(SmartGrid* smart_grid, char phase)
-  : smart_grid_(smart_grid), phase_(phase), graph_(new Graph), shrinked_graph_(nullptr)
+  : smart_grid_(smart_grid), phase_(phase), graph_(new Graph(this)), shrinked_graph_(nullptr)
 {
 }
 
 Grid::~Grid()
 {
-  delete graph_;
-  graph_ = nullptr;
+  for (auto pair : all_vertices_) {
+    delete pair.second;
+  }
+  for (auto pair : all_edges_) {
+    delete pair.second;
+  }
+
+  /* delete graph_; */
+  /* graph_ = nullptr; */
+
+  /* delete shrinked_graph_; */
+  /* shrinked_graph_ = nullptr; */
 }
 
 void Grid::Print() const
@@ -164,6 +174,11 @@ void Grid::ShrinkGraph()
   shrinked_graph_ = graph_->Shrink();
 }
 
+SmartGrid* Grid::GetSmartGrid() const
+{
+  return smart_grid_;
+}
+
 char Grid::GetPhase() const
 {
   return phase_;
@@ -171,4 +186,18 @@ char Grid::GetPhase() const
 
 Graph* Grid::GetGraph() const{
   return graph_;
+}
+
+void Grid::AddVertex(Vertex* vertex)
+{
+  all_vertices_.insert(make_pair(vertex, vertex));
+
+  vertex->SetGrid(this);
+}
+
+void Grid::AddEdge(Edge* edge)
+{
+  all_edges_.insert(make_pair(edge, edge));
+
+  edge->SetGrid(this);
 }
