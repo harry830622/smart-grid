@@ -11,7 +11,7 @@ ResidentVertex::ResidentVertex(Resident* raw) : Vertex(raw, Vertex::Type::RESIDE
 void ResidentVertex::Print() const
 {
   cout << "Resident Vertex: " << endl;
-  resident_->Print();
+  Vertex::Print();
 }
 
 string ResidentVertex::GetName() const

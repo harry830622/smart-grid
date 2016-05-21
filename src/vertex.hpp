@@ -6,6 +6,7 @@
 
 #include <vector>
 
+class Grid;
 class Edge;
 
 class Vertex
@@ -24,36 +25,51 @@ class Vertex
 
     virtual void Print() const;
 
+    Grid* GetGrid() const;
     Node* GetRaw() const;
     Type GetType() const;
-    void AddIncidentEdge(Edge* edge);
-    Edge* GetIncidentEdge(int);
-    int GetIncidentEdgeNum();
-    double GetVoltage ();
-    bool GetVisit();
-    void SetVisit(bool);
-    Vertex* GetParant();
-    void SetParant (Vertex*);
-    void AddChild (Vertex*);
-    Vertex* GetChild (int);
-    int GetChildNum ();
-    bool GetIsArtic();
-    void SetIsArtic(bool);
-    
-    int index_num_, low_;
+    double GetVoltage() const;
+
+    int GetIncidentEdgesNum() const;
+    Edge* GetIncidentEdge(int idx) const;
+
+    bool GetIsVisited() const;
+    Vertex* GetParent() const;
+    int GetChildrenNum() const;
+    Vertex* GetChild(int idx) const;
+    int GetDepth() const;
+    int GetLow() const;
+    int GetIsArticulate() const;
+
+    void SetGrid(Grid* grid);
+
+    void SetIncidentEdge(int idx, Edge* incident_edge);
+
+    void SetIsVisted(bool is_visited = true);
+    void SetParent(Vertex* parent);
+    void SetDepth(int depth);
+    void SetLow(int low);
+    void SetIsArticulate(bool is_articulate);
+
+    void AddIncidentEdge(Edge* incident_edge);
+    void AddChild(Vertex* child);
+    void ResetMarks();
 
   private:
-    bool visit_;
-    bool is_artic_;
-    std::vector<Edge*> incident_edges_;
-
-    Vertex* parant_;
-    std::vector<Vertex*> children_;
-    
+    Grid* grid_;
 
     Node* raw_;
     Type type_;
     double voltage_;
+
+    std::vector<Edge*> incident_edges_;
+
+    Vertex* parent_;
+    std::vector<Vertex*> children_;
+    int depth_;
+
+    int low_;
+    bool is_articulate_;
 
 };
 

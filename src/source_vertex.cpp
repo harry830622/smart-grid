@@ -11,7 +11,7 @@ SourceVertex::SourceVertex(Source* raw) : Vertex(raw, Vertex::Type::SOURCE), sou
 void SourceVertex::Print() const
 {
   cout << "Source Vertex: " << endl;
-  source_->Print();
+  Vertex::Print();
 }
 
 double SourceVertex::GetOutputPower() const

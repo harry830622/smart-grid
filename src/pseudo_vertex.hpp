@@ -3,22 +3,35 @@
 
 #include "graph.hpp"
 
-class PseudoVertex : public Node
+#include <map>
+
+class Graph;
+
+class PseudoVertex : public Vertex
 {
   public:
-    PseudoVertex(std::string name, Node::Type type, Vertex* source);
-    ~PseudoVertex();
+    PseudoVertex(Node* raw);
+    virtual ~PseudoVertex() = default;
 
-    Graph* GetGraph();
-    Vertex* GetSource();
-    double GetPower();
+    virtual void Print() const;
 
-    void SetPower(double power);
+    void MergeDescendants(Vertex* root);
+    void MergeBySwitches(Vertex* root);
+
+    double GetConsumingPower() const;
+
+    Graph* GetGraph() const;
+
+    Vertex* GetBoundaryVertex(Edge* edge) const;
+    std::vector<Vertex*> GetBoundaryVertices() const;
+
+    void AddBoundaryVertex(Edge* edge, Vertex* vertex);
 
   private:
+    double consuming_power_;
+
     Graph* graph_;
-    Vertex* root_;
-    double power_;
+    std::map<Edge*, Vertex*> boundary_vertices_; // Index by edge
 
 };
 

@@ -11,7 +11,7 @@ SwitchEdge::SwitchEdge(Switch* raw) : Edge(raw, Edge::Type::SWITCH), switch_(raw
 void SwitchEdge::Print() const
 {
   cout << "Switch Edge: " << endl;
-  switch_->Print();
+  Edge::Print();
 }
 
 bool SwitchEdge::GetIsOn() const

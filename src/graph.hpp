@@ -1,36 +1,50 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include "grid.hpp"
 #include "vertex.hpp"
+#include "source_vertex.hpp"
 #include "edge.hpp"
 
 #include <map>
-#include <vector>
+
+class Grid;
+
 class Graph
 {
   public:
-    Graph();
+    Graph(Grid* grid);
     ~Graph();
 
     void Print() const;
 
+    Graph* Shrink();
+
     Vertex* GetVertex(std::string name) const;
+    int GetVerticesNum() const;
     Edge* GetEdge(std::string name) const;
-    void FlushVertexMark();
-    void FlushVisit();
-    int GetVertexNum();
+
+    Vertex* GetRoot() const;
+
+    void SetRoot(Vertex* root);
+
     void AddVertex(Vertex* vertex);
     void AddEdge(Edge* edge);
-    bool GetSource (Vertex* &source);
-    Vertex* GetSource(int);
-    int GetSourceNum();
-    void SetVertexArtic();
 
   private:
-    //bool should_delete_;
-    std::vector<Vertex*> sources_;
+    Grid* grid_;
+
     std::map<std::string, Vertex*> vertices_;
     std::map<std::string, Edge*> edges_;
+
+    std::vector<SourceVertex*> source_vertices_;
+
+    Vertex* root_;
+
+    void ResetVerticesMarks();
+    void MarkArticulationPoints();
+    Graph* ShrinkByArticulationPoints();
+    Graph* ShrinkBySwitches();
 
 };
 
