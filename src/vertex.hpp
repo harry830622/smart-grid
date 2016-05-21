@@ -43,6 +43,8 @@ class Vertex
 
     void SetGrid(Grid* grid);
 
+    void SetIncidentEdge(int idx, Edge* incident_edge);
+
     void SetIsVisted(bool is_visited = true);
     void SetParent(Vertex* parent);
     void SetDepth(int depth);

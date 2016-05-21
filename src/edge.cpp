@@ -12,6 +12,11 @@ Edge::Edge(Wire* raw, Type type) : raw_(raw), type_(type), current_(0.0)
 void Edge::Print() const
 {
   cout << "Edge: " << endl;
+  cout << "  incident_vertices_: ";
+  for (auto vertex : incident_vertices_) {
+    cout << vertex->GetRaw()->GetName() << " ";
+  }
+  cout << endl;
   raw_->Print();
 }
 
@@ -33,6 +38,13 @@ Edge::Type Edge::GetType() const
 double Edge::GetCurrent() const
 {
   return current_;
+}
+
+Vertex* Edge::GetIncidentVertex(int i) const
+{
+  assert(i < 2);
+
+  return incident_vertices_[i];
 }
 
 Vertex* Edge::GetNeighbor(Vertex* vertex) const

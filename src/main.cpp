@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
   smart_grid.Parse(equipments_data_input, node_coordinates_input, grids_wrapper_input);
 
   smart_grid.GetGrid('A')->ShrinkGraph();
+  smart_grid.GetGrid('B')->ShrinkGraph();
+  smart_grid.GetGrid('C')->ShrinkGraph();
 
   /* smart_grid.PrintEquipments(); */
   /* smart_grid.PrintGrids(); */

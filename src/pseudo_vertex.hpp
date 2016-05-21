@@ -16,10 +16,14 @@ class PseudoVertex : public Vertex
     virtual void Print() const;
 
     void MergeDescendants(Vertex* root);
+    void MergeBySwitches(Vertex* root);
 
     double GetConsumingPower() const;
 
     Graph* GetGraph() const;
+
+    Vertex* GetBoundaryVertex(Edge* edge) const;
+    std::vector<Vertex*> GetBoundaryVertices() const;
 
     void AddBoundaryVertex(Edge* edge, Vertex* vertex);
 
@@ -28,8 +32,6 @@ class PseudoVertex : public Vertex
 
     Graph* graph_;
     std::map<Edge*, Vertex*> boundary_vertices_; // Index by edge
-
-    Vertex* root_;
 
 };
 

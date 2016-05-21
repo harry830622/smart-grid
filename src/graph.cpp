@@ -79,7 +79,9 @@ Graph* Graph::Shrink()
 
   Graph* shrinked_graph = ShrinkByArticulationPoints();
 
-  // TODO: Shrink by switch.
+  shrinked_graph = shrinked_graph->ShrinkBySwitches();
+
+  shrinked_graph->Print();
 
   return shrinked_graph;
 }
@@ -105,6 +107,16 @@ Edge* Graph::GetEdge(string name) const
   }
 
   return edges_.find(name)->second;
+}
+
+Vertex* Graph::GetRoot() const
+{
+  return root_;
+}
+
+void Graph::SetRoot(Vertex* root)
+{
+  root_ = root;
 }
 
 void Graph::AddVertex(Vertex* vertex)
@@ -186,7 +198,7 @@ Graph* Graph::ShrinkByArticulationPoints()
 
   ResetVerticesMarks();
 
-  map<Vertex*, PseudoVertex*> pseudo_vertices; // Index by the vertex
+  map<Vertex*, PseudoVertex*> pseudo_vertices;
 
   queue<Vertex*> bfs_queue;
   root_->SetIsVisted();
@@ -217,17 +229,19 @@ Graph* Graph::ShrinkByArticulationPoints()
 
             PseudoVertex* pseudo_vertex = new PseudoVertex(new Node(pseudo_vertex_name));
 
-            Edge* edge = new Edge(incident_edge->GetRaw());
+            Edge* new_edge = new Edge(incident_edge->GetRaw());
 
-            pseudo_vertex->AddBoundaryVertex(edge, child);
+            pseudo_vertex->AddBoundaryVertex(new_edge, child);
 
-            pseudo_vertex->AddIncidentEdge(edge);
+            pseudo_vertex->AddIncidentEdge(new_edge);
 
-            edge->AddIncidentVertex(front);
-            edge->AddIncidentVertex(pseudo_vertex);
+            new_edge->AddIncidentVertex(front);
+            new_edge->AddIncidentVertex(pseudo_vertex);
+
+            front->SetIncidentEdge(i, new_edge);
 
             shrinked_graph->AddVertex(pseudo_vertex);
-            shrinked_graph->AddEdge(edge);
+            shrinked_graph->AddEdge(new_edge);
 
             pseudo_vertices.insert(make_pair(child, pseudo_vertex));
           } else {
@@ -240,16 +254,18 @@ Graph* Graph::ShrinkByArticulationPoints()
           if (child->GetIsArticulate()) {
             PseudoVertex* pseudo_vertex = pseudo_vertices.find(child)->second;
 
-            Edge* edge = new Edge(incident_edge->GetRaw());
+            Edge* new_edge = new Edge(incident_edge->GetRaw());
 
-            pseudo_vertex->AddBoundaryVertex(edge, child);
+            pseudo_vertex->AddBoundaryVertex(new_edge, child);
 
-            pseudo_vertex->AddIncidentEdge(edge);
+            pseudo_vertex->AddIncidentEdge(new_edge);
 
-            edge->AddIncidentVertex(front);
-            edge->AddIncidentVertex(pseudo_vertex);
+            new_edge->AddIncidentVertex(front);
+            new_edge->AddIncidentVertex(pseudo_vertex);
 
-            shrinked_graph->AddEdge(edge);
+            front->SetIncidentEdge(i, new_edge);
+
+            shrinked_graph->AddEdge(new_edge);
           } else {
             shrinked_graph->AddEdge(incident_edge);
           }
@@ -260,6 +276,67 @@ Graph* Graph::ShrinkByArticulationPoints()
 
   for (auto pair : pseudo_vertices) {
     pair.second->MergeDescendants(pair.first);
+  }
+
+  return shrinked_graph;
+}
+
+Graph* Graph::ShrinkBySwitches()
+{
+  Graph* shrinked_graph = new Graph(grid_);
+
+  const string pseudo_vertex_prefix("PSV");
+  int pseudo_vertex_counter = 0;
+
+  ResetVerticesMarks();
+
+  map<Vertex*, PseudoVertex*> pseudo_vertices;
+
+  for (auto pair : vertices_) {
+    Vertex* vertex = pair.second;
+
+    if (!vertex->GetIsVisited()) {
+      const string pseudo_vertex_name(pseudo_vertex_prefix + to_string(pseudo_vertex_counter++));
+
+      Node* node = new Node(pseudo_vertex_name);
+
+      grid_->GetSmartGrid()->AddEquipment(node);
+
+      PseudoVertex* pseudo_vertex = new PseudoVertex(node);
+
+      pseudo_vertex->MergeBySwitches(vertex);
+
+      shrinked_graph->AddVertex(pseudo_vertex);
+
+      vector<Vertex*> boundary_vertices(pseudo_vertex->GetBoundaryVertices());
+      for (auto vertex : boundary_vertices) {
+        pseudo_vertices.insert(make_pair(vertex, pseudo_vertex));
+      }
+    }
+  }
+
+  for (auto pair : edges_) {
+    Edge* edge = pair.second;
+
+    if (edge->GetType() == Edge::Type::SWITCH) {
+      Vertex* vertex_a = edge->GetIncidentVertex(0);
+      Vertex* vertex_b = edge->GetIncidentVertex(1);
+
+      assert(pseudo_vertices.count(vertex_a) == 1 && pseudo_vertices.count(vertex_b) == 1);
+
+      PseudoVertex* pseudo_vertex_a = pseudo_vertices.find(vertex_a)->second;
+      PseudoVertex* pseudo_vertex_b = pseudo_vertices.find(vertex_b)->second;
+
+      Edge* new_edge = new Edge(edge->GetRaw());
+
+      pseudo_vertex_a->AddIncidentEdge(new_edge);
+      pseudo_vertex_b->AddIncidentEdge(new_edge);
+
+      new_edge->AddIncidentVertex(pseudo_vertex_a);
+      new_edge->AddIncidentVertex(pseudo_vertex_b);
+
+      shrinked_graph->AddEdge(new_edge);
+    }
   }
 
   return shrinked_graph;

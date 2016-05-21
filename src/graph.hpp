@@ -24,6 +24,10 @@ class Graph
     int GetVerticesNum() const;
     Edge* GetEdge(std::string name) const;
 
+    Vertex* GetRoot() const;
+
+    void SetRoot(Vertex* root);
+
     void AddVertex(Vertex* vertex);
     void AddEdge(Edge* edge);
 
@@ -40,6 +44,7 @@ class Graph
     void ResetVerticesMarks();
     void MarkArticulationPoints();
     Graph* ShrinkByArticulationPoints();
+    Graph* ShrinkBySwitches();
 
 };
 

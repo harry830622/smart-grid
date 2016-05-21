@@ -24,6 +24,8 @@ Equipment	equipment.hpp	/^class Equipment$/;"	c
 FindArticulationPoints	graph.cpp	/^void FindArticulationPoints(Vertex* vertex, int depth)$/;"	f
 GRAPH_HPP	graph.hpp	2;"	d
 GRID_HPP	grid.hpp	2;"	d
+GetBoundaryVertex	pseudo_vertex.cpp	/^Vertex* PseudoVertex::GetBoundaryVertex(Edge* edge) const$/;"	f	class:PseudoVertex
+GetBoundaryVertices	pseudo_vertex.cpp	/^vector<Vertex*> PseudoVertex::GetBoundaryVertices() const$/;"	f	class:PseudoVertex
 GetChild	vertex.cpp	/^Vertex* Vertex::GetChild(int idx) const$/;"	f	class:Vertex
 GetChildrenNum	vertex.cpp	/^int Vertex::GetChildrenNum() const$/;"	f	class:Vertex
 GetConsumingPower	pseudo_vertex.cpp	/^double PseudoVertex::GetConsumingPower() const$/;"	f	class:PseudoVertex
@@ -41,6 +43,7 @@ GetGrid	smart_grid.cpp	/^Grid* SmartGrid::GetGrid(char phase) const$/;"	f	class:
 GetGrid	vertex.cpp	/^Grid* Vertex::GetGrid() const$/;"	f	class:Vertex
 GetIncidentEdge	vertex.cpp	/^Edge* Vertex::GetIncidentEdge(int idx) const$/;"	f	class:Vertex
 GetIncidentEdgesNum	vertex.cpp	/^int Vertex::GetIncidentEdgesNum() const$/;"	f	class:Vertex
+GetIncidentVertex	edge.cpp	/^Vertex* Edge::GetIncidentVertex(int i) const$/;"	f	class:Edge
 GetIsArticulate	vertex.cpp	/^int Vertex::GetIsArticulate() const$/;"	f	class:Vertex
 GetIsOn	switch.cpp	/^bool Switch::GetIsOn() const$/;"	f	class:Switch
 GetIsOn	switch_edge.cpp	/^bool SwitchEdge::GetIsOn() const$/;"	f	class:SwitchEdge
@@ -58,6 +61,7 @@ GetRaw	edge.cpp	/^Wire* Edge::GetRaw() const$/;"	f	class:Edge
 GetRaw	vertex.cpp	/^Node* Vertex::GetRaw() const$/;"	f	class:Vertex
 GetRemainingPower	source_vertex.cpp	/^double SourceVertex::GetRemainingPower() const$/;"	f	class:SourceVertex
 GetResistance	wire.cpp	/^double Wire::GetResistance() const$/;"	f	class:Wire
+GetRoot	graph.cpp	/^Vertex* Graph::GetRoot() const$/;"	f	class:Graph
 GetSmartGrid	grid.cpp	/^SmartGrid* Grid::GetSmartGrid() const$/;"	f	class:Grid
 GetType	edge.cpp	/^Edge::Type Edge::GetType() const$/;"	f	class:Edge
 GetType	node.cpp	/^Node::Type Node::GetType() const$/;"	f	class:Node
@@ -74,6 +78,7 @@ Graph	graph.hpp	/^class Graph$/;"	c
 Grid	grid.cpp	/^Grid::Grid(SmartGrid* smart_grid, char phase)$/;"	f	class:Grid
 Grid	grid.hpp	/^class Grid$/;"	c
 MarkArticulationPoints	graph.cpp	/^void Graph::MarkArticulationPoints()$/;"	f	class:Graph
+MergeBySwitches	pseudo_vertex.cpp	/^void PseudoVertex::MergeBySwitches(Vertex* root)$/;"	f	class:PseudoVertex
 MergeDescendants	pseudo_vertex.cpp	/^void PseudoVertex::MergeDescendants(Vertex* root)$/;"	f	class:PseudoVertex
 NODE	node.hpp	/^      NODE,$/;"	m	class:Node::Type
 NODE_HPP	node.hpp	2;"	d
@@ -129,17 +134,20 @@ SetCurrentLimit	wire.cpp	/^void Wire::SetCurrentLimit(double current_limit)$/;"	
 SetDepth	vertex.cpp	/^void Vertex::SetDepth(int depth)$/;"	f	class:Vertex
 SetGrid	edge.cpp	/^void Edge::SetGrid(Grid* grid)$/;"	f	class:Edge
 SetGrid	vertex.cpp	/^void Vertex::SetGrid(Grid* grid)$/;"	f	class:Vertex
+SetIncidentEdge	vertex.cpp	/^void Vertex::SetIncidentEdge(int idx, Edge* incident_edge)$/;"	f	class:Vertex
 SetIsArticulate	vertex.cpp	/^void Vertex::SetIsArticulate(bool is_articulate)$/;"	f	class:Vertex
 SetIsOn	switch.cpp	/^void Switch::SetIsOn(bool is_on)$/;"	f	class:Switch
 SetIsVisted	vertex.cpp	/^void Vertex::SetIsVisted(bool is_visited)$/;"	f	class:Vertex
 SetLow	vertex.cpp	/^void Vertex::SetLow(int low)$/;"	f	class:Vertex
 SetParent	vertex.cpp	/^void Vertex::SetParent(Vertex* parent)$/;"	f	class:Vertex
+SetRoot	graph.cpp	/^void Graph::SetRoot(Vertex* root)$/;"	f	class:Graph
 SetSource	resident_vertex.cpp	/^void ResidentVertex::SetSource(SourceVertex* source_vertex)$/;"	f	class:ResidentVertex
 SetX	point.cpp	/^void Point::SetX(double x)$/;"	f	class:Point
 SetY	point.cpp	/^void Point::SetY(double y)$/;"	f	class:Point
 SetZ	point.cpp	/^void Point::SetZ(double z)$/;"	f	class:Point
 Shrink	graph.cpp	/^Graph* Graph::Shrink()$/;"	f	class:Graph
 ShrinkByArticulationPoints	graph.cpp	/^Graph* Graph::ShrinkByArticulationPoints()$/;"	f	class:Graph
+ShrinkBySwitches	graph.cpp	/^Graph* Graph::ShrinkBySwitches()$/;"	f	class:Graph
 ShrinkGraph	grid.cpp	/^void Grid::ShrinkGraph()$/;"	f	class:Grid
 SmartGrid	smart_grid.cpp	/^SmartGrid::SmartGrid()$/;"	f	class:SmartGrid
 SmartGrid	smart_grid.hpp	/^class SmartGrid$/;"	c
@@ -201,7 +209,6 @@ raw_	vertex.hpp	/^    Node* raw_;$/;"	m	class:Vertex
 resident_	resident_vertex.hpp	/^    Resident* resident_;$/;"	m	class:ResidentVertex
 resistance_	wire.hpp	/^    double resistance_;$/;"	m	class:Wire
 root_	graph.hpp	/^    Vertex* root_;$/;"	m	class:Graph
-root_	pseudo_vertex.hpp	/^    Vertex* root_;$/;"	m	class:PseudoVertex
 shrinked_graph_	grid.hpp	/^    Graph* shrinked_graph_;$/;"	m	class:Grid
 smart_grid_	grid.hpp	/^    SmartGrid* smart_grid_;$/;"	m	class:Grid
 source_	source_vertex.hpp	/^    Source* source_;$/;"	m	class:SourceVertex

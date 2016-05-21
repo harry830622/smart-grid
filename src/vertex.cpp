@@ -7,7 +7,7 @@
 using namespace std;
 
 Vertex::Vertex(Node* raw, Type type)
-  : raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false)
+  : grid_(nullptr), raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false)
 {
 }
 
@@ -17,6 +17,11 @@ void Vertex::Print() const
   cout << "  depth_: " << depth_ << endl;
   cout << "  low_: " << low_ << endl;
   cout << "  is_articulate_: " << is_articulate_ << endl;
+  cout << "  incident_edges_: ";
+  for (auto edge : incident_edges_) {
+    cout << edge->GetRaw()->GetName() << " ";
+  }
+  cout << endl;
   raw_->Print();
 }
 
@@ -90,6 +95,13 @@ int Vertex::GetIsArticulate() const
 void Vertex::SetGrid(Grid* grid)
 {
   grid_ = grid;
+}
+
+void Vertex::SetIncidentEdge(int idx, Edge* incident_edge)
+{
+  assert(idx < incident_edges_.size());
+
+  incident_edges_[idx] = incident_edge;
 }
 
 void Vertex::SetIsVisted(bool is_visited)

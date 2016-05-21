@@ -29,6 +29,7 @@ class Edge
     Type GetType() const;
     double GetCurrent() const;
 
+    Vertex* GetIncidentVertex(int i) const;
     Vertex* GetNeighbor(Vertex* vertex) const;
 
     void SetGrid(Grid* grid);
