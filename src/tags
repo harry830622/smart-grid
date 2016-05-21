@@ -177,7 +177,7 @@ Wire	wire.cpp	/^Wire::Wire(string name, Type type, double resistance, double cur
 Wire	wire.hpp	/^class Wire : public Equipment$/;"	c
 all_edges_	grid.hpp	/^    std::map<Edge*, Edge*> all_edges_;$/;"	m	class:Grid
 all_vertices_	grid.hpp	/^    std::map<Vertex*, Vertex*> all_vertices_;$/;"	m	class:Grid
-boundary_vertices_	pseudo_vertex.hpp	/^    std::map<Edge*, Vertex*> boundary_vertices_; \/\/ Index by edge$/;"	m	class:PseudoVertex
+boundary_vertices_	pseudo_vertex.hpp	/^    std::map<Edge*, Vertex*> boundary_vertices_;$/;"	m	class:PseudoVertex
 children_	vertex.hpp	/^    std::vector<Vertex*> children_;$/;"	m	class:Vertex
 consuming_power_	pseudo_vertex.hpp	/^    double consuming_power_;$/;"	m	class:PseudoVertex
 consuming_power_	resident.hpp	/^    double consuming_power_;$/;"	m	class:Resident
@@ -224,6 +224,6 @@ voltage_	vertex.hpp	/^    double voltage_;$/;"	m	class:Vertex
 x_	point.hpp	/^    double x_;$/;"	m	class:Point
 y_	point.hpp	/^    double y_;$/;"	m	class:Point
 z_	point.hpp	/^    double z_;$/;"	m	class:Point
-~Graph	graph.cpp	/^Graph::~Graph()$/;"	f	class:Graph
 ~Grid	grid.cpp	/^Grid::~Grid()$/;"	f	class:Grid
+~PseudoVertex	pseudo_vertex.cpp	/^PseudoVertex::~PseudoVertex()$/;"	f	class:PseudoVertex
 ~SmartGrid	smart_grid.cpp	/^SmartGrid::~SmartGrid()$/;"	f	class:SmartGrid

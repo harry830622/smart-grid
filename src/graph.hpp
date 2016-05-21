@@ -14,7 +14,7 @@ class Graph
 {
   public:
     Graph(Grid* grid);
-    ~Graph();
+    ~Graph() = default;
 
     void Print() const;
 

@@ -12,22 +12,6 @@ Graph::Graph(Grid* grid) : grid_(grid), root_(nullptr)
 {
 }
 
-Graph::~Graph()
-{
-  /* for (auto pair : vertices_) { */
-  /*   if (pair.second != nullptr) { */
-  /*     delete pair.second; */
-  /*     pair.second = nullptr; */
-  /*   } */
-  /* } */
-  /* for (auto pair : edges_) { */
-  /*   if (pair.second != nullptr) { */
-  /*     delete pair.second; */
-  /*     pair.second = nullptr; */
-  /*   } */
-  /* } */
-}
-
 void Graph::Print() const
 {
   cout << "Graph: "<< endl;
@@ -47,7 +31,7 @@ Graph* Graph::Shrink()
 
   MarkArticulationPoints();
 
-  // Clean all articulation points on the paths between every pair of source
+  // Clean all the articulation points on the paths between every pair of source
   // vertices to ensure that all the source vertices will not be merged into
   // pseudo vertices.
   for (auto source_vertex : source_vertices_) {
@@ -62,8 +46,9 @@ Graph* Graph::Shrink()
     }
   }
 
-  // Clean all the articulation points connecting a resident directly to avoid
-  // making useless pseudo vertices each containing just a single resident.
+  // Clean all the articulation points connecting to a resident directly to
+  // avoid making useless pseudo vertices each containing just a single
+  // resident.
   for (auto pair : vertices_) {
     Vertex* vertex = pair.second;
 
@@ -77,9 +62,11 @@ Graph* Graph::Shrink()
     }
   }
 
-  Graph* shrinked_graph = ShrinkByArticulationPoints();
+  Graph* tmp = ShrinkByArticulationPoints();
 
-  shrinked_graph = shrinked_graph->ShrinkBySwitches();
+  Graph* shrinked_graph = tmp->ShrinkBySwitches();
+
+  delete tmp;
 
   shrinked_graph->Print();
 
@@ -223,11 +210,11 @@ Graph* Graph::ShrinkByArticulationPoints()
           if (child->GetIsArticulate()) {
             const string pseudo_vertex_name(pseudo_vertex_prefix + to_string(pseudo_vertex_counter++));
 
-            Node* node = new Node(pseudo_vertex_name);
+            Node* new_node = new Node(pseudo_vertex_name);
 
-            grid_->GetSmartGrid()->AddEquipment(node);
+            grid_->GetSmartGrid()->AddEquipment(new_node);
 
-            PseudoVertex* pseudo_vertex = new PseudoVertex(new Node(pseudo_vertex_name));
+            PseudoVertex* pseudo_vertex = new PseudoVertex(new_node);
 
             Edge* new_edge = new Edge(incident_edge->GetRaw());
 
@@ -252,6 +239,8 @@ Graph* Graph::ShrinkByArticulationPoints()
           }
         } else {
           if (child->GetIsArticulate()) {
+            assert(pseudo_vertices.count(child) == 1);
+
             PseudoVertex* pseudo_vertex = pseudo_vertices.find(child)->second;
 
             Edge* new_edge = new Edge(incident_edge->GetRaw());
@@ -298,11 +287,11 @@ Graph* Graph::ShrinkBySwitches()
     if (!vertex->GetIsVisited()) {
       const string pseudo_vertex_name(pseudo_vertex_prefix + to_string(pseudo_vertex_counter++));
 
-      Node* node = new Node(pseudo_vertex_name);
+      Node* new_node = new Node(pseudo_vertex_name);
 
-      grid_->GetSmartGrid()->AddEquipment(node);
+      grid_->GetSmartGrid()->AddEquipment(new_node);
 
-      PseudoVertex* pseudo_vertex = new PseudoVertex(node);
+      PseudoVertex* pseudo_vertex = new PseudoVertex(new_node);
 
       pseudo_vertex->MergeBySwitches(vertex);
 

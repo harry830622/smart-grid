@@ -24,11 +24,11 @@ Grid::~Grid()
     delete pair.second;
   }
 
-  /* delete graph_; */
-  /* graph_ = nullptr; */
+  delete graph_;
+  graph_ = nullptr;
 
-  /* delete shrinked_graph_; */
-  /* shrinked_graph_ = nullptr; */
+  delete shrinked_graph_;
+  shrinked_graph_ = nullptr;
 }
 
 void Grid::Print() const

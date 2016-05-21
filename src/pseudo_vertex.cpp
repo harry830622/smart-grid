@@ -11,6 +11,12 @@ PseudoVertex::PseudoVertex(Node* raw)
 {
 }
 
+PseudoVertex::~PseudoVertex()
+{
+  delete graph_;
+  graph_ = nullptr;
+}
+
 void PseudoVertex::Print() const
 {
   cout << "Pseudo Vertex: " << endl;
