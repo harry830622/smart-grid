@@ -165,4 +165,10 @@ void PseudoVertex::SetIsSource (bool input){
 bool PseudoVertex::GetIsSource(){ 
 	return is_source_;
 }
+void PseudoVertex::SetAssignSource (char input){
+	assign_source_ = input;
+}
 
+bool PseudoVertex::GetAssignSource(){ 
+	return assign_source_;
+}

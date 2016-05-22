@@ -36,7 +36,7 @@ class Graph
     Vertex* GetSource(int);
 
 
-    void Check ();
+    void check ();
     
 
   private:

@@ -9,7 +9,7 @@
 using namespace std;
 
 Vertex::Vertex(Node* raw, Type type)
-  : grid_(nullptr), raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false), assign_source_("ungiven")
+  : grid_(nullptr), raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false)
 {
 }
 

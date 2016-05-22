@@ -28,7 +28,8 @@ class PseudoVertex : public Vertex
     void AddBoundaryVertex(Edge* edge, Vertex* vertex);
     void SetIsSource(bool);
     bool GetIsSource();
-
+    void SetAssignSource(char);
+    char GetAssignSource();
 
   private:
     double consuming_power_;

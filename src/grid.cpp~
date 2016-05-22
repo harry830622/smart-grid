@@ -187,9 +187,6 @@ char Grid::GetPhase() const
 Graph* Grid::GetGraph() const{
   return graph_;
 }
-Graph* Grid::GetShrinkGraph() const{
-  return shrinked_graph_;
-}
 
 void Grid::AddVertex(Vertex* vertex)
 {

@@ -400,35 +400,16 @@ void Graph::SetApplySource(){
 	for (int i=0 ; i<sort_vector.size();++i) {
 		PseudoVertex* target = dynamic_cast<PseudoVertex*>(sort_vector[i]);
 		for (int j=0;j<sort_vector[i]->GetPriorityNum();++j ){
-			if (remain_power_[sort_vector[i]->GetSourcePriority(j)] > target->GetConsumingPower()){
+			//if (remain_power_[sort_vector[i]->GetSourcePriority(j)] > target->GetConsumingPower()){
 				remain_power_[sort_vector[i]->GetSourcePriority(j)]-=target->GetConsumingPower();
 				target->SetAssignSource(sort_vector[i]->GetSourcePriority(j)->GetAssignSource());
 				break;
-			}else{
+			//}else{
 				//remain_power_[sort_vector[i]->GetSourcePriority(j)]=0;
-			}
+			//}
 		}
 	}
-/*
-	for (auto pair:remain_power_){
-		if (pair.second > 0)
-			continue;
-		while (pair.second < 0){ 
-			for (auto edge:edges_){
-				PseudoVertex* a =dynamic_cast<PseudoVertex*>(GetIncidentVertex(0));
-				PseudoVertex* b =dynamic_cast<PseudoVertex*>(GetIncidentVertex(1));
-				if (a->GetAssignSource()!=pair.first){
-					PseudoVertex* temp = a;
-					a = b;
-					b = temp;
-				}
-				if (a->GetAssignSource()==pair.first && b->GetAssignSource()!=pair.first) {
-					if(remain_power_[b] > target->GetConsumingPower())
-				}
-			}
-		}
-	}
-*/
+
 }
 
 void Graph::Check() {
