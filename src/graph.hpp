@@ -34,7 +34,7 @@ class Graph
     int GetSourceNum();
     void SetShrinkSource(); // set peudo vertex which contains sources into source_vertices_
     Vertex* GetSource(int);
-
+    void DeepSetApplySource(std::string="no assign");
 
     void Check ();
     
@@ -46,7 +46,7 @@ class Graph
     std::map<std::string, Edge*> edges_;
 
     std::vector<Vertex*> source_vertices_;
-    std::map<Vertex*,double> remain_power_;
+    std::map<std::string,double> remain_power_;
 
     Vertex* root_;
 

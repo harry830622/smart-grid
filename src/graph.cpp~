@@ -343,13 +343,12 @@ void Graph::SetShrinkSource (){
 			pseudo->SetIsSource(true);
 		
 			Source* source_node = dynamic_cast<Source*>(pseudo->GetGraph()->GetSource(0)->GetRaw());
-			remain_power_[pair.second]=source_node->GetOutputPower() - pseudo->GetConsumingPower();
-	cout << source_node->GetName() <<":" <<source_node->GetOutputPower() <<endl;
+			remain_power_[source_node->GetName()]=source_node->GetOutputPower() - pseudo->GetConsumingPower();
+//cout << source_node->GetName() <<":" <<source_node->GetOutputPower() <<endl;
 			pseudo->SetAssignSource(source_node->GetName());
 			
 		}
 	}
-        
 	assert(source_vertices_.size() == 3);
 }
 
@@ -389,7 +388,7 @@ void Graph::SetApplySource(){
 
 	vector<Vertex*> sort_vector;
 	for (auto pair:vertices_){
-		if (dynamic_cast<PseudoVertex*>(pair.second) -> GetIsSource()){			
+		if (pair.second -> GetIsSource()){			
 			continue;
 		}
 		sort_vector.push_back(pair.second);
@@ -397,19 +396,86 @@ void Graph::SetApplySource(){
 	}
 	sort (sort_vector.begin(), sort_vector.end(), compare_function);  //ordering in decending order
 	
+	////////////////////////////////////////////
+	//  assigned without consider power constrain
+	////////////////////////////////////////////
 	for (int i=0 ; i<sort_vector.size();++i) {
 		PseudoVertex* target = dynamic_cast<PseudoVertex*>(sort_vector[i]);
-		for (int j=0;j<sort_vector[i]->GetPriorityNum();++j ){
-			//if (remain_power_[sort_vector[i]->GetSourcePriority(j)] > target->GetConsumingPower()){
-				remain_power_[sort_vector[i]->GetSourcePriority(j)]-=target->GetConsumingPower();
+		remain_power_[sort_vector[i]->GetSourcePriority(0)->GetAssignSource()]-=target->GetConsumingPower();
+		target->SetAssignSource(sort_vector[i]->GetSourcePriority(0)->GetAssignSource());
+
+		/*for (int j=0;j<sort_vector[i]->GetPriorityNum();++j ){
+			if (remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()] > target->GetConsumingPower()){
+				remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()]-=target->GetConsumingPower();
 				target->SetAssignSource(sort_vector[i]->GetSourcePriority(j)->GetAssignSource());
 				break;
-			//}else{
-				//remain_power_[sort_vector[i]->GetSourcePriority(j)]=0;
-			//}
+			}
+		}*/
+
+	}
+
+
+	////////////////////////////////////////////
+	//  adjusting
+	////////////////////////////////////////////
+	for (auto pair:remain_power_){
+		if (pair.second > 0)
+			continue;
+		queue<Vertex*> boundary_vertex;
+		for (auto edge:edges_){
+			PseudoVertex* a =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(0));
+			PseudoVertex* b =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(1));
+			if (a->GetAssignSource()!=pair.first){
+				PseudoVertex* temp = a;
+				a = b;
+				b = temp;
+			}
+			if (a->GetAssignSource()==pair.first && b->GetAssignSource()!=pair.first) {
+				boundary_vertex.push(a);
+			}
+		}
+		while (pair.second < 0){ 
+				PseudoVertex* target = dynamic_cast<PseudoVertex*>(boundary_vertex.front());
+				boundary_vertex.pop();
+				for (int i=0; i < target->GetIncidentEdgesNum();++i) {
+					Vertex* neighbor = target->GetIncidentEdge(i)->GetNeighbor(target);
+					if (target->GetAssignSource() == neighbor->GetAssignSource())
+						continue;
+					else {
+						if (remain_power_[neighbor->GetAssignSource()] > target->GetConsumingPower()){
+							remain_power_[neighbor->GetAssignSource()]-=target->GetConsumingPower();
+							remain_power_[target->GetAssignSource()]+=target->GetConsumingPower();
+							pair.second+=target->GetConsumingPower();
+							target->SetAssignSource(neighbor->GetAssignSource());
+							for (int j=0;j < target->GetIncidentEdgesNum();++j){
+								Vertex* origin_neighbor = target->GetIncidentEdge(j)->GetNeighbor(target);
+								if (origin_neighbor->GetAssignSource() == pair.first){
+									boundary_vertex.push(origin_neighbor);
+								}
+							}
+							break;
+						}
+					}
+				}
+			
 		}
 	}
 
+	for (auto pair: vertices_) {
+		PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
+		pseudo->GetGraph()->DeepSetApplySource(pseudo->GetAssignSource());
+	}
+}
+
+
+void Graph::DeepSetApplySource(string set_source){
+	for (auto pair:vertices_){
+		pair.second->SetAssignSource(set_source);
+		if (pair.second->GetType() == Vertex::Type::PSEUDO){
+			PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
+			pseudo->GetGraph()->DeepSetApplySource(set_source);
+		}
+	}
 }
 
 void Graph::Check() {
@@ -427,8 +493,8 @@ void Graph::Check() {
 /*
 	for (auto pair:vertices_) {
 		cout <<"load on :" << pair.second->GetAssignSource()<<endl;
-        }*/
-
+        }
+*/
 	bool no_connect = false;
 	int tt = 0;	
 	for (auto pair:vertices_) {

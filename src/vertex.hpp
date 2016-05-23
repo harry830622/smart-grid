@@ -63,7 +63,8 @@ class Vertex
     void AddChild(Vertex* child);
     void ResetMarks();
     void CountDistanceDiff ();
-    
+    void SetIsSource(bool);
+    bool GetIsSource();
 
   private:
     Grid* grid_;
@@ -84,6 +85,7 @@ class Vertex
     std::map<Vertex*, int> source_distance_;
     std::vector<std::pair<Vertex*, int>> source_priority_;
     int distance_diff_;
+    bool is_source_;
 
 };
 

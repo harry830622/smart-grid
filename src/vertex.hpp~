@@ -5,6 +5,7 @@
 #include "edge.hpp"
 #include <map>
 #include <vector>
+#include <algorithm>
 
 class Grid;
 class Edge;
@@ -83,6 +84,7 @@ class Vertex
     std::map<Vertex*, int> source_distance_;
     std::vector<std::pair<Vertex*, int>> source_priority_;
     int distance_diff_;
+    bool is_source_;
 
 };
 

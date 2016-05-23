@@ -26,8 +26,7 @@ class PseudoVertex : public Vertex
     std::vector<Vertex*> GetBoundaryVertices() const;
 
     void AddBoundaryVertex(Edge* edge, Vertex* vertex);
-    void SetIsSource(bool);
-    bool GetIsSource();
+
 
 
   private:
@@ -55,7 +54,7 @@ class PseudoVertex : public Vertex
     //
     // For convenience, the original vertices is indexed by the edge E'.
     std::map<Edge*, Vertex*> boundary_vertices_;
-    bool is_source_;
+    
     
 
 };

@@ -9,7 +9,7 @@
 using namespace std;
 
 Vertex::Vertex(Node* raw, Type type)
-  : grid_(nullptr), raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false), assign_source_("ungiven")
+  : grid_(nullptr), raw_(raw), type_(type), voltage_(0.0), parent_(nullptr), depth_(-1), low_(-1), is_articulate_(false), assign_source_("ungiven"), is_source_(false)
 {
 }
 
@@ -201,4 +201,12 @@ Vertex* Vertex::GetSourcePriority (int index){
 }
 int Vertex::GetPriorityNum (){
 	return source_priority_.size();
+}
+
+void Vertex::SetIsSource (bool input){
+	is_source_ = input;
+}
+
+bool Vertex::GetIsSource(){ 
+	return is_source_;
 }

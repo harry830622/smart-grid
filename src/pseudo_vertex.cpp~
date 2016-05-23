@@ -7,7 +7,7 @@
 using namespace std;
 
 PseudoVertex::PseudoVertex(Node* raw)
-  : Vertex(raw, Vertex::Type::PSEUDO), consuming_power_(0.0), graph_(nullptr), is_source_(false)
+  : Vertex(raw, Vertex::Type::PSEUDO), consuming_power_(0.0), graph_(nullptr)
 {
 }
 
@@ -88,11 +88,11 @@ void PseudoVertex::MergeBySwitches(Vertex* root)
     for (int i = 0; i < front->GetIncidentEdgesNum(); ++i) {
       Edge* incident_edge = front->GetIncidentEdge(i);
       Vertex* child = incident_edge->GetNeighbor(front);
-
+/*
       if (front->GetType() == Vertex::Type::SOURCE) {
-            is_source_=true;
+            Vertex::is_source_=true;
        }
-
+*/
       if (incident_edge->GetType() == Edge::Type::SWITCH) {
         AddBoundaryVertex(incident_edge, front);
         continue;
@@ -158,17 +158,5 @@ void PseudoVertex::AddBoundaryVertex(Edge* edge, Vertex* vertex)
   boundary_vertices_.insert(make_pair(edge, vertex));
 }
 
-void PseudoVertex::SetIsSource (bool input){
-	is_source_ = input;
-}
 
-bool PseudoVertex::GetIsSource(){ 
-	return is_source_;
-}
-void PseudoVertex::SetAssignSource (char input){
-	assign_source_ = input;
-}
 
-bool PseudoVertex::GetAssignSource(){ 
-	return assign_source_;
-}
