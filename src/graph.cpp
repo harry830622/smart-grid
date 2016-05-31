@@ -1,5 +1,6 @@
 #include "graph.hpp"
 #include "pseudo_vertex.hpp"
+#include "switch.hpp"
 
 #include "json.hpp"
 
@@ -11,7 +12,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-Graph::Graph(Grid* grid) : grid_(grid), root_(nullptr)
+Graph::Graph(Grid* grid) : grid_(grid), root_(nullptr), wire_upgrade(0.0), switch_change(0)
 {
 }
 
@@ -44,7 +45,7 @@ void Graph::OutputJSON() const
         {"y", pair.second->GetRaw()->GetCoordinate().GetY()},
         {"z", pair.second->GetRaw()->GetCoordinate().GetZ()},
         {"source", pair.second->GetAssignSource()},
-    });
+        });
   }
 
   for (auto pair : edges_) {
@@ -52,7 +53,7 @@ void Graph::OutputJSON() const
         {"name", pair.second->GetRaw()->GetName()},
         {"vertex1", pair.second->GetIncidentVertex(0)->GetRaw()->GetName()},
         {"vertex2", pair.second->GetIncidentVertex(1)->GetRaw()->GetName()}
-    });
+        });
   }
 
   cout << j << endl;
@@ -493,6 +494,13 @@ void Graph::SetApplySource(){
   }
 
   for (auto pair: vertices_) {
+    if (pair.second->GetAssignSource()=="15xx(GREENS_PRAIRIE)") {
+      pair.second->SetVoltage(79674.3);
+    }else if (pair.second->GetAssignSource()=="06xx(SOUTH)"){
+      pair.second->SetVoltage(79674.3);
+    }else if (pair.second->GetAssignSource()=="07xx(MILLICAN)"){
+      pair.second->SetVoltage(39837.2);
+    }
     PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
     pseudo->GetGraph()->DeepSetApplySource(pseudo->GetAssignSource());
   }
@@ -501,49 +509,135 @@ void Graph::SetApplySource(){
 
 void Graph::DeepSetApplySource(string set_source){
   for (auto pair:vertices_){
+
     pair.second->SetAssignSource(set_source);
     if (pair.second->GetType() == Vertex::Type::PSEUDO){
       PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
       pseudo->GetGraph()->DeepSetApplySource(set_source);
     }
+
+    if (pair.second->GetAssignSource()=="15xx(GREENS_PRAIRIE)") {
+      pair.second->SetVoltage(79674.3);
+    }else if (pair.second->GetAssignSource()=="06xx(SOUTH)"){
+      pair.second->SetVoltage(79674.3);
+    }else if (pair.second->GetAssignSource()=="07xx(MILLICAN)"){
+      pair.second->SetVoltage(39837.2);
+    }else
+      cout <<"something not asigned source!"<< pair.second->GetAssignSource() <<"!"<<endl;
   }
 }
 
 void Graph::Check() {
-  /* for (auto source:source_vertices_) {   //bfs for each source; */
-  /*   string source_name =source->GetAssignSource(); */
-  /*   double total_power = 0; */
-  /*   for (auto pair : vertices_) { */
-  /*     string assign_source = pair.second->GetAssignSource(); */
-  /*     if (assign_source==source_name){ */
-  /*       total_power += dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower(); */
-  /*     } */
-  /*   } */
-  /*   cout <<"Source :"<< source_name <<" load:" <<total_power<<endl; */
-  /* } */
-  for (auto pair:vertices_) {
-    cout <<"load on :" << pair.second->GetAssignSource()<<endl;
+  ResetVerticesMarks();
+  queue<Vertex*> bfs_queue;
+  Vertex* root=source_vertices_[0];
+  bfs_queue.push(root);
+  root->SetIsVisted(true);
+  while (!bfs_queue.empty()){
+    Vertex* front = bfs_queue.front();
+    bfs_queue.pop();
+    for (int i=0; i<front->GetIncidentEdgesNum();++i){
+      Vertex* child = front->GetIncidentEdge(i)->GetNeighbor(front);
+      if (child->GetType()==Vertex::Type::PSEUDO){
+        child = dynamic_cast<PseudoVertex*>(child)->GetBoundaryVertex(front->GetIncidentEdge(i));
+      }
+      if (!child->GetIsVisited()){
+        child->SetIsVisted(true);
+        bfs_queue.push(child);
+      }
+    }
   }
-  /* bool no_connect = false; */
-  /* int tt = 0; */
-  /* for (auto pair:vertices_) { */
-  /*   no_connect = true; */
-  /*   for (int i=0; i<pair.second->GetIncidentEdgesNum();++i){ */
-  /*     Vertex* child = pair.second->GetIncidentEdge(i)->GetNeighbor(pair.second); */
-  /*     if (child->GetAssignSource()==pair.second->GetAssignSource()){ */
-  /*       no_connect =false; */
-  /*       continue; */
-  /*     } */
 
-  /*   } */
-  /*   if (no_connect){ */
-  /*     pair.second->SetAssignSource(pair.second->GetIncidentEdge(0)->GetNeighbor(pair.second)->GetAssignSource()); */
-  /*     cout <<" There is a vertex dis ouside the group!!! :"<<" "<<pair.second->GetAssignSource()<<" "<<dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower()<<endl; */
-  /*     for (int j=0; j<pair.second->GetIncidentEdgesNum();++j){ */
-  /*       Vertex* child = pair.second->GetIncidentEdge(j)->GetNeighbor(pair.second); */
-  /*       cout <<"     connect :"<<child->GetAssignSource()<<endl; */
-  /*     } */
-  /*   } */
-  /* } */
-  /* cout <<"num:"<<tt<<endl; */
+  for (auto pair:vertices_) {
+    if (!pair.second->GetIsVisited())
+      cout <<"no connect!"<<endl;
+  }
+
+}
+
+void Graph::CountCost (){
+  ResetVerticesMarks();
+
+  for (auto source:source_vertices_) {   //bfs for each source;
+    ResetVerticesMarks();
+    queue<Vertex*> bfs_queue;
+    bfs_queue.push(source);
+    source->SetIsVisted(true);
+    string source_name = source ->GetRaw()->GetName();
+    vector <Vertex*> vector_leafs;
+    //cout <<"Start:"<<source_name<<endl;
+    while (!bfs_queue.empty()){
+      Vertex* front = bfs_queue.front();
+      bfs_queue.pop();
+      for (int i=0; i<front->GetIncidentEdgesNum();++i){
+        Vertex* child = front->GetIncidentEdge(i)->GetNeighbor(front);
+        Edge* connect_edge = front->GetIncidentEdge(i);
+        if (child->GetType()==Vertex::Type::PSEUDO){
+          child = dynamic_cast<PseudoVertex*>(child)->GetBoundaryVertex(front->GetIncidentEdge(i));
+          connect_edge = edges_[front->GetIncidentEdge(i)->GetRaw()->GetName()];
+        }
+
+        if (child->GetIsVisited() || child->GetAssignSource()!=source_name){
+          continue;
+        }
+        child->SetIsVisted(true);
+        child->SetParent(front);
+        front->AddChild(child);
+        bfs_queue.push(child);
+        child->SetParentEdge(connect_edge);
+      }
+      if (front->GetChildrenNum() == 0){
+        vector_leafs.push_back(front);
+      } else if (front->GetType() == Vertex::Type::RESIDENT ){
+        cout <<"error!!! :resident has more one edge"<<endl;
+      }
+    }
+    /*
+       for (auto pair: vertices_) {
+       if (!pair.second->GetIsVisited() && pair.second->GetAssignSource()==source_name){
+       cout <<"someting wrong!!"<<endl;
+       }
+       }
+       */
+    cout <<"process:"<<source_name<<" leafnum:"<<vector_leafs.size()<<endl;
+    for (auto child : vector_leafs){
+      //Vertex* child = pair.second;
+      if (child->GetType() == Vertex::Type::RESIDENT && child->GetAssignSource() == source_name) {
+        //cout <<"IN!! "<<endl;
+        double load_current = dynamic_cast<ResidentVertex*>(child)->GetConsumingPower()/child->GetVoltage();
+        //cout <<"load:"<< load_current<<endl;
+        while (child!=source) {
+          Vertex* parent = child->GetParent();
+          Edge* connect_edge = child->GetParentEdge();
+          assert(connect_edge->GetNeighbor(child)==parent);
+          connect_edge->SetCurrent(connect_edge->GetCurrent()+load_current);
+          child = parent;
+        }
+      }
+    }
+    //cout <<"finish:"<<source_name<<endl;
+  }
+
+  //cout <<"counting..."<<endl;
+  wire_upgrade = 0.0;
+  switch_change =0;
+
+  for (auto pair:edges_) {
+    if (pair.second->GetType()==Edge::Type::EDGE){
+      Wire* wire = pair.second->GetRaw();
+      if (pair.second->GetCurrent() > wire->GetCurrentLimit()){
+        //cout <<"Current:"<< pair.second->GetCurrent()<< "  Limit:"<< wire->GetCurrentLimit()<<endl;
+        wire_upgrade += pair.second->GetCurrent()-wire->GetCurrentLimit();
+      }
+    }else if(pair.second->GetType()==Edge::Type::SWITCH){
+      Switch* switches = dynamic_cast<Switch*> (pair.second->GetRaw());
+      Vertex* a = pair.second->GetIncidentVertex(0);
+      Vertex* b = pair.second->GetIncidentVertex(1);
+
+      if ( (a->GetAssignSource() != b->GetAssignSource() && switches->GetIsOn()) || (a->GetAssignSource() == b->GetAssignSource() && !switches->GetIsOn() ))
+        switch_change++;
+    }
+  }
+  cout << "wire upgrade :" << wire_upgrade << endl;
+  cout << "wire change  :" << switch_change << endl;
 }

@@ -28,6 +28,7 @@ class Edge
     Wire* GetRaw() const;
     Type GetType() const;
     double GetCurrent() const;
+    void SetCurrent(double);
 
     Vertex* GetIncidentVertex(int i) const;
     Vertex* GetNeighbor(Vertex* vertex) const;
