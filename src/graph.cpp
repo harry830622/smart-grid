@@ -1,12 +1,15 @@
 #include "graph.hpp"
 #include "pseudo_vertex.hpp"
 
+#include "json.hpp"
+
 #include <cassert>
 #include <iostream>
 #include <algorithm>
 #include <queue>
 
 using namespace std;
+using json = nlohmann::json;
 
 Graph::Graph(Grid* grid) : grid_(grid), root_(nullptr)
 {
@@ -19,12 +22,40 @@ void Graph::Print() const
     pair.second->Print();
     cout << endl;
   }
-/*
-  for (auto pair : edges_) {
-    pair.second->Print();
-    cout << endl;
+  /*
+     for (auto pair : edges_) {
+     pair.second->Print();
+     cout << endl;
+     }
+     */
+}
+
+void Graph::OutputJSON() const
+{
+  json j = {
+    {"vertices", json::array({})},
+    {"edges", json::array({})}
+  };
+
+  for (auto pair : vertices_) {
+    j["vertices"].push_back({
+        {"name", pair.second->GetRaw()->GetName()},
+        {"x", pair.second->GetRaw()->GetCoordinate().GetX()},
+        {"y", pair.second->GetRaw()->GetCoordinate().GetY()},
+        {"z", pair.second->GetRaw()->GetCoordinate().GetZ()},
+        {"source", pair.second->GetAssignSource()},
+    });
   }
-*/
+
+  for (auto pair : edges_) {
+    j["edges"].push_back({
+        {"name", pair.second->GetRaw()->GetName()},
+        {"vertex1", pair.second->GetIncidentVertex(0)->GetRaw()->GetName()},
+        {"vertex2", pair.second->GetIncidentVertex(1)->GetRaw()->GetName()}
+    });
+  }
+
+  cout << j << endl;
 }
 
 Graph* Graph::Shrink()
@@ -335,188 +366,184 @@ Graph* Graph::ShrinkBySwitches()
 }
 
 void Graph::SetShrinkSource (){
-	for (auto pair:vertices_) {	
-		PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
-		assert(pseudo->GetGraph()->GetSourceNum() <= 1);
-		if (pseudo->GetGraph()->GetSourceNum() == 1){
-			source_vertices_.push_back(pair.second);
-			pseudo->SetIsSource(true);
-		
-			Source* source_node = dynamic_cast<Source*>(pseudo->GetGraph()->GetSource(0)->GetRaw());
-			remain_power_[source_node->GetName()]=source_node->GetOutputPower() - pseudo->GetConsumingPower();
-//cout << source_node->GetName() <<":" <<source_node->GetOutputPower() <<endl;
-			pseudo->SetAssignSource(source_node->GetName());
-			
-		}
-	}
-	assert(source_vertices_.size() == 3);
+  for (auto pair:vertices_) {
+    PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
+    assert(pseudo->GetGraph()->GetSourceNum() <= 1);
+    if (pseudo->GetGraph()->GetSourceNum() == 1){
+      source_vertices_.push_back(pair.second);
+      pseudo->SetIsSource(true);
+
+      Source* source_node = dynamic_cast<Source*>(pseudo->GetGraph()->GetSource(0)->GetRaw());
+      remain_power_[source_node->GetName()]=source_node->GetOutputPower() - pseudo->GetConsumingPower();
+      //cout << source_node->GetName() <<":" <<source_node->GetOutputPower() <<endl;
+      pseudo->SetAssignSource(source_node->GetName());
+
+    }
+  }
+  assert(source_vertices_.size() == 3);
 }
 
 int Graph::GetSourceNum(){
-	return source_vertices_.size(); 
+  return source_vertices_.size();
 }
 Vertex* Graph::GetSource(int index){
-	return dynamic_cast<SourceVertex*>(source_vertices_[index]); 
+  return dynamic_cast<SourceVertex*>(source_vertices_[index]);
 }
 
 bool compare_function(Vertex* a, Vertex* b){
-	return (a->GetDistanceDiff() > b->GetDistanceDiff());
+  return (a->GetDistanceDiff() > b->GetDistanceDiff());
 }
 
 void Graph::SetApplySource(){
-	for (auto source:source_vertices_) {   //bfs for each source;		
-		ResetVerticesMarks();
-		queue<Vertex*> bfs_queue;
-		bfs_queue.push(source);
-		source->SetSourceDistance(source, 0);
-		source->SetIsVisted(true);
-		while (!bfs_queue.empty()){
-			Vertex* front = bfs_queue.front();
-			bfs_queue.pop();
-			for (int i=0; i<front->GetIncidentEdgesNum();++i){
-				Vertex* child = front->GetIncidentEdge(i)->GetNeighbor(front);
-				if (child->GetIsVisited()){
-					continue;
-				}
-				child->SetIsVisted(true);
-				child->SetSourceDistance(source,front->GetSourceDistance(source)+1);
-				//cout << front->GetSourceDistance(source)+1 <<endl;
-				bfs_queue.push(child);
-			}
-		}
-	}
+  for (auto source:source_vertices_) {   //bfs for each source;
+    ResetVerticesMarks();
+    queue<Vertex*> bfs_queue;
+    bfs_queue.push(source);
+    source->SetSourceDistance(source, 0);
+    source->SetIsVisted(true);
+    while (!bfs_queue.empty()){
+      Vertex* front = bfs_queue.front();
+      bfs_queue.pop();
+      for (int i=0; i<front->GetIncidentEdgesNum();++i){
+        Vertex* child = front->GetIncidentEdge(i)->GetNeighbor(front);
+        if (child->GetIsVisited()){
+          continue;
+        }
+        child->SetIsVisted(true);
+        child->SetSourceDistance(source,front->GetSourceDistance(source)+1);
+        //cout << front->GetSourceDistance(source)+1 <<endl;
+        bfs_queue.push(child);
+      }
+    }
+  }
 
-	vector<Vertex*> sort_vector;
-	for (auto pair:vertices_){
-		if (pair.second -> GetIsSource()){			
-			continue;
-		}
-		sort_vector.push_back(pair.second);
-		pair.second -> CountDistanceDiff();
-	}
-	sort (sort_vector.begin(), sort_vector.end(), compare_function);  //ordering in decending order
-	
-	////////////////////////////////////////////
-	//  assigned without consider power constrain
-	////////////////////////////////////////////
-	for (int i=0 ; i<sort_vector.size();++i) {
-		PseudoVertex* target = dynamic_cast<PseudoVertex*>(sort_vector[i]);
-		remain_power_[sort_vector[i]->GetSourcePriority(0)->GetAssignSource()]-=target->GetConsumingPower();
-		target->SetAssignSource(sort_vector[i]->GetSourcePriority(0)->GetAssignSource());
+  vector<Vertex*> sort_vector;
+  for (auto pair:vertices_){
+    if (pair.second -> GetIsSource()){
+      continue;
+    }
+    sort_vector.push_back(pair.second);
+    pair.second -> CountDistanceDiff();
+  }
+  sort (sort_vector.begin(), sort_vector.end(), compare_function);  //ordering in decending order
 
-		/*for (int j=0;j<sort_vector[i]->GetPriorityNum();++j ){
-			if (remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()] > target->GetConsumingPower()){
-				remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()]-=target->GetConsumingPower();
-				target->SetAssignSource(sort_vector[i]->GetSourcePriority(j)->GetAssignSource());
-				break;
-			}
-		}*/
+  ////////////////////////////////////////////
+  //  assigned without consider power constrain
+  ////////////////////////////////////////////
+  for (int i=0 ; i<sort_vector.size();++i) {
+    PseudoVertex* target = dynamic_cast<PseudoVertex*>(sort_vector[i]);
+    remain_power_[sort_vector[i]->GetSourcePriority(0)->GetAssignSource()]-=target->GetConsumingPower();
+    target->SetAssignSource(sort_vector[i]->GetSourcePriority(0)->GetAssignSource());
 
-	}
+    /*for (int j=0;j<sort_vector[i]->GetPriorityNum();++j ){
+      if (remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()] > target->GetConsumingPower()){
+      remain_power_[sort_vector[i]->GetSourcePriority(j)->GetAssignSource()]-=target->GetConsumingPower();
+      target->SetAssignSource(sort_vector[i]->GetSourcePriority(j)->GetAssignSource());
+      break;
+      }
+      }*/
+
+  }
 
 
-	////////////////////////////////////////////
-	//  adjusting
-	////////////////////////////////////////////
-	for (auto pair:remain_power_){
-		if (pair.second > 0)
-			continue;
-		queue<Vertex*> boundary_vertex;
-		for (auto edge:edges_){
-			PseudoVertex* a =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(0));
-			PseudoVertex* b =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(1));
-			if (a->GetAssignSource()!=pair.first){
-				PseudoVertex* temp = a;
-				a = b;
-				b = temp;
-			}
-			if (a->GetAssignSource()==pair.first && b->GetAssignSource()!=pair.first) {
-				boundary_vertex.push(a);
-			}
-		}
-		while (pair.second < 0){ 
-				PseudoVertex* target = dynamic_cast<PseudoVertex*>(boundary_vertex.front());
-				boundary_vertex.pop();
-				for (int i=0; i < target->GetIncidentEdgesNum();++i) {
-					Vertex* neighbor = target->GetIncidentEdge(i)->GetNeighbor(target);
-					if (target->GetAssignSource() == neighbor->GetAssignSource())
-						continue;
-					else {
-						if (remain_power_[neighbor->GetAssignSource()] > target->GetConsumingPower()){
-							remain_power_[neighbor->GetAssignSource()]-=target->GetConsumingPower();
-							remain_power_[target->GetAssignSource()]+=target->GetConsumingPower();
-							pair.second+=target->GetConsumingPower();
-							target->SetAssignSource(neighbor->GetAssignSource());
-							for (int j=0;j < target->GetIncidentEdgesNum();++j){
-								Vertex* origin_neighbor = target->GetIncidentEdge(j)->GetNeighbor(target);
-								if (origin_neighbor->GetAssignSource() == pair.first){
-									boundary_vertex.push(origin_neighbor);
-								}
-							}
-							break;
-						}
-					}
-				}
-			
-		}
-	}
+  ////////////////////////////////////////////
+  //  adjusting
+  ////////////////////////////////////////////
+  for (auto pair:remain_power_){
+    if (pair.second > 0)
+      continue;
+    queue<Vertex*> boundary_vertex;
+    for (auto edge:edges_){
+      PseudoVertex* a =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(0));
+      PseudoVertex* b =dynamic_cast<PseudoVertex*>(edge.second->GetIncidentVertex(1));
+      if (a->GetAssignSource()!=pair.first){
+        PseudoVertex* temp = a;
+        a = b;
+        b = temp;
+      }
+      if (a->GetAssignSource()==pair.first && b->GetAssignSource()!=pair.first) {
+        boundary_vertex.push(a);
+      }
+    }
+    while (pair.second < 0){
+      PseudoVertex* target = dynamic_cast<PseudoVertex*>(boundary_vertex.front());
+      boundary_vertex.pop();
+      for (int i=0; i < target->GetIncidentEdgesNum();++i) {
+        Vertex* neighbor = target->GetIncidentEdge(i)->GetNeighbor(target);
+        if (target->GetAssignSource() == neighbor->GetAssignSource())
+          continue;
+        else {
+          if (remain_power_[neighbor->GetAssignSource()] > target->GetConsumingPower()){
+            remain_power_[neighbor->GetAssignSource()]-=target->GetConsumingPower();
+            remain_power_[target->GetAssignSource()]+=target->GetConsumingPower();
+            pair.second+=target->GetConsumingPower();
+            target->SetAssignSource(neighbor->GetAssignSource());
+            for (int j=0;j < target->GetIncidentEdgesNum();++j){
+              Vertex* origin_neighbor = target->GetIncidentEdge(j)->GetNeighbor(target);
+              if (origin_neighbor->GetAssignSource() == pair.first){
+                boundary_vertex.push(origin_neighbor);
+              }
+            }
+            break;
+          }
+        }
+      }
 
-	for (auto pair: vertices_) {
-		PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
-		pseudo->GetGraph()->DeepSetApplySource(pseudo->GetAssignSource());
-	}
+    }
+  }
+
+  for (auto pair: vertices_) {
+    PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
+    pseudo->GetGraph()->DeepSetApplySource(pseudo->GetAssignSource());
+  }
 }
 
 
 void Graph::DeepSetApplySource(string set_source){
-	for (auto pair:vertices_){
-		pair.second->SetAssignSource(set_source);
-		if (pair.second->GetType() == Vertex::Type::PSEUDO){
-			PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
-			pseudo->GetGraph()->DeepSetApplySource(set_source);
-		}
-	}
+  for (auto pair:vertices_){
+    pair.second->SetAssignSource(set_source);
+    if (pair.second->GetType() == Vertex::Type::PSEUDO){
+      PseudoVertex* pseudo = dynamic_cast<PseudoVertex*>(pair.second);
+      pseudo->GetGraph()->DeepSetApplySource(set_source);
+    }
+  }
 }
 
 void Graph::Check() {
-/*
-	for (auto source:source_vertices_) {   //bfs for each source;		
-		string source_name =source->GetAssignSource();
-		double total_power = 0;
-		for (auto pair : vertices_) {
-		   	string assign_source = pair.second->GetAssignSource();
-		   	if (assign_source==source_name){
-				total_power += dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower();
-			}
-		}
-		cout <<"Source :"<< source_name <<" load:" <<total_power<<endl;
-	}
-*/
-	for (auto pair:vertices_) {
-		cout <<"load on :" << pair.second->GetAssignSource()<<endl;
-        }
-/*
-	bool no_connect = false;
-	int tt = 0;	
-	for (auto pair:vertices_) {
-		no_connect = true;
-		for (int i=0; i<pair.second->GetIncidentEdgesNum();++i){
-				Vertex* child = pair.second->GetIncidentEdge(i)->GetNeighbor(pair.second);
-				if (child->GetAssignSource()==pair.second->GetAssignSource()){
-					no_connect =false;
-					continue;
-				}
-				
-		}
-		if (no_connect){
-			//pair.second->SetAssignSource(pair.second->GetIncidentEdge(0)->GetNeighbor(pair.second)->GetAssignSource());
-cout <<" There is a vertex dis ouside the group!!! :"<<" "<<pair.second->GetAssignSource()<<" "<<dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower()<<endl;
-			for (int j=0; j<pair.second->GetIncidentEdgesNum();++j){
-				Vertex* child = pair.second->GetIncidentEdge(j)->GetNeighbor(pair.second);
-				cout <<"     connect :"<<child->GetAssignSource()<<endl;
-			}
-		}
-	}
-	cout <<"num:"<<tt<<endl;
-*/
+  /* for (auto source:source_vertices_) {   //bfs for each source; */
+  /*   string source_name =source->GetAssignSource(); */
+  /*   double total_power = 0; */
+  /*   for (auto pair : vertices_) { */
+  /*     string assign_source = pair.second->GetAssignSource(); */
+  /*     if (assign_source==source_name){ */
+  /*       total_power += dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower(); */
+  /*     } */
+  /*   } */
+  /*   cout <<"Source :"<< source_name <<" load:" <<total_power<<endl; */
+  /* } */
+  for (auto pair:vertices_) {
+    cout <<"load on :" << pair.second->GetAssignSource()<<endl;
+  }
+  /* bool no_connect = false; */
+  /* int tt = 0; */
+  /* for (auto pair:vertices_) { */
+  /*   no_connect = true; */
+  /*   for (int i=0; i<pair.second->GetIncidentEdgesNum();++i){ */
+  /*     Vertex* child = pair.second->GetIncidentEdge(i)->GetNeighbor(pair.second); */
+  /*     if (child->GetAssignSource()==pair.second->GetAssignSource()){ */
+  /*       no_connect =false; */
+  /*       continue; */
+  /*     } */
+
+  /*   } */
+  /*   if (no_connect){ */
+  /*     pair.second->SetAssignSource(pair.second->GetIncidentEdge(0)->GetNeighbor(pair.second)->GetAssignSource()); */
+  /*     cout <<" There is a vertex dis ouside the group!!! :"<<" "<<pair.second->GetAssignSource()<<" "<<dynamic_cast<PseudoVertex*>(pair.second)->GetConsumingPower()<<endl; */
+  /*     for (int j=0; j<pair.second->GetIncidentEdgesNum();++j){ */
+  /*       Vertex* child = pair.second->GetIncidentEdge(j)->GetNeighbor(pair.second); */
+  /*       cout <<"     connect :"<<child->GetAssignSource()<<endl; */
+  /*     } */
+  /*   } */
+  /* } */
+  /* cout <<"num:"<<tt<<endl; */
 }

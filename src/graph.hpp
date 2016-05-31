@@ -17,6 +17,7 @@ class Graph
     ~Graph() = default;
 
     void Print() const;
+    void OutputJSON() const;
 
     Graph* Shrink();
 
@@ -37,7 +38,7 @@ class Graph
     void DeepSetApplySource(std::string="no assign");
 
     void Check ();
-    
+
 
   private:
     Grid* grid_;
