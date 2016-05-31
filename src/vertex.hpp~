@@ -68,8 +68,8 @@ class Vertex
     void SetIsSource(bool);
     bool GetIsSource();
 
-    void SetParentEdge(Edge*);
-    Edge* GetParentEdge();
+    void SetParantEdge(Edge*);
+    Edge* GetParantEdge();
 
   private:
     Grid* grid_;
@@ -81,7 +81,7 @@ class Vertex
     std::vector<Edge*> incident_edges_;
       
     Vertex* parent_;
-    Edge* parent_edge_;
+    Edge* parant_edge_;
     std::vector<Vertex*> children_;
     int depth_;
 

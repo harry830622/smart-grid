@@ -56,8 +56,6 @@ class Graph
     Graph* ShrinkByArticulationPoints();
     Graph* ShrinkBySwitches();
 
-    double wire_upgrade;
-    int switch_change;
 };
 
 #endif

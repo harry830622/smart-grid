@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
   //smart_grid.GetGrid('C')->ShrinkGraph();
 
   smart_grid.GetGrid('A')->GetShrinkGraph()->SetApplySource();
-  //smart_grid.GetGrid('A')->GetGraph()->Check();
+  smart_grid.GetGrid('A')->GetGraph()->Check();
   smart_grid.GetGrid('A')->GetGraph()->CountCost();
   /* smart_grid.PrintEquipments(); */
   /* smart_grid.PrintGrids(); */

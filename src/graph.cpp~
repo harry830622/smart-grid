@@ -586,10 +586,9 @@ void Graph::CountCost (){
 			bfs_queue.pop();
 			for (int i=0; i<front->GetIncidentEdgesNum();++i){
 				Vertex* child = front->GetIncidentEdge(i)->GetNeighbor(front);
-				Edge* connect_edge = front->GetIncidentEdge(i); 
+				
 				if (child->GetType()==Vertex::Type::PSEUDO){
 				 	child = dynamic_cast<PseudoVertex*>(child)->GetBoundaryVertex(front->GetIncidentEdge(i));
-					connect_edge = edges_[front->GetIncidentEdge(i)->GetRaw()->GetName()];
 				}
 
 				if (child->GetIsVisited() || child->GetAssignSource()!=source_name){
@@ -599,7 +598,7 @@ void Graph::CountCost (){
 				child->SetParent(front);
 				front->AddChild(child);
 				bfs_queue.push(child);
-				child->SetParentEdge(connect_edge);
+				child->SetParentEdge(front->GetIncidentEdge(i));
 			}
 			if (front->GetChildrenNum() == 0){
 				vector_leafs.push_back(front);

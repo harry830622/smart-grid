@@ -221,9 +221,9 @@ double Vertex::GetVoltage(){
 }
 
 void Vertex::SetParentEdge(Edge* input){
-	parent_edge_ = input;
+	parant_edge_ = input;
 }
 
 Edge* Vertex::GetParentEdge(){
-	return parent_edge_;
+	return parant_edge_;
 }
