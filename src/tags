@@ -14,6 +14,10 @@ AddIncidentVertex	edge.cpp	/^void Edge::AddIncidentVertex(Vertex* vertex)$/;"	f	
 AddLoadingResident	source_vertex.cpp	/^void SourceVertex::AddLoadingResident(ResidentVertex* resident)$/;"	f	class:SourceVertex
 AddVertex	graph.cpp	/^void Graph::AddVertex(Vertex* vertex)$/;"	f	class:Graph
 AddVertex	grid.cpp	/^void Grid::AddVertex(Vertex* vertex)$/;"	f	class:Grid
+Check	graph.cpp	/^void Graph::Check() {$/;"	f	class:Graph
+CountDistanceDiff	vertex.cpp	/^void Vertex::CountDistanceDiff (){$/;"	f	class:Vertex
+DecimalSeparator	json.hpp	/^class DecimalSeparator : public std::numpunct<char>$/;"	c	namespace:nlohmann::__anon1
+DeepSetApplySource	graph.cpp	/^void Graph::DeepSetApplySource(string set_source){$/;"	f	class:Graph
 EDGE	edge.hpp	/^      EDGE,$/;"	m	class:Edge::Type
 EDGE_HPP	edge.hpp	2;"	d
 EQUIPMENT_HPP	equipment.hpp	2;"	d
@@ -24,6 +28,7 @@ Equipment	equipment.hpp	/^class Equipment$/;"	c
 FindArticulationPoints	graph.cpp	/^void FindArticulationPoints(Vertex* vertex, int depth)$/;"	f
 GRAPH_HPP	graph.hpp	2;"	d
 GRID_HPP	grid.hpp	2;"	d
+GetAssignSource	vertex.cpp	/^std::string Vertex::GetAssignSource(){ $/;"	f	class:Vertex
 GetBoundaryVertex	pseudo_vertex.cpp	/^Vertex* PseudoVertex::GetBoundaryVertex(Edge* edge) const$/;"	f	class:PseudoVertex
 GetBoundaryVertices	pseudo_vertex.cpp	/^vector<Vertex*> PseudoVertex::GetBoundaryVertices() const$/;"	f	class:PseudoVertex
 GetChild	vertex.cpp	/^Vertex* Vertex::GetChild(int idx) const$/;"	f	class:Vertex
@@ -31,9 +36,11 @@ GetChildrenNum	vertex.cpp	/^int Vertex::GetChildrenNum() const$/;"	f	class:Verte
 GetConsumingPower	pseudo_vertex.cpp	/^double PseudoVertex::GetConsumingPower() const$/;"	f	class:PseudoVertex
 GetConsumingPower	resident.cpp	/^double Resident::GetConsumingPower() const$/;"	f	class:Resident
 GetConsumingPower	resident_vertex.cpp	/^double ResidentVertex::GetConsumingPower() const$/;"	f	class:ResidentVertex
+GetCoordinate	node.cpp	/^Point Node::GetCoordinate() const$/;"	f	class:Node
 GetCurrent	edge.cpp	/^double Edge::GetCurrent() const$/;"	f	class:Edge
 GetCurrentLimit	wire.cpp	/^double Wire::GetCurrentLimit() const$/;"	f	class:Wire
 GetDepth	vertex.cpp	/^int Vertex::GetDepth() const$/;"	f	class:Vertex
+GetDistanceDiff	vertex.cpp	/^int Vertex::GetDistanceDiff (){$/;"	f	class:Vertex
 GetEdge	graph.cpp	/^Edge* Graph::GetEdge(string name) const$/;"	f	class:Graph
 GetEquipment	smart_grid.cpp	/^Equipment* SmartGrid::GetEquipment(string name) const$/;"	f	class:SmartGrid
 GetGraph	grid.cpp	/^Graph* Grid::GetGraph() const{$/;"	f	class:Grid
@@ -47,6 +54,7 @@ GetIncidentVertex	edge.cpp	/^Vertex* Edge::GetIncidentVertex(int i) const$/;"	f	
 GetIsArticulate	vertex.cpp	/^int Vertex::GetIsArticulate() const$/;"	f	class:Vertex
 GetIsOn	switch.cpp	/^bool Switch::GetIsOn() const$/;"	f	class:Switch
 GetIsOn	switch_edge.cpp	/^bool SwitchEdge::GetIsOn() const$/;"	f	class:SwitchEdge
+GetIsSource	vertex.cpp	/^bool Vertex::GetIsSource(){ $/;"	f	class:Vertex
 GetIsVisited	vertex.cpp	/^bool Vertex::GetIsVisited() const$/;"	f	class:Vertex
 GetLoadingPower	source_vertex.cpp	/^double SourceVertex::GetLoadingPower() const$/;"	f	class:SourceVertex
 GetLow	vertex.cpp	/^int Vertex::GetLow() const$/;"	f	class:Vertex
@@ -57,12 +65,18 @@ GetOutputPower	source.cpp	/^double Source::GetOutputPower() const$/;"	f	class:So
 GetOutputPower	source_vertex.cpp	/^double SourceVertex::GetOutputPower() const$/;"	f	class:SourceVertex
 GetParent	vertex.cpp	/^Vertex* Vertex::GetParent() const$/;"	f	class:Vertex
 GetPhase	grid.cpp	/^char Grid::GetPhase() const$/;"	f	class:Grid
+GetPriorityNum	vertex.cpp	/^int Vertex::GetPriorityNum (){$/;"	f	class:Vertex
 GetRaw	edge.cpp	/^Wire* Edge::GetRaw() const$/;"	f	class:Edge
 GetRaw	vertex.cpp	/^Node* Vertex::GetRaw() const$/;"	f	class:Vertex
 GetRemainingPower	source_vertex.cpp	/^double SourceVertex::GetRemainingPower() const$/;"	f	class:SourceVertex
 GetResistance	wire.cpp	/^double Wire::GetResistance() const$/;"	f	class:Wire
 GetRoot	graph.cpp	/^Vertex* Graph::GetRoot() const$/;"	f	class:Graph
+GetShrinkGraph	grid.cpp	/^Graph* Grid::GetShrinkGraph() const{$/;"	f	class:Grid
 GetSmartGrid	grid.cpp	/^SmartGrid* Grid::GetSmartGrid() const$/;"	f	class:Grid
+GetSource	graph.cpp	/^Vertex* Graph::GetSource(int index){$/;"	f	class:Graph
+GetSourceDistance	vertex.cpp	/^int Vertex::GetSourceDistance (Vertex* vertex){$/;"	f	class:Vertex
+GetSourceNum	graph.cpp	/^int Graph::GetSourceNum(){$/;"	f	class:Graph
+GetSourcePriority	vertex.cpp	/^Vertex* Vertex::GetSourcePriority (int index){$/;"	f	class:Vertex
 GetType	edge.cpp	/^Edge::Type Edge::GetType() const$/;"	f	class:Edge
 GetType	node.cpp	/^Node::Type Node::GetType() const$/;"	f	class:Node
 GetType	vertex.cpp	/^Vertex::Type Vertex::GetType() const$/;"	f	class:Vertex
@@ -80,10 +94,12 @@ Grid	grid.hpp	/^class Grid$/;"	c
 MarkArticulationPoints	graph.cpp	/^void Graph::MarkArticulationPoints()$/;"	f	class:Graph
 MergeBySwitches	pseudo_vertex.cpp	/^void PseudoVertex::MergeBySwitches(Vertex* root)$/;"	f	class:PseudoVertex
 MergeDescendants	pseudo_vertex.cpp	/^void PseudoVertex::MergeDescendants(Vertex* root)$/;"	f	class:PseudoVertex
+NLOHMANN_JSON_HPP	json.hpp	30;"	d
 NODE	node.hpp	/^      NODE,$/;"	m	class:Node::Type
 NODE_HPP	node.hpp	2;"	d
 Node	node.cpp	/^Node::Node(string name, Type type) : Equipment(name), type_(type)$/;"	f	class:Node
 Node	node.hpp	/^class Node : public Equipment$/;"	c
+OutputJSON	graph.cpp	/^void Graph::OutputJSON() const$/;"	f	class:Graph
 POINT_HPP	point.hpp	2;"	d
 PSEUDO_VERTEX_HPP	pseudo_vertex.hpp	2;"	d
 Parse	smart_grid.cpp	/^void SmartGrid::Parse(ifstream& equipments_data_input, ifstream& node_coordinates_input, ifstream& grids_wrapper_input)$/;"	f	class:SmartGrid
@@ -127,6 +143,8 @@ SOURCE_HPP	source.hpp	2;"	d
 SOURCE_VERTEX_HPP	source_vertex.hpp	2;"	d
 SWITCH_EDGE_HPP	switch_edge.hpp	2;"	d
 SWITCH_HPP	switch.hpp	2;"	d
+SetApplySource	graph.cpp	/^void Graph::SetApplySource(){$/;"	f	class:Graph
+SetAssignSource	vertex.cpp	/^void Vertex::SetAssignSource (std::string input){$/;"	f	class:Vertex
 SetCoordinateX	node.cpp	/^void Node::SetCoordinateX(double x)$/;"	f	class:Node
 SetCoordinateY	node.cpp	/^void Node::SetCoordinateY(double y)$/;"	f	class:Node
 SetCoordinateZ	node.cpp	/^void Node::SetCoordinateZ(double z)$/;"	f	class:Node
@@ -137,11 +155,14 @@ SetGrid	vertex.cpp	/^void Vertex::SetGrid(Grid* grid)$/;"	f	class:Vertex
 SetIncidentEdge	vertex.cpp	/^void Vertex::SetIncidentEdge(int idx, Edge* incident_edge)$/;"	f	class:Vertex
 SetIsArticulate	vertex.cpp	/^void Vertex::SetIsArticulate(bool is_articulate)$/;"	f	class:Vertex
 SetIsOn	switch.cpp	/^void Switch::SetIsOn(bool is_on)$/;"	f	class:Switch
+SetIsSource	vertex.cpp	/^void Vertex::SetIsSource (bool input){$/;"	f	class:Vertex
 SetIsVisted	vertex.cpp	/^void Vertex::SetIsVisted(bool is_visited)$/;"	f	class:Vertex
 SetLow	vertex.cpp	/^void Vertex::SetLow(int low)$/;"	f	class:Vertex
 SetParent	vertex.cpp	/^void Vertex::SetParent(Vertex* parent)$/;"	f	class:Vertex
 SetRoot	graph.cpp	/^void Graph::SetRoot(Vertex* root)$/;"	f	class:Graph
+SetShrinkSource	graph.cpp	/^void Graph::SetShrinkSource (){$/;"	f	class:Graph
 SetSource	resident_vertex.cpp	/^void ResidentVertex::SetSource(SourceVertex* source_vertex)$/;"	f	class:ResidentVertex
+SetSourceDistance	vertex.cpp	/^void Vertex::SetSourceDistance (Vertex* vertex, int distance){$/;"	f	class:Vertex
 SetX	point.cpp	/^void Point::SetX(double x)$/;"	f	class:Point
 SetY	point.cpp	/^void Point::SetY(double y)$/;"	f	class:Point
 SetZ	point.cpp	/^void Point::SetZ(double z)$/;"	f	class:Point
@@ -175,50 +196,351 @@ WIRE	wire.hpp	/^      WIRE,$/;"	m	class:Wire::Type
 WIRE_HPP	wire.hpp	2;"	d
 Wire	wire.cpp	/^Wire::Wire(string name, Type type, double resistance, double current_limit)$/;"	f	class:Wire
 Wire	wire.hpp	/^class Wire : public Equipment$/;"	c
+_json	json.hpp	/^inline nlohmann::json operator "" _json(const char* s, std::size_t)$/;"	f
+_json_pointer	json.hpp	/^inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std::size_t)$/;"	f
 all_edges_	grid.hpp	/^    std::map<Edge*, Edge*> all_edges_;$/;"	m	class:Grid
 all_vertices_	grid.hpp	/^    std::map<Vertex*, Vertex*> all_vertices_;$/;"	m	class:Grid
+anchor	json.hpp	/^                : anchor(it)$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+anchor	json.hpp	/^            IteratorType anchor;$/;"	m	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+array	json.hpp	/^        array,           \/\/\/< array (ordered collection of values)$/;"	m	class:nlohmann::basic_json::value_t
+array	json.hpp	/^        array_t* array;$/;"	m	union:nlohmann::basic_json::json_value
+array	json.hpp	/^    static basic_json array(std::initializer_list<basic_json> init =$/;"	f	class:nlohmann::basic_json
+array_end	json.hpp	/^        array_end,$/;"	m	class:nlohmann::basic_json::parse_event_t
+array_index	json.hpp	/^            size_t array_index = 0;$/;"	m	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+array_iterator	json.hpp	/^        typename array_t::iterator array_iterator;$/;"	m	struct:nlohmann::basic_json::internal_iterator
+array_start	json.hpp	/^        array_start,$/;"	m	class:nlohmann::basic_json::parse_event_t
+assign_source_	vertex.hpp	/^    std::string assign_source_;$/;"	m	class:Vertex
+at	json.hpp	/^    const_reference at(const json_pointer& ptr) const$/;"	f	class:nlohmann::basic_json
+at	json.hpp	/^    const_reference at(const typename object_t::key_type& key) const$/;"	f	class:nlohmann::basic_json
+at	json.hpp	/^    const_reference at(size_type idx) const$/;"	f	class:nlohmann::basic_json
+at	json.hpp	/^    reference at(const json_pointer& ptr)$/;"	f	class:nlohmann::basic_json
+at	json.hpp	/^    reference at(const typename object_t::key_type& key)$/;"	f	class:nlohmann::basic_json
+at	json.hpp	/^    reference at(size_type idx)$/;"	f	class:nlohmann::basic_json
+back	json.hpp	/^    const_reference back() const$/;"	f	class:nlohmann::basic_json
+back	json.hpp	/^    reference back()$/;"	f	class:nlohmann::basic_json
+base_iterator	json.hpp	/^            : base_iterator(it)$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+base_iterator	json.hpp	/^            : base_iterator(object)$/;"	f	class:nlohmann::basic_json::iterator
+base_iterator	json.hpp	/^            : base_iterator(other)$/;"	f	class:nlohmann::basic_json::iterator
+basic_json	json.hpp	/^        : basic_json(value_t::null)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(InputIT first, InputIT last) : m_type(first.m_object->m_type)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const CompatibleArrayType& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const CompatibleObjectType& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const CompatibleStringType& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const array_t& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const basic_json& other)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const object_t& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const string_t& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const typename string_t::value_type* val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(const value_t value_type)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(size_type cnt, const basic_json& val)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    basic_json(std::initializer_list<basic_json> init,$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^    explicit basic_json(std::istream& i, parser_callback_t cb = nullptr)$/;"	f	class:nlohmann::basic_json
+basic_json	json.hpp	/^class basic_json$/;"	c	namespace:nlohmann
+begin_array	json.hpp	/^            begin_array,     \/\/\/< the character for array begin "["$/;"	m	class:nlohmann::basic_json::lexer::token_type
+begin_object	json.hpp	/^            begin_object,    \/\/\/< the character for object begin "{"$/;"	m	class:nlohmann::basic_json::lexer::token_type
+begin_value	json.hpp	/^        static constexpr difference_type begin_value = 0;$/;"	m	class:nlohmann::basic_json::primitive_iterator_t
+bits	json.hpp	/^        } bits;$/;"	m	union:nlohmann::basic_json::type_data_t	typeref:struct:nlohmann::basic_json::type_data_t::__anon2
+boolean	json.hpp	/^        boolean,         \/\/\/< boolean value$/;"	m	class:nlohmann::basic_json::value_t
+boolean	json.hpp	/^        boolean_t boolean;$/;"	m	union:nlohmann::basic_json::json_value
+boolean	json.hpp	/^        json_value(boolean_t v) noexcept : boolean(v) {}$/;"	f	union:nlohmann::basic_json::json_value
 boundary_vertices_	pseudo_vertex.hpp	/^    std::map<Edge*, Vertex*> boundary_vertices_;$/;"	m	class:PseudoVertex
+callback	json.hpp	/^        parser_callback_t callback;$/;"	m	class:nlohmann::basic_json::parser
 children_	vertex.hpp	/^    std::vector<Vertex*> children_;$/;"	m	class:Vertex
+compare_function	graph.cpp	/^bool compare_function(Vertex* a, Vertex* b){$/;"	f
+const_iterator	json.hpp	/^    class const_iterator : public std::iterator<std::random_access_iterator_tag, const basic_json>$/;"	c	class:nlohmann::basic_json
 consuming_power_	pseudo_vertex.hpp	/^    double consuming_power_;$/;"	m	class:PseudoVertex
 consuming_power_	resident.hpp	/^    double consuming_power_;$/;"	m	class:Resident
+container	json.hpp	/^        typename IteratorType::reference container;$/;"	m	class:nlohmann::basic_json::iteration_proxy
 coordinate_	node.hpp	/^    Point coordinate_;$/;"	m	class:Node
+count	json.hpp	/^    size_type count(typename object_t::key_type key) const$/;"	f	class:nlohmann::basic_json
+create	json.hpp	/^    static T* create(Args&& ... args)$/;"	f	class:nlohmann::basic_json
 current_	edge.hpp	/^    double current_;$/;"	m	class:Edge
 current_limit_	wire.hpp	/^    double current_limit_;$/;"	m	class:Wire
+data	json.hpp	/^        uint16_t data;$/;"	m	union:nlohmann::basic_json::type_data_t
+depth	json.hpp	/^        int depth = 0;$/;"	m	class:nlohmann::basic_json::parser
 depth_	vertex.hpp	/^    int depth_;$/;"	m	class:Vertex
+diff	json.hpp	/^    static basic_json diff(const basic_json& source,$/;"	f	class:nlohmann::basic_json
+distance_diff_	vertex.hpp	/^    int distance_diff_;$/;"	m	class:Vertex
+do_decimal_point	json.hpp	/^    char do_decimal_point() const$/;"	f	class:nlohmann::__anon1::DecimalSeparator
+dump	json.hpp	/^    string_t dump(const int indent = -1) const$/;"	f	class:nlohmann::basic_json
+dump	json.hpp	/^    void dump(std::ostream& o,$/;"	f	class:nlohmann::basic_json
 edges_	graph.hpp	/^    std::map<std::string, Edge*> edges_;$/;"	m	class:Graph
+end_array	json.hpp	/^            end_array,       \/\/\/< the character for array end "]"$/;"	m	class:nlohmann::basic_json::lexer::token_type
+end_object	json.hpp	/^            end_object,      \/\/\/< the character for object end "}"$/;"	m	class:nlohmann::basic_json::lexer::token_type
+end_value	json.hpp	/^        static constexpr difference_type end_value = begin_value + 1;$/;"	m	class:nlohmann::basic_json::primitive_iterator_t
 equipments_	smart_grid.hpp	/^    std::map<std::string, Equipment*> equipments_;$/;"	m	class:SmartGrid
+erase	json.hpp	/^    InteratorType erase(InteratorType first, InteratorType last)$/;"	f	class:nlohmann::basic_json
+erase	json.hpp	/^    InteratorType erase(InteratorType pos)$/;"	f	class:nlohmann::basic_json
+erase	json.hpp	/^    size_type erase(const typename object_t::key_type& key)$/;"	f	class:nlohmann::basic_json
+erase	json.hpp	/^    void erase(const size_type idx)$/;"	f	class:nlohmann::basic_json
+escape	json.hpp	/^        static std::string escape(std::string s)$/;"	f	class:nlohmann::basic_json::json_pointer
+escape_string	json.hpp	/^    static string_t escape_string(const string_t& s)$/;"	f	class:nlohmann::basic_json
+exp_cap	json.hpp	/^            uint16_t exp_cap : 1;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
+exp_plus	json.hpp	/^            uint16_t exp_plus : 1;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
+expect	json.hpp	/^        void expect(typename lexer::token_type t) const$/;"	f	class:nlohmann::basic_json::parser
+find	json.hpp	/^    const_iterator find(typename object_t::key_type key) const$/;"	f	class:nlohmann::basic_json
+find	json.hpp	/^    iterator find(typename object_t::key_type key)$/;"	f	class:nlohmann::basic_json
+flatten	json.hpp	/^        static void flatten(const std::string& reference_string,$/;"	f	class:nlohmann::basic_json::json_pointer
+flatten	json.hpp	/^    basic_json flatten() const$/;"	f	class:nlohmann::basic_json
+front	json.hpp	/^    const_reference front() const$/;"	f	class:nlohmann::basic_json
+front	json.hpp	/^    reference front()$/;"	f	class:nlohmann::basic_json
+get	json.hpp	/^    ValueType get() const$/;"	f	class:nlohmann::basic_json
+get_allocator	json.hpp	/^    static allocator_type get_allocator()$/;"	f	class:nlohmann::basic_json
+get_and_create	json.hpp	/^        reference get_and_create(reference j) const$/;"	f	class:nlohmann::basic_json::json_pointer
+get_checked	json.hpp	/^        const_reference get_checked(const_pointer ptr) const$/;"	f	class:nlohmann::basic_json::json_pointer
+get_checked	json.hpp	/^        reference get_checked(pointer ptr) const$/;"	f	class:nlohmann::basic_json::json_pointer
+get_impl	json.hpp	/^    T get_impl(T*) const$/;"	f	class:nlohmann::basic_json
+get_impl	json.hpp	/^    array_t get_impl(array_t*) const$/;"	f	class:nlohmann::basic_json
+get_impl	json.hpp	/^    constexpr boolean_t get_impl(boolean_t*) const$/;"	f	class:nlohmann::basic_json
+get_impl	json.hpp	/^    object_t get_impl(object_t*) const$/;"	f	class:nlohmann::basic_json
+get_impl	json.hpp	/^    std::vector<T> get_impl(std::vector<T>*) const$/;"	f	class:nlohmann::basic_json
+get_number	json.hpp	/^        void get_number(basic_json& result) const$/;"	f	class:nlohmann::basic_json::lexer
+get_ref	json.hpp	/^    ReferenceType get_ref() const$/;"	f	class:nlohmann::basic_json
+get_ref	json.hpp	/^    ReferenceType get_ref()$/;"	f	class:nlohmann::basic_json
+get_ref_impl	json.hpp	/^    static ReferenceType get_ref_impl(ThisType& obj)$/;"	f	class:nlohmann::basic_json
+get_string	json.hpp	/^        string_t get_string() const$/;"	f	class:nlohmann::basic_json::lexer
+get_token	json.hpp	/^        string_t get_token() const$/;"	f	class:nlohmann::basic_json::lexer
+get_unchecked	json.hpp	/^        const_reference get_unchecked(const_pointer ptr) const$/;"	f	class:nlohmann::basic_json::json_pointer
+get_unchecked	json.hpp	/^        reference get_unchecked(pointer ptr) const$/;"	f	class:nlohmann::basic_json::json_pointer
 graph_	grid.hpp	/^    Graph* graph_;$/;"	m	class:Grid
 graph_	pseudo_vertex.hpp	/^    Graph* graph_;$/;"	m	class:PseudoVertex
 grid_	edge.hpp	/^    Grid* grid_;$/;"	m	class:Edge
 grid_	graph.hpp	/^    Grid* grid_;$/;"	m	class:Graph
 grid_	vertex.hpp	/^    Grid* grid_;$/;"	m	class:Vertex
 grids_	smart_grid.hpp	/^    std::map<char, Grid*> grids_;$/;"	m	class:SmartGrid
+has_exp	json.hpp	/^            uint16_t has_exp : 1;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
+has_mapped_type	json.hpp	/^struct has_mapped_type$/;"	s	namespace:nlohmann::__anon1
+hash	json.hpp	/^struct hash<nlohmann::json>$/;"	s	namespace:std
 incident_edges_	vertex.hpp	/^    std::vector<Edge*> incident_edges_;$/;"	m	class:Vertex
 incident_vertices_	edge.hpp	/^    std::vector<Vertex*> incident_vertices_;$/;"	m	class:Edge
+insert	json.hpp	/^    iterator insert(const_iterator pos, basic_json&& val)$/;"	f	class:nlohmann::basic_json
+insert	json.hpp	/^    iterator insert(const_iterator pos, const basic_json& val)$/;"	f	class:nlohmann::basic_json
+insert	json.hpp	/^    iterator insert(const_iterator pos, const_iterator first, const_iterator last)$/;"	f	class:nlohmann::basic_json
+insert	json.hpp	/^    iterator insert(const_iterator pos, size_type cnt, const basic_json& val)$/;"	f	class:nlohmann::basic_json
+insert	json.hpp	/^    iterator insert(const_iterator pos, std::initializer_list<basic_json> ilist)$/;"	f	class:nlohmann::basic_json
+internal_iterator	json.hpp	/^    struct internal_iterator$/;"	s	class:nlohmann::basic_json
 is_articulate_	vertex.hpp	/^    bool is_articulate_;$/;"	m	class:Vertex
 is_on_	switch.hpp	/^    bool is_on_;$/;"	m	class:Switch
+is_root	json.hpp	/^        bool is_root() const$/;"	f	class:nlohmann::basic_json::json_pointer
+is_source_	vertex.hpp	/^    bool is_source_;$/;"	m	class:Vertex
+iteration_proxy	json.hpp	/^        explicit iteration_proxy(typename IteratorType::reference cont)$/;"	f	class:nlohmann::basic_json::iteration_proxy
+iteration_proxy	json.hpp	/^    class iteration_proxy$/;"	c	class:nlohmann::basic_json
+iteration_proxy_internal	json.hpp	/^        class iteration_proxy_internal$/;"	c	class:nlohmann::basic_json::iteration_proxy
+iterator	json.hpp	/^    class iterator : public const_iterator$/;"	c	class:nlohmann::basic_json
+iterator_wrapper	json.hpp	/^    static iteration_proxy<const_iterator> iterator_wrapper(const_reference cont)$/;"	f	class:nlohmann::basic_json
+iterator_wrapper	json.hpp	/^    static iteration_proxy<iterator> iterator_wrapper(reference cont)$/;"	f	class:nlohmann::basic_json
+json_pointer	json.hpp	/^        explicit json_pointer(const std::string& s = "")$/;"	f	class:nlohmann::basic_json::json_pointer
+json_pointer	json.hpp	/^    class json_pointer$/;"	c	class:nlohmann::basic_json
+json_reverse_iterator	json.hpp	/^    class json_reverse_iterator : public std::reverse_iterator<Base>$/;"	c	class:nlohmann::basic_json
+json_value	json.hpp	/^        json_value(const array_t& value)$/;"	f	union:nlohmann::basic_json::json_value
+json_value	json.hpp	/^        json_value(const object_t& value)$/;"	f	union:nlohmann::basic_json::json_value
+json_value	json.hpp	/^        json_value(const string_t& value)$/;"	f	union:nlohmann::basic_json::json_value
+json_value	json.hpp	/^        json_value(value_t t)$/;"	f	union:nlohmann::basic_json::json_value
+json_value	json.hpp	/^    union json_value$/;"	u	class:nlohmann::basic_json
+key	json.hpp	/^            typename basic_json::string_t key() const$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+key	json.hpp	/^        key,$/;"	m	class:nlohmann::basic_json::parse_event_t
+key	json.hpp	/^        typename object_t::key_type key() const$/;"	f	class:nlohmann::basic_json::const_iterator
+key	json.hpp	/^        typename object_t::key_type key() const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+last_token	json.hpp	/^        typename lexer::token_type last_token = lexer::token_type::uninitialized;$/;"	m	class:nlohmann::basic_json::parser
+lexer	json.hpp	/^    class lexer$/;"	c	class:nlohmann::basic_json
+literal_false	json.hpp	/^            literal_false,   \/\/\/< the "false" literal$/;"	m	class:nlohmann::basic_json::lexer::token_type
+literal_null	json.hpp	/^            literal_null,    \/\/\/< the "null" literal$/;"	m	class:nlohmann::basic_json::lexer::token_type
+literal_true	json.hpp	/^            literal_true,    \/\/\/< the "true" literal$/;"	m	class:nlohmann::basic_json::lexer::token_type
 loading_residents_	source_vertex.hpp	/^    std::map<std::string, ResidentVertex*> loading_residents_;$/;"	m	class:SourceVertex
 low_	vertex.hpp	/^    int low_;$/;"	m	class:Vertex
+m_buffer	json.hpp	/^            : m_stream(nullptr), m_buffer(s)$/;"	f	class:nlohmann::basic_json::lexer
+m_buffer	json.hpp	/^            : m_stream(s), m_buffer()$/;"	f	class:nlohmann::basic_json::lexer
+m_buffer	json.hpp	/^        string_t m_buffer;$/;"	m	class:nlohmann::basic_json::lexer
+m_content	json.hpp	/^        const lexer_char_t* m_content = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_cursor	json.hpp	/^        const lexer_char_t* m_cursor = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_it	json.hpp	/^            : m_object(other.m_object), m_it(other.m_it)$/;"	f	class:nlohmann::basic_json::const_iterator
+m_it	json.hpp	/^        difference_type m_it = std::numeric_limits<std::ptrdiff_t>::denorm_min();$/;"	m	class:nlohmann::basic_json::primitive_iterator_t
+m_it	json.hpp	/^        internal_iterator m_it = internal_iterator();$/;"	m	class:nlohmann::basic_json::const_iterator
+m_lexer	json.hpp	/^            : callback(cb), m_lexer(s)$/;"	f	class:nlohmann::basic_json::parser
+m_lexer	json.hpp	/^        lexer m_lexer;$/;"	m	class:nlohmann::basic_json::parser
+m_limit	json.hpp	/^        const lexer_char_t* m_limit = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_marker	json.hpp	/^        const lexer_char_t* m_marker = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_object	json.hpp	/^            : m_object(object)$/;"	f	class:nlohmann::basic_json::const_iterator
+m_object	json.hpp	/^            : m_object(other.m_object)$/;"	f	class:nlohmann::basic_json::const_iterator
+m_object	json.hpp	/^        pointer m_object = nullptr;$/;"	m	class:nlohmann::basic_json::const_iterator
+m_start	json.hpp	/^        const lexer_char_t* m_start = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_stream	json.hpp	/^        std::istream* m_stream = nullptr;$/;"	m	class:nlohmann::basic_json::lexer
+m_type	json.hpp	/^    type_data_t m_type = value_t::null;$/;"	m	class:nlohmann::basic_json
+m_value	json.hpp	/^        : m_type(value_t::boolean), m_value(val)$/;"	f	class:nlohmann::basic_json
+m_value	json.hpp	/^        : m_type(value_t::number_float), m_value(val)$/;"	f	class:nlohmann::basic_json
+m_value	json.hpp	/^        : m_type(value_t::number_integer), m_value(val)$/;"	f	class:nlohmann::basic_json
+m_value	json.hpp	/^        : m_type(value_t::number_unsigned), m_value(val)$/;"	f	class:nlohmann::basic_json
+m_value	json.hpp	/^    json_value m_value = {};$/;"	m	class:nlohmann::basic_json
 main	main.cpp	/^int main(int argc, char* argv[])$/;"	f
+move	json.hpp	/^          m_value(std::move(other.m_value))$/;"	f	class:nlohmann::basic_json
 name_	equipment.hpp	/^    std::string name_;$/;"	m	class:Equipment
+name_separator	json.hpp	/^            name_separator,  \/\/\/< the name separator ":"$/;"	m	class:nlohmann::basic_json::lexer::token_type
+nlohmann	json.hpp	/^namespace nlohmann$/;"	n
+noexcept	json.hpp	/^                 nlohmann::json& j2) noexcept($/;"	f	namespace:std
+noexcept	json.hpp	/^        const_iterator& operator=(const_iterator other) noexcept($/;"	f	class:nlohmann::basic_json::const_iterator
+noexcept	json.hpp	/^        internal_iterator() noexcept$/;"	m	struct:nlohmann::basic_json::internal_iterator
+noexcept	json.hpp	/^        iterator& operator=(iterator other) noexcept($/;"	f	class:nlohmann::basic_json::iterator
+noexcept	json.hpp	/^    reference& operator=(basic_json other) noexcept ($/;"	f	class:nlohmann::basic_json
+noexcept	json.hpp	/^    void swap(reference other) noexcept ($/;"	f	class:nlohmann::basic_json
+null	json.hpp	/^        null,            \/\/\/< null value$/;"	m	class:nlohmann::basic_json::value_t
+number_float	json.hpp	/^        json_value(number_float_t v) noexcept : number_float(v) {}$/;"	f	union:nlohmann::basic_json::json_value
+number_float	json.hpp	/^        number_float,    \/\/\/< number value (floating-point)$/;"	m	class:nlohmann::basic_json::value_t
+number_float	json.hpp	/^        number_float_t number_float;$/;"	m	union:nlohmann::basic_json::json_value
+number_float_t	json.hpp	/^        : basic_json(number_float_t(val))$/;"	f	class:nlohmann::basic_json
+number_integer	json.hpp	/^        json_value(number_integer_t v) noexcept : number_integer(v) {}$/;"	f	union:nlohmann::basic_json::json_value
+number_integer	json.hpp	/^        number_integer,  \/\/\/< number value (integer)$/;"	m	class:nlohmann::basic_json::value_t
+number_integer	json.hpp	/^        number_integer_t number_integer;$/;"	m	union:nlohmann::basic_json::json_value
+number_unsigned	json.hpp	/^        json_value(number_unsigned_t v) noexcept : number_unsigned(v) {}$/;"	f	union:nlohmann::basic_json::json_value
+number_unsigned	json.hpp	/^        number_unsigned, \/\/\/< number value (unsigned integer)$/;"	m	class:nlohmann::basic_json::value_t
+number_unsigned	json.hpp	/^        number_unsigned_t number_unsigned;$/;"	m	union:nlohmann::basic_json::json_value
+object	json.hpp	/^        object,          \/\/\/< object (unordered set of name\/value pairs)$/;"	m	class:nlohmann::basic_json::value_t
+object	json.hpp	/^        object_t* object;$/;"	m	union:nlohmann::basic_json::json_value
+object	json.hpp	/^    static basic_json object(std::initializer_list<basic_json> init =$/;"	f	class:nlohmann::basic_json
+object_end	json.hpp	/^        object_end,$/;"	m	class:nlohmann::basic_json::parse_event_t
+object_iterator	json.hpp	/^        typename object_t::iterator object_iterator;$/;"	m	struct:nlohmann::basic_json::internal_iterator
+object_start	json.hpp	/^        object_start,$/;"	m	class:nlohmann::basic_json::parse_event_t
+operator !=	json.hpp	/^            bool operator!= (const iteration_proxy_internal& o) const$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+operator !=	json.hpp	/^        bool operator!=(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator ()	json.hpp	/^    std::size_t operator()(const nlohmann::json& j) const$/;"	f	struct:std::hash
+operator *	json.hpp	/^            iteration_proxy_internal& operator*()$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+operator *	json.hpp	/^        reference operator*() const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator *	json.hpp	/^        reference operator*() const$/;"	f	class:nlohmann::basic_json::iterator
+operator +	json.hpp	/^        const_iterator operator+(difference_type i)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator +	json.hpp	/^        iterator operator+(difference_type i)$/;"	f	class:nlohmann::basic_json::iterator
+operator +	json.hpp	/^        json_reverse_iterator operator+(difference_type i) const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator ++	json.hpp	/^            iteration_proxy_internal& operator++()$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+operator ++	json.hpp	/^        const_iterator operator++(int)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator ++	json.hpp	/^        const_iterator& operator++()$/;"	f	class:nlohmann::basic_json::const_iterator
+operator ++	json.hpp	/^        iterator operator++(int)$/;"	f	class:nlohmann::basic_json::iterator
+operator ++	json.hpp	/^        iterator& operator++()$/;"	f	class:nlohmann::basic_json::iterator
+operator ++	json.hpp	/^        json_reverse_iterator operator++(int)$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator ++	json.hpp	/^        json_reverse_iterator& operator++()$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator +=	json.hpp	/^        const_iterator& operator+=(difference_type i)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator +=	json.hpp	/^        iterator& operator+=(difference_type i)$/;"	f	class:nlohmann::basic_json::iterator
+operator +=	json.hpp	/^        json_reverse_iterator& operator+=(difference_type i)$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator +=	json.hpp	/^    reference operator+=(basic_json&& val)$/;"	f	class:nlohmann::basic_json
+operator +=	json.hpp	/^    reference operator+=(const basic_json& val)$/;"	f	class:nlohmann::basic_json
+operator +=	json.hpp	/^    reference operator+=(const typename object_t::value_type& val)$/;"	f	class:nlohmann::basic_json
+operator +=	json.hpp	/^    reference operator+=(std::initializer_list<basic_json> init)$/;"	f	class:nlohmann::basic_json
+operator -	json.hpp	/^        const_iterator operator-(difference_type i)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator -	json.hpp	/^        difference_type operator-(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator -	json.hpp	/^        difference_type operator-(const iterator& other) const$/;"	f	class:nlohmann::basic_json::iterator
+operator -	json.hpp	/^        difference_type operator-(const json_reverse_iterator& other) const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator -	json.hpp	/^        iterator operator-(difference_type i)$/;"	f	class:nlohmann::basic_json::iterator
+operator -	json.hpp	/^        json_reverse_iterator operator-(difference_type i) const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator --	json.hpp	/^        const_iterator operator--(int)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator --	json.hpp	/^        const_iterator& operator--()$/;"	f	class:nlohmann::basic_json::const_iterator
+operator --	json.hpp	/^        iterator operator--(int)$/;"	f	class:nlohmann::basic_json::iterator
+operator --	json.hpp	/^        iterator& operator--()$/;"	f	class:nlohmann::basic_json::iterator
+operator --	json.hpp	/^        json_reverse_iterator operator--(int)$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator --	json.hpp	/^        json_reverse_iterator& operator--()$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator -=	json.hpp	/^        const_iterator& operator-=(difference_type i)$/;"	f	class:nlohmann::basic_json::const_iterator
+operator -=	json.hpp	/^        iterator& operator-=(difference_type i)$/;"	f	class:nlohmann::basic_json::iterator
+operator ->	json.hpp	/^        pointer operator->() const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator ->	json.hpp	/^        pointer operator->() const$/;"	f	class:nlohmann::basic_json::iterator
+operator <	json.hpp	/^        bool operator<(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator <<	json.hpp	/^    friend std::istream& operator<<(basic_json& j, std::istream& i)$/;"	f	class:nlohmann::basic_json
+operator <<	json.hpp	/^    friend std::ostream& operator<<(std::ostream& o, const basic_json& j)$/;"	f	class:nlohmann::basic_json
+operator <=	json.hpp	/^        bool operator<=(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator =	json.hpp	/^        type_data_t& operator=(value_t rhs)$/;"	f	union:nlohmann::basic_json::type_data_t
+operator ==	json.hpp	/^        bool operator==(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator ==	json.hpp	/^        bool operator==(const value_t& rhs) const$/;"	f	union:nlohmann::basic_json::type_data_t
+operator >	json.hpp	/^        bool operator>(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator >=	json.hpp	/^        bool operator>=(const const_iterator& other) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator >>	json.hpp	/^    friend std::istream& operator>>(std::istream& i, basic_json& j)$/;"	f	class:nlohmann::basic_json
+operator >>	json.hpp	/^    friend std::ostream& operator>>(const basic_json& j, std::ostream& o)$/;"	f	class:nlohmann::basic_json
+operator ValueType	json.hpp	/^    operator ValueType() const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^        reference operator[](difference_type n) const$/;"	f	class:nlohmann::basic_json::const_iterator
+operator []	json.hpp	/^        reference operator[](difference_type n) const$/;"	f	class:nlohmann::basic_json::iterator
+operator []	json.hpp	/^        reference operator[](difference_type n) const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+operator []	json.hpp	/^    const_reference operator[](T * (&key)[n]) const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    const_reference operator[](T* key) const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    const_reference operator[](const json_pointer& ptr) const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    const_reference operator[](const typename object_t::key_type& key) const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    const_reference operator[](size_type idx) const$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    reference operator[](T * (&key)[n])$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    reference operator[](T* key)$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    reference operator[](const json_pointer& ptr)$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    reference operator[](const typename object_t::key_type& key)$/;"	f	class:nlohmann::basic_json
+operator []	json.hpp	/^    reference operator[](size_type idx)$/;"	f	class:nlohmann::basic_json
+operator std::string	json.hpp	/^        operator std::string() const$/;"	f	class:nlohmann::basic_json::json_pointer
+operator value_t	json.hpp	/^        operator value_t() const$/;"	f	union:nlohmann::basic_json::type_data_t
 output_power_	source.hpp	/^    double output_power_;$/;"	m	class:Source
 parent_	vertex.hpp	/^    Vertex* parent_;$/;"	m	class:Vertex
+parse	json.hpp	/^        basic_json parse()$/;"	f	class:nlohmann::basic_json::parser
+parse	json.hpp	/^    static basic_json parse(const string_t& s, parser_callback_t cb = nullptr)$/;"	f	class:nlohmann::basic_json
+parse	json.hpp	/^    static basic_json parse(std::istream& i, parser_callback_t cb = nullptr)$/;"	f	class:nlohmann::basic_json
+parse	json.hpp	/^    static basic_json parse(std::istream&& i, parser_callback_t cb = nullptr)$/;"	f	class:nlohmann::basic_json
+parse_error	json.hpp	/^            parse_error,     \/\/\/< indicating a parse error$/;"	m	class:nlohmann::basic_json::lexer::token_type
+parse_event_t	json.hpp	/^    enum class parse_event_t : uint8_t$/;"	c	class:nlohmann::basic_json
+parse_internal	json.hpp	/^        basic_json parse_internal(bool keep)$/;"	f	class:nlohmann::basic_json::parser
+parsed	json.hpp	/^            uint16_t parsed : 1;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
+parser	json.hpp	/^    class parser$/;"	c	class:nlohmann::basic_json
+patch	json.hpp	/^    basic_json patch(const basic_json& json_patch) const$/;"	f	class:nlohmann::basic_json
 phase_	grid.hpp	/^    char phase_;$/;"	m	class:Grid
+pop_back	json.hpp	/^        std::string pop_back()$/;"	f	class:nlohmann::basic_json::json_pointer
+precision	json.hpp	/^            uint16_t precision : 8;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
+primitive_iterator	json.hpp	/^            : object_iterator(), array_iterator(), primitive_iterator()$/;"	f	struct:nlohmann::basic_json::internal_iterator
+primitive_iterator	json.hpp	/^        primitive_iterator_t primitive_iterator;$/;"	m	struct:nlohmann::basic_json::internal_iterator
+primitive_iterator_t	json.hpp	/^    class primitive_iterator_t$/;"	c	class:nlohmann::basic_json
+priority_compare	vertex.cpp	/^bool priority_compare(pair<Vertex*, int> a, pair<Vertex*, int> b){$/;"	f
+push_back	json.hpp	/^    void push_back(basic_json&& val)$/;"	f	class:nlohmann::basic_json
+push_back	json.hpp	/^    void push_back(const basic_json& val)$/;"	f	class:nlohmann::basic_json
+push_back	json.hpp	/^    void push_back(const typename object_t::value_type& val)$/;"	f	class:nlohmann::basic_json
+push_back	json.hpp	/^    void push_back(std::initializer_list<basic_json> init)$/;"	f	class:nlohmann::basic_json
 raw_	edge.hpp	/^    Wire* raw_;$/;"	m	class:Edge
 raw_	vertex.hpp	/^    Node* raw_;$/;"	m	class:Vertex
+remain_power_	graph.hpp	/^    std::map<std::string,double> remain_power_;$/;"	m	class:Graph
+replace_substring	json.hpp	/^        static void replace_substring(std::string& s,$/;"	f	class:nlohmann::basic_json::json_pointer
 resident_	resident_vertex.hpp	/^    Resident* resident_;$/;"	m	class:ResidentVertex
 resistance_	wire.hpp	/^    double resistance_;$/;"	m	class:Wire
 root_	graph.hpp	/^    Vertex* root_;$/;"	m	class:Graph
 shrinked_graph_	grid.hpp	/^    Graph* shrinked_graph_;$/;"	m	class:Grid
 smart_grid_	grid.hpp	/^    SmartGrid* smart_grid_;$/;"	m	class:Grid
 source_	source_vertex.hpp	/^    Source* source_;$/;"	m	class:SourceVertex
+source_distance_	vertex.hpp	/^    std::map<Vertex*, int> source_distance_;$/;"	m	class:Vertex
+source_priority_	vertex.hpp	/^    std::vector<std::pair<Vertex*, int>> source_priority_;$/;"	m	class:Vertex
 source_vertex_	resident_vertex.hpp	/^    SourceVertex* source_vertex_;$/;"	m	class:ResidentVertex
-source_vertices_	graph.hpp	/^    std::vector<SourceVertex*> source_vertices_;$/;"	m	class:Graph
+source_vertices_	graph.hpp	/^    std::vector<Vertex*> source_vertices_;$/;"	m	class:Graph
+split	json.hpp	/^        static std::vector<std::string> split(std::string reference_string)$/;"	f	class:nlohmann::basic_json::json_pointer
+static_cast	json.hpp	/^          m_value(static_cast<number_integer_t>(val))$/;"	f	class:nlohmann::basic_json
+static_cast	json.hpp	/^          m_value(static_cast<number_unsigned_t>(val))$/;"	f	class:nlohmann::basic_json
+std	json.hpp	/^namespace std$/;"	n
+str_to_float_t	json.hpp	/^        double str_to_float_t(double* \/* type *\/, char** endptr) const$/;"	f	class:nlohmann::basic_json::lexer
+str_to_float_t	json.hpp	/^        float str_to_float_t(float* \/* type *\/, char** endptr) const$/;"	f	class:nlohmann::basic_json::lexer
+str_to_float_t	json.hpp	/^        long double str_to_float_t(long double* \/* type *\/, char** endptr) const$/;"	f	class:nlohmann::basic_json::lexer
+string	json.hpp	/^        string,          \/\/\/< string value$/;"	m	class:nlohmann::basic_json::value_t
+string	json.hpp	/^        string_t* string;$/;"	m	union:nlohmann::basic_json::json_value
+swap	json.hpp	/^    void swap(array_t& other)$/;"	f	class:nlohmann::basic_json
+swap	json.hpp	/^    void swap(object_t& other)$/;"	f	class:nlohmann::basic_json
+swap	json.hpp	/^    void swap(string_t& other)$/;"	f	class:nlohmann::basic_json
 switch_	switch_edge.hpp	/^    Switch* switch_;$/;"	m	class:SwitchEdge
+to_unicode	json.hpp	/^        static string_t to_unicode(const std::size_t codepoint1,$/;"	f	class:nlohmann::basic_json::lexer
+token_type	json.hpp	/^        enum class token_type$/;"	c	class:nlohmann::basic_json::lexer
+token_type_name	json.hpp	/^        static std::string token_type_name(token_type t)$/;"	f	class:nlohmann::basic_json::lexer
+top	json.hpp	/^        json_pointer top() const$/;"	f	class:nlohmann::basic_json::json_pointer
+type	json.hpp	/^            uint16_t type : 4;$/;"	m	struct:nlohmann::basic_json::type_data_t::__anon2
 type_	edge.hpp	/^    Type type_;$/;"	m	class:Edge
 type_	node.hpp	/^    Type type_;$/;"	m	class:Node
 type_	vertex.hpp	/^    Type type_;$/;"	m	class:Vertex
 type_	wire.hpp	/^    Type type_;$/;"	m	class:Wire
+type_data_t	json.hpp	/^    union type_data_t$/;"	u	class:nlohmann::basic_json
+unescape	json.hpp	/^        static void unescape(std::string& s)$/;"	f	class:nlohmann::basic_json::json_pointer
+unexpect	json.hpp	/^        void unexpect(typename lexer::token_type t) const$/;"	f	class:nlohmann::basic_json::parser
+unflatten	json.hpp	/^        static basic_json unflatten(const basic_json& value)$/;"	f	class:nlohmann::basic_json::json_pointer
+unflatten	json.hpp	/^    basic_json unflatten() const$/;"	f	class:nlohmann::basic_json
+uninitialized	json.hpp	/^            uninitialized,   \/\/\/< indicating the scanner is uninitialized$/;"	m	class:nlohmann::basic_json::lexer::token_type
+value	json.hpp	/^            typename IteratorType::reference value() const$/;"	f	class:nlohmann::basic_json::iteration_proxy::iteration_proxy_internal
+value	json.hpp	/^        reference value() const$/;"	f	class:nlohmann::basic_json::const_iterator
+value	json.hpp	/^        reference value() const$/;"	f	class:nlohmann::basic_json::iterator
+value	json.hpp	/^        reference value() const$/;"	f	class:nlohmann::basic_json::json_reverse_iterator
+value	json.hpp	/^    ValueType value(const typename object_t::key_type& key, ValueType default_value) const$/;"	f	class:nlohmann::basic_json
+value	json.hpp	/^    static constexpr bool value = sizeof(test<T>(0)) == 1;$/;"	m	struct:nlohmann::__anon1::has_mapped_type
+value	json.hpp	/^    string_t value(const typename object_t::key_type& key, const char* default_value) const$/;"	f	class:nlohmann::basic_json
+value_number	json.hpp	/^            value_number,    \/\/\/< a number -- use get_number() for actual value$/;"	m	class:nlohmann::basic_json::lexer::token_type
+value_separator	json.hpp	/^            value_separator, \/\/\/< the value separator ","$/;"	m	class:nlohmann::basic_json::lexer::token_type
+value_string	json.hpp	/^            value_string,    \/\/\/< a string -- use get_string() for actual value$/;"	m	class:nlohmann::basic_json::lexer::token_type
+value_t	json.hpp	/^    enum class value_t : uint8_t$/;"	c	class:nlohmann::basic_json
 vertices_	graph.hpp	/^    std::map<std::string, Vertex*> vertices_;$/;"	m	class:Graph
 voltage_	vertex.hpp	/^    double voltage_;$/;"	m	class:Vertex
 x_	point.hpp	/^    double x_;$/;"	m	class:Point
@@ -227,3 +549,4 @@ z_	point.hpp	/^    double z_;$/;"	m	class:Point
 ~Grid	grid.cpp	/^Grid::~Grid()$/;"	f	class:Grid
 ~PseudoVertex	pseudo_vertex.cpp	/^PseudoVertex::~PseudoVertex()$/;"	f	class:PseudoVertex
 ~SmartGrid	smart_grid.cpp	/^SmartGrid::~SmartGrid()$/;"	f	class:SmartGrid
+~basic_json	json.hpp	/^    ~basic_json()$/;"	f	class:nlohmann::basic_json

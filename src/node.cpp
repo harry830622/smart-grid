@@ -15,6 +15,11 @@ void Node::Print() const
   cout << "  x: " << coordinate_.GetX() << " y: " << coordinate_.GetY() << " z: " << coordinate_.GetZ() << endl;
 }
 
+Point Node::GetCoordinate() const
+{
+  return coordinate_;
+}
+
 Node::Type Node::GetType() const
 {
   return type_;

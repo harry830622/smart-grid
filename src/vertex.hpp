@@ -46,6 +46,7 @@ class Vertex
     int GetDistanceDiff();
     Vertex* GetSourcePriority(int);
     int GetPriorityNum();
+    double GetVoltage();
 
     void SetGrid(Grid* grid);
 
@@ -58,6 +59,7 @@ class Vertex
     void SetIsArticulate(bool is_articulate);
     void SetSourceDistance (Vertex*, int);
     void SetAssignSource(std::string);
+    void SetVoltage(double);
 
     void AddIncidentEdge(Edge* incident_edge);
     void AddChild(Vertex* child);
@@ -65,6 +67,9 @@ class Vertex
     void CountDistanceDiff ();
     void SetIsSource(bool);
     bool GetIsSource();
+
+    void SetParentEdge(Edge*);
+    Edge* GetParentEdge();
 
   private:
     Grid* grid_;
@@ -76,6 +81,7 @@ class Vertex
     std::vector<Edge*> incident_edges_;
       
     Vertex* parent_;
+    Edge* parent_edge_;
     std::vector<Vertex*> children_;
     int depth_;
 

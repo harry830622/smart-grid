@@ -152,6 +152,7 @@ void Vertex::ResetMarks()
   parent_ = nullptr;
   children_.clear();
   depth_ = -1;
+  parent_edge_ = nullptr;
 }
 
 void Vertex::SetSourceDistance (Vertex* vertex, int distance){
@@ -209,4 +210,20 @@ void Vertex::SetIsSource (bool input){
 
 bool Vertex::GetIsSource(){ 
 	return is_source_;
+}
+
+void Vertex::SetVoltage(double input){
+	voltage_ = input;
+}
+
+double Vertex::GetVoltage(){
+	return voltage_;
+}
+
+void Vertex::SetParentEdge(Edge* input){
+	parent_edge_ = input;
+}
+
+Edge* Vertex::GetParentEdge(){
+	return parent_edge_;
 }

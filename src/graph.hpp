@@ -17,6 +17,7 @@ class Graph
     ~Graph() = default;
 
     void Print() const;
+    void OutputJSON() const;
 
     Graph* Shrink();
 
@@ -32,12 +33,11 @@ class Graph
     void AddEdge(Edge* edge);
     void SetApplySource();
     int GetSourceNum();
-    void SetShrinkSource(); // set peudo vertex which contains sources into source_vertices_
+    void SetShrinkSource(); // set pseudo vertex which contains sources into source_vertices_
     Vertex* GetSource(int);
     void DeepSetApplySource(std::string="no assign");
-
+    void CountCost();
     void Check ();
-    
 
   private:
     Grid* grid_;
@@ -55,6 +55,8 @@ class Graph
     Graph* ShrinkByArticulationPoints();
     Graph* ShrinkBySwitches();
 
+    double wire_upgrade;
+    int switch_change;
 };
 
 #endif
