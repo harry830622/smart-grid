@@ -33,11 +33,11 @@ class Graph
     void AddEdge(Edge* edge);
     void SetApplySource();
     int GetSourceNum();
-    void SetShrinkSource(); // set pseudo vertex which contains sources into source_vertices_
+    void SetShrinkSource(); // Set pseudo vertex which contains sources into source_vertices_
     Vertex* GetSource(int);
-    void DeepSetApplySource(std::string="no assign");
+    void DeepSetApplySource(std::string = "no assign");
     void CountCost();
-    void Check ();
+    void Check();
 
   private:
     Grid* grid_;
@@ -46,7 +46,7 @@ class Graph
     std::map<std::string, Edge*> edges_;
 
     std::vector<Vertex*> source_vertices_;
-    std::map<std::string,double> remain_power_;
+    std::map<std::string, double> remain_power_;
 
     Vertex* root_;
 

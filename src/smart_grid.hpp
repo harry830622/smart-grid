@@ -9,6 +9,8 @@
 
 class Grid;
 
+// It's a container at the top of the hierarchy used for parsing and operating on grids. It's responsible for managing
+// the lifecycles of all equipments and grids inside.
 class SmartGrid
 {
   public:
@@ -18,8 +20,13 @@ class SmartGrid
     void PrintEquipments() const;
     void PrintGrids() const;
 
+    // Parse all the files including equipments' informations, nodes' coordinates and grids' data at each phase.
     void Parse(std::ifstream& equipments_data_input, std::ifstream& node_coordinates_input, std::ifstream& grids_wrapper_input);
 
+    /* void DistributePowerForGrids(); */
+    /* void DistributePowerForGrid(char phase); */
+
+    // Notice that a getter will return a null pointer if the target is not found.
     Equipment* GetEquipment(std::string name) const;
     Grid* GetGrid(char phase) const;
 

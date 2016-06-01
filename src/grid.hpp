@@ -11,6 +11,7 @@ class Graph;
 class Vertex;
 class Edge;
 
+// It provides an interface to operate graphs, and it also manages the lifecycles of all graphs, vertices and edges.
 class Grid
 {
   public:
@@ -26,7 +27,7 @@ class Grid
 
     char GetPhase() const;
     Graph* GetGraph() const;
-    Graph* GetShrinkGraph()const;
+    Graph* GetShrinkGraph() const;
 
     void AddVertex(Vertex* vertex);
     void AddEdge(Edge* edge);

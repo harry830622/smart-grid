@@ -1,12 +1,11 @@
 #include "switch.hpp"
 
-#include <limits>
 #include <iostream>
 
 using namespace std;
 
 Switch::Switch(string name, bool is_on)
-  : Wire(name, Wire::Type::SWITCH), is_on_(is_on)
+  : Wire(name, Wire::IDEAL_RESISTENCE, Wire::IDEAL_CURRENT_LIMIT, Wire::Type::SWITCH), is_on_(is_on)
 {
   SetIsOn(is_on_);
 }
@@ -22,11 +21,12 @@ bool Switch::GetIsOn() const
 {
   return is_on_;
 }
+
 void Switch::SetIsOn(bool is_on)
 {
   is_on_ = is_on;
   if (is_on_) {
-    SetCurrentLimit(numeric_limits<double>::max());
+    SetCurrentLimit(Wire::IDEAL_CURRENT_LIMIT);
   } else {
     SetCurrentLimit(0.0);
   }

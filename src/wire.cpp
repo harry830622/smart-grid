@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Wire::Wire(string name, Type type, double resistance, double current_limit)
-  : Equipment(name), type_(type), resistance_(resistance), current_limit_(current_limit)
+Wire::Wire(string name, double resistance, double current_limit, Type type)
+  : Equipment(name, Equipment::Type::WIRE), type_(type), resistance_(resistance), current_limit_(current_limit)
 {
 }
 

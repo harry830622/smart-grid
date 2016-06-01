@@ -1,8 +1,8 @@
 #include "smart_grid.hpp"
 
-#include "switch.hpp"
 #include "source.hpp"
 #include "resident.hpp"
+#include "switch.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -60,7 +60,7 @@ Equipment* SmartGrid::GetEquipment(string name) const
 
 Grid* SmartGrid::GetGrid(char phase) const
 {
-  assert(grids_.find(phase) != grids_.end());
+  assert(grids_.count(phase) == 1);
 
   return grids_.find(phase)->second;
 }
@@ -82,7 +82,7 @@ void SmartGrid::ParseEquipments(ifstream& input)
     string name;
     line_ss >> name;
 
-    Equipment* equipment;
+    Equipment* equipment = nullptr;
     if (type == "node") {
       equipment = new Node(name);
     } else if (type == "source") {
@@ -102,7 +102,7 @@ void SmartGrid::ParseEquipments(ifstream& input)
       double current_limit;
       line_ss >> current_limit;
 
-      equipment = new Wire(name, Wire::Type::WIRE, resistance, current_limit);
+      equipment = new Wire(name, resistance, current_limit);
     } else if (type == "i_wire") {
       equipment = new Wire(name);
     } else if (type == "switch") {
@@ -118,6 +118,8 @@ void SmartGrid::ParseEquipments(ifstream& input)
     } else {
       continue;
     }
+
+    assert(equipment != nullptr);
     equipments_.insert(make_pair(equipment->GetName(), equipment));
   }
 }
@@ -131,8 +133,11 @@ void SmartGrid::ParseNodeCoordinates(ifstream& input)
     string name;
     line_ss >> name;
 
-    assert(equipments_.find(name) != equipments_.end());
-    Node* node = dynamic_cast<Node*>(equipments_.find(name)->second);
+    assert(equipments_.count(name) == 1);
+    Equipment* equipment = equipments_.find(name)->second;
+
+    assert(equipment->GetType() == Equipment::Type::NODE);
+    Node* node = dynamic_cast<Node*>(equipment);
 
     double x;
     line_ss >> x;

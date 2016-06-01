@@ -7,6 +7,9 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+  // Check if the arguments for this program are acceptable. However, the truth is that it only checks if the number of
+  // the arguments is correct, so the order and the file of the arguments must be check manually to make this program
+  // behave correctly.
   if (argc != 4) {
     cout << "Usage: " << argv[0] << " equipments.data nodes.pos grids.wrapper" << endl;
     return 1;

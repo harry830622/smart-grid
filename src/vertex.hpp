@@ -79,7 +79,7 @@ class Vertex
     double voltage_;
 
     std::vector<Edge*> incident_edges_;
-      
+
     Vertex* parent_;
     Edge* parent_edge_;
     std::vector<Vertex*> children_;

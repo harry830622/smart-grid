@@ -6,14 +6,23 @@
 class Equipment
 {
   public:
-    Equipment(std::string name);
+    enum class Type
+    {
+      EQUIPMENT,
+      NODE,
+      WIRE
+    };
+
+    Equipment(std::string name, Type type = Type::EQUIPMENT);
     virtual ~Equipment() = default;
 
     virtual void Print() const;
 
+    Type GetType() const;
     std::string GetName() const;
 
   private:
+    Type type_;
     std::string name_;
 
 };

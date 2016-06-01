@@ -23,12 +23,10 @@ void Graph::Print() const
     pair.second->Print();
     cout << endl;
   }
-  /*
-     for (auto pair : edges_) {
-     pair.second->Print();
-     cout << endl;
-     }
-     */
+  for (auto pair : edges_) {
+    pair.second->Print();
+    cout << endl;
+  }
 }
 
 void Graph::OutputJSON() const

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Node::Node(string name, Type type) : Equipment(name), type_(type)
+Node::Node(string name, Type type) : Equipment(name, Equipment::Type::NODE), type_(type)
 {
 }
 
